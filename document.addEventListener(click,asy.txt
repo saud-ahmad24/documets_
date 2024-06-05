@@ -1,0 +1,40 @@
+document.addEventListener("click",async function (event) {
+  const cookiee = getCookie('refkey');
+  console.log('event',event)
+  if(cookiee){
+    if (event.target.classList.contains("11za-addtoCart")) {
+      // Get product data or form data
+      var productId = event.target.getAttribute("11za-product-id");
+      var productName = event.target.getAttribute("11za-product-name");
+      let cartDetails = await getCartData();
+      const item = cartDetails.items.find(item => item.variant_id == productId);
+
+      // Prepare data to send to your API for "Add to Cart" event
+      var data = {
+        refkey : cookiee,
+        event: "addtocart",
+        details : {
+          items : [item]
+        }
+        // Add more data as needed
+      };
+  
+      // Send data to your API using AJAX
+      sendDataToAPI(data);
+    }
+    if (event.target.classList.contains("11za-checkout")) {
+      // Prepare data to send to your API for "Checkout" event
+      let cartData = await getCartData();
+      var data = {
+        refkey : cookiee,
+        event: "checkout",
+        details: cartData, // Implement this function to get cart data
+        // Add more data as needed
+      };
+      console.log('data---obj',data)
+      // Send data to your API using AJAX
+      sendDataToAPI(data);
+    }
+  }
+  
+});

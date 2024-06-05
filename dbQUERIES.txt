@@ -1,0 +1,1 @@
+db.getCollection("endcustomers").updateMany({ "groupData.teamMemberReply":null }, { $set: { "groupData.teamMemberReply": ObjectId("64a6f75db141e5443f034416"),"groupData.assignedBy" : "Chat Assigned By Someone to you" } })

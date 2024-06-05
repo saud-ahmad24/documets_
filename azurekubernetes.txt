@@ -1,0 +1,9 @@
+. awsume admin@11za
+aws eks get-token --cluster-name engees-11za-eks --region ap-south-1
+kubectl proxy
+
+
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 934858809258.dkr.ecr.ap-south-1.amazonaws.com
+
+docker build -t 934858809258.dkr.ecr.ap-south-1.amazonaws.com/engees/admin .
+docker push 934858809258.dkr.ecr.ap-south-1.amazonaws.com/engees/admin:latest

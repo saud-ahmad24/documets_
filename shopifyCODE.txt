@@ -1,0 +1,104 @@
+// Listen for clicks on "Add to Cart" buttons
+document.addEventListener("click", function (event) {
+  
+  if (event.target.classList.contains("add-to-cart-button")) {
+    // Get product data or form data
+    var productId = event.target.getAttribute("data-product-id");
+    var productName = event.target.getAttribute("data-product-name");
+
+    // Prepare data to send to your API for "Add to Cart" event
+    var data = {
+      event: "addtocart",
+      productId: productId,
+      productName: productName,
+      // Add more data as needed
+    };
+
+    // Send data to your API using AJAX
+    sendDataToAPI(data);
+  }
+  if (event.target.classList.contains("checkout-button")) {
+    // Prepare data to send to your API for "Checkout" event
+    var data = {
+      event: "checkout",
+      cartData: getCartData(), // Implement this function to get cart data
+      // Add more data as needed
+    };
+
+    // Send data to your API using AJAX
+    sendDataToAPI(data);
+  }
+});
+
+// Function to send data to your API using AJAX
+function sendDataToAPI(data) {
+  $.ajax({
+    url: "https://app.11za.in/shopifyref'",
+    type: 'POST',
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    data: data,
+    success: function (response) {
+      // Handle success
+      console.log("Data sent successfully:", response);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      // Handle error
+      console.error("Error sending data:", errorThrown);
+    },
+  });
+}
+
+// Function to get cart data (customize this as needed)
+function getCartData() {
+  $.ajax({
+    url: '/cart.js', 
+    type: 'GET',
+    dataType: 'json',
+    success: function (cart) {
+      return cart;
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error('Error getting cart data:', errorThrown);
+    },
+  });
+}
+
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    const cookieParts = cookie.split('=');
+      if (cookieParts[0] === name) {
+        return decodeURIComponent(cookieParts[1]);
+      }
+    }
+    return null;
+  }
+
+// Function to get the value of the refkey from the URL
+function getRefkeyFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("refkey");
+  }
+
+// Function to set a cookie with the refkey
+function setRefkeyCookie(refkey) {
+    // Calculate the expiration date 30 days from the current date
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 30);
+  
+    // Format the expiration date in the correct GMT format
+    const formattedExpirationDate = expirationDate.toGMTString();
+  
+    // Set the cookie with the updated expiration date
+    document.cookie = `refkey=${refkey}; expires=${formattedExpirationDate}; path=/`;
+  }
+
+
+// Check if refkey is present in the URL
+const refkey = getRefkeyFromURL();
+if (refkey) {
+    setRefkeyCookie(refkey);
+  }
+

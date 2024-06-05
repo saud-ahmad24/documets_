@@ -1,0 +1,1297 @@
+1-1-24
+template updateCron allowCatogarychange true template update
+responded not responded function added in remaining 12 files
+master merge over internal
+customer_not_responded_manage merge over internal
+balanceMismatch fixing 
+
+2-Jan-24
+Halemons endCustomer update
+StatusMessga optimization and live
+socket added in autoLogout app
+logs isPaidTemplate working
+
+3-Jan-24
+typenotification merge in internal
+deepak bhai s3 error solve
+log working fetch and export isPaidTemplate
+multiple Buttons Template backend working
+
+4-Jan-24
+contact send firstName validation
+showinapp key added for app
+abc check for 2 customers
+responseManager added instead for response in saveManual
+selectedautorpely id added in sendQuickTemplate app
+broadcast saveManual autoSend implemented
+uncomment customerOptions abccron done	
+
+
+changes on - 5 -Jan
+allowedCatogery change true cron
+ruledata.showinapp = true;
+broadcast autoSend app
+selectedAutoReply in snedQuivkTemplate app
+customerUpdateWithInboundCreate added everywhere
+socketBox.autoLogout on app login
+screenType added for message, assignChat
+isPaidTemplate: "$messageStatus.isPaidTemplate" in logs report and export
+lastOrderData.fulfillment_status != 'fulfilled' then cancel shopify Order
+customer pagination fix
+template select catogary fix
+$scope.ruledata.templatereplayData[index].replytemplatedata.localizations[0].language; in autoreply
+First Name * required in contact send chat
+tempmedia added in internal
+billing-details merge in internal
+vastraFlow merge in internal
+
+
+changes on - 6 -Jan
+autoreplay_id_api merge in internal
+notification for order cod and order prepaid added for app
+multiple buttons working checking sending
+internal merge over webSocketClient2
+
+changes on - 8 -Jan
+account-status merge in inquiryEdit
+billing-details merge in internal
+customer-account-status merge in internal
+new-milk-palace-working merge in internal 
+AbandonedCron error fix and live
+ResponseManager error solve in master 
+master merge in internal
+openApis sendTemple validation for body and buttons
+
+
+
+text: '*Send your current location* :\n> click on 🔗 or ➕ icon \n> Click "📍location" option \n> Click "Send You Current Location" option'
+let body = `*Great!*\n Your order is confirm in *${getNearestBranch.outlet}* branch 👇\n\n${getNearestBranch.address}\n\n${productUser.ecommerceText.addressLinktext}\n\nBelow Link is Valid for 30 Minutes.\n\n*Click* 👉 ${dylink}`
+let body = `*Great!*\n Your order is confirm in *${getBranchData.outlet}* branch 👇\n\n${getBranchData.address}\n\n${productUser.ecommerceText.addressLinktext}\n\nBelow Link is Valid for 30 Minutes.\n\n*Click* 👉 ${dylink}`
+html += `➔ ${' ' + orderData.lineitems[0].title}`
+html += `➔ ${' ' + orderData.lineitems[0].title}`
+
+
+
+valteammemb -- not to merge
+
+changes on - 9 -Jan
+membersdata validation added for socket notification for channel id
+openApis sendTemplate validation
+ -templateName
+ -language
+ -body filed dynamic
+ -isTiny
+ -url Regex
+ -url space check
+ -endCustomer name update error 
+ -userId decryption
+ -empty localization check
+ -badRequest message changes
+ -sendTo + remove from number
+master merge over internal
+internal merge in websocketClient2
+
+changes on - 10 -Jan
+template-select-option merge in inquiryEdit and conflicts remove
+scrapbazar customer update function add to fullName in address obj
+
+
+
+changes on - 11 -Jan
+loginwork merge in inquiryEdit
+internal merge over webSocketClient for statusMEssage
+live statusMessage on kubernetes
+
+
+todo
+getting notification evenif not in team - pending
+combined broadcast not working in webSoc - done
+/app/tags/createTag also add tag in teammember - done
+sir/madam add in static body in broadcast create and give dropdown - done
+dont blank data on changing tplate category
+
+
+
+
+
+
+
+
+
+
+
+
+customerUpdateWithInboundCreate added everywhere
+query for responded and conversation  - customer collection update remaining
+allowedCatogery change true cron
+obj.cancelOrder = { $ne: true }; bulkUpdate
+ruledata.showinapp = true;
+broadcast auto Send app
+cancel order
+changePayment Status
+deletePRoduct
+fullfill order
+broadcast report responded filter
+default selectedLanguage in template on autoreplyCreate
+country code working add in new customer save
+ecommerceSetting shipping Template,saveAbandoned1TempEcom
+accountStatus api in layout
+metaFormList dynamicURl working
+order working
+getAutoreply api for app
+bulkMedia autoreply edit working for app
+selectedAutoReply in snedQuikTemplate app
+metaformlist https://graph.facebook.com/v18.0 version change
+viewreportdata query change for getting responded filter
+checkout changes for order
+countrieslist api in app
+updatedAt sort customer list 
+tags working in customer add
+screenType for order and giving details
+screenType added for message, assignChat
+vastraPrivateUsercheck function in inbound
+customProductFlowVastraAppFun function in inbound
+OrderFlowEcommerce function in inbound
+logs isPaid working in report and export
+Quick Reply Title Already Exists working
+teammember edit phone number same commented
+walletMedia allow pdf and other mediaFormat
+generate Invoice of wallet
+leads dynUrl working
+milkPalace location function
+sendDirectMsgAddressConvert function
+lastOrderData.fulfillment_status != 'fulfilled' then cancel shopify Order
+socketBox.autoLogout on app login
+First Name * required in contact send chat
+ecomAbandoned working
+sendTemplate OpenApis - validation
+ -templateName
+ -language
+ -body filed dynamic
+ -isTiny
+ -url Regex
+ -url space check
+ -endCustomer name update error 
+ -userId decryption
+ -empty localization check
+ -badRequest message changes
+ -sendTo + remove from number
+
+
+changes on - 16 -Jan
+combinedBroadcast export fix 
+create tags then add that tags in teammember app /createTag		
+om error solve for export
+/profile api removed from customer.js
+sagar bhai broadcast static {{name}} working
+
+
+
+changes on - 17 -Jan
+statusMessage error solve in kubernetes
+Om error solve
+varnee autoreply error solve 
+
+
+changes on - 18 -Jan
+sendMessage app media upload fix done
+adminCustomer api check for error and optimized for faster for web and app
+sendBulk uncommented and live
+
+
+Todo
+filter check metaleadlist
+teamMember_assign_customer view to numberMasking key on teammember
+
+changes on - 19 -Jan
+teammember_remove merge in internal
+loginwork merge in main admin
+sync button added in admin
+async await added in autoreplyRules 
+blanktemp merge in internal
+maskingteam merge in internal
+
+
+
+working as on 19-Jan-24
+@nirmit user removed from all teammember list apis
+show " Add Topup " only to wallet users
+dont empty filled values in templateCreate when type changed
+masking key setting added
+add tags to teammember when he/she create tags
+one profile api removed from customer.js
+productUser.database == 'db_vastraapp02_india' || productUser.database == 'db_engeesecompvtltd_india') {
+when sync data add timeStamp in metaLeads
+send Interactive flow all Ids changed
+.post('https://vastraapp.com/api/v2/store/weba-verify-otp')
+                .set('api-key', 'va$Tra@pP')
+.post('http://13.235.138.204:3000/api/v2/store/weba-verify-otp')
+                .set('api-key', '1')
+
+
+
+
+productUser.database == 'db_vastraapp02_india' || productUser.database == 'db_engeesecompvtltd_india'
+http://13.235.138.204:3000/api/v2/stor
+
+msgText += '\n\n👉 Type #️⃣ for main menu.\n\n';
+
+
+changes on - 20 -Jan
+profile update error check and fix
+teammember.lastLoginToken error check and fix in middleware
+autoreply condition minimize
+url sent in myfile is not accessible validation in openApis
+
+
+changes on - 23 -Jan
+mediaurl validation on openApi sentTemplate sakhiya error solve
+autoreply error check and solve scrapbazar
+all endcustomers customerReply key added
+
+changes on - 24 -Jan
+Admin live on kuberentes
+apikey decrypt and show done on admin
+customerReplay added in broadcast
+unseenCounter set to 0 for all varni database
+master merge over internal
+Live broadcast tonight
+
+changes on - 25 -Jan
+internal merge in webSocketclient2
+adminCustomer api change not to show team Customers
+
+TODO
+/configurations/channels/whatsapp create cron to update webhook  done ---------------------------------------------
+freemessage service half done 
+add openApi req.body in database and response in their database, timestamp done
+
+changes on - 26 -Jan
+excel updated for all reaminig tasks
+
+changes on - 29 -Jan
+login from admin merge in internal 
+conversation added on statusMessage app for EndCustomers
+free message condition created
+custom code to export vogzy template responded report
+winWallet added in admin
+
+
+changes on - 30 -Jan
+om-test merge in internal
+dont add duplicatedroles added in internal
+condition change for saveCustomer api
+create deployment with database and delete deployement
+customer delete and revert api created for app
+loginwithotp conflicts removed and merge in internal
+sendmediaset merge in internal
+templatelogs conflicts removed and merge in internal
+
+TODO
+mediaset morequantity error done
+dont add new role of administrator in lowercase done
+
+changes on - 31 -Jan
+openApi res.error added in catch done
+All new changes from internal added to commonroutes
+master merge over internal
+easyOn changes merge in commonroutes
+varnee database update
+
+customer broadcast.js	
+
+changes as on 31-1-24
+otp working
+openApis logs
+fileuploader mediaset limit 50
+dont add duplicated roles
+deleteRevertCustomer api for mobile app
+metaJsonData.from && metaJsonData.to && metaJsonData.from !== metaJsonData.to added
+delete schedules broadcast
+
+task on - 1 -Feb
+customerReply added in all database
+query.customerReplay = true query added for web and app and live
+shopify.js condition added
+sendBulk more than 1 limit added for app
+loginotpcommon merge in commonroutes
+
+task on - 2 -Feb
+statusMessage code update and live
+condition update for freeMessage
+autoreply error solve and interactiveId: interactiveId added QuickyBowl
+added metaFunction in 2 files
+
+
+
+
+changes as on 2-2-24
+autoreply show on chat
+try catch added
+create broadcast filename replace
+buttonResponse button
+autoreply after working
+indiamart save api key
+login from admin 
+delete teammember then assign customers to other
+otp working
+openApis logs
+fileuploader mediaset limit 50
+dont add duplicated roles
+deleteRevertCustomer api for mobile app
+metaJsonData.from && metaJsonData.to && metaJsonData.from !== metaJsonData.to added
+delete schedules broadcast
+easyon working
+document upload in wallet
+freemessage count on dashboard
+quickreply not duplicate
+conversation key added in statusMessage
+autoreply error solve and interactiveId: interactiveId added QuickyBowl
+
+
+task on - 3 -Feb
+scrapBazar autoreply 2 times error solve
+commonroutes merge in maincommonroutes and live
+freemessage working
+
+task on - 5 -Feb
+trim added in openApi sendTemplate
+maincommonroutes merge in commonroutes
+commonroutes merge in maincommonroutes and live
+freemessage condition working
+kaushal openAPi logs dateFilter and export help
+orderapis for app created - branch - ordersapi
+
+.sendMetaMessage(
+sendInterativeMessageOnPrepaidOrder
+
+Todo-------------
+businessname 11za error in profile
+
+task on - 6 -Feb
+78 files conflicts remove 
+10 files webSocket add after
+shopifyjs openApi wrong file added
+
+
+task on - 7 -Feb
+teammembers all api created and live for app
+country-code-broadcast merge in commonroutes
+set minWallet to 10 and trail wallet entry created for rs 100
+tali broadcast message status update
+
+
+task on - 8 -Feb
+teammember and queue notification error solved	 and live
+excel created for all types of notifications
+Kaushal todays assign report help
+new-route-doc-locker merge in commonroutes
+om-commonroutes in commonroutes 
+setpostback for statusMwssage and inbound working admin and live
+login url set on admin 
+subdomain merge in main for admin
+/metaResponse with db entry and leads/11zaMetaform endpoints created and live on admin
+apikeyCustomerlist merge in main and live on admin
+
+
+task on - 8 -Feb
+config and parentId added in payment wallet
+todayscustomer merge in commonroutes
+openApilogs code check
+not to send Notifications on chat assign to ArchiveMember
+openapilogslist merge in commonroutes
+broadcast app error solve for callback already defined
+commonroutes merge in main commonroutes and live
+broadcast merge and live
+
+https://admin.11za.in/leads/11zaMetaform
+
+		Team_member/ delete.js uuid check
+changes as on 9-feb
+openApis logs show and export
+not to send Notifications on chat assign to ArchiveMember
+assign customer to teammembers list and report
+doc Token working locker
+on deleting file also delte from mediaFile
+flexi mobile no validations
+ allTypes: webhook.allTypes,
+online status working / and assingning customer to live teammembers
+country code working for broadcast
+generate invoice of wallet topup
+show razorpay recharge of wallet in admin
+broadcast dynamic name working sir/madam
+export api integration
+autoreply hours after working
+teammembers all apis for app
+orders all apis for app
+inboundwebhookFun working on inbound
+isDocLocker working flow on inbound
+logs working for sendBulkTemplate
+country code working for broadcast
+
+
+
+
+task on - 9 -Feb
+openapis/assigntoQueueArchive toString() error solve
+broadcast sakhiyaclinic error solve
+maincommonroutes merge in commonroutes
+inbound error check
+
+task on - 12 -Feb
+key name change for filter chat on app
+name change for filters on web
+Shiprockets merge in main for Admin
+app_login_admin merge in main for Admin
+ticketcategory merge in main for Admin
+maincommonroutes merge in commonroutes
+catogery working on admin
+businessNotification webhook set for all clients
+shopifySettingData added in all shopifyUsers users collections
+ 
+
+task on - 13 -Feb
+ticket working
+multiple button template check
+
+task on - 14 -Feb
+Chikankari Chic autoreply error solve / for all done
+
+task on - 15 -Feb
+chat report download not open
+country code view added for broadcast report and live
+isSpam customer show in customer list app
+
+task on - 16 -Feb
+catch error send in response openApis live
+markasread branch added in commonroutes	
+openapi-media-validation branch added in commonroutes
+autoreply erro solve for ','
+
+changes as on 9-feb	------
+autoreply expiry date added
+sendto search in openApi logs
+chat filter name change for web
+chat filter key name change and customerReply working
+multipart working added in inbound
+isSpam inbound notification off
+chats export
+mark all read
+online status of teammember
+country code show on broadcast report already live - 
+
+
+task on - 17 -Feb
+main merge in metaonboarding admin
+multiple button working for template on autoreply
+sendAutoreply cron error solve
+
+task on -19- Feb
+testtemplates1 ds
+tempdata 2d
+
+header_txt_dyn_fb
+broadcast create multiple button template working 
+broadcast node app working 
+
+task on -20- Feb
+broadcast keyx error solve
+broadcast array of linkObj created
+same for webApp / autoreply
+18 files sentTemplateObj function added
+
+files remains for globalSentTemp  - sendAutoreplycron.js shopify.js-op software.js-op tally.js-op template.js-op autoreplyrules.js
+files remains for globalTemp  - autoreplyrules.js directorder.js  supplier.js software.js tally.js woocommerce 
+
+task on -21- Feb
+getuserType key added for app 
+broadcast app error handling and response manage
+app broadcast error handling 
+
+task on - 22 - Feb
+commonroutes merge in woocom-sagar
+template-responded-button-filter merge in commonroutes
+multiple template working and common function adding
+(google-sheet-working)google sheet working merge and conflict remove in commonroutes 
+maincommonroutes merge and conflicts remove in commonroutes
+kaushal task explain	
+company name remove from apiKeys list
+commonrouter merge in maincommonroutes and live
+
+
+task on - 23 - Feb
+admin code live 
+admin export error solve for s3 and bucket name
+walletfreeconvo merge in commonroutes
+apiKey manual entries in database admin
+search working in apiKey admin
+
+task on - 24 - Feb
+notification working for app
+autoreply of inbound check for wallet
+multiplebutton-2 merge in commonroutes
+metaflow merge in meta-flowcommonroutes
+google sheetworking merge in maincommonroutes
+interactive media working for app and live
+
+task on - 26 - Feb
+files add on admin and endpoints added
+emailworking merge in main admin
+Commit c6ac9949: 11zametaapionbording working merge on admin main
+remaining task list create for jiga bhai
+openApis sendTemplate multipe button working done
+
+task on - 27 - Feb
+commonroutes merge in websocketclient3 common done 12 fileconflicts
+
+task on - 29 - Feb
+anydesk support to Karan for openAPi sendTemplate
+shopify setting working for multiple url on view and backend
+zorko customers teammember change from database
+
+task on - 1 - March
+woocom-sagar merge in linkobjsworking and conflict remove
+linkobjs working global function for indiamart & whatsapp commerce
+admin live .env key change for login to web
+
+task on - 2 - March
+admin embedded query added
+wallet customer image preview fix
+loop for checking rezorpayid on live database
+woocommerce, ecommerce and shopify only single url working
+
+task on - 4 - March
+linkObj working completed
+linkobj working merge in commonroutes
+lead create working completed on admin
+fbsignup merge in main and live
+
+profile data get chetan bhai error
+
+
+task on - 5 - March
+socket implementation in openChat app done 
+fb leads merge again with validation and live
+
+task on - 6 - March
+multiple button working merge in internal-broadcast and live
+broadcast validation working
+
+
+task on - 7 - March
+embeddedsignup code error solve and optimize
+excel export error solve admin and live
+broadcast nodeApp working for flow
+spam customers message count not to show for app
+chpl error finding
+
+task on - 8 - March
+commenting all checkwallet function 40 files
+checkWindowandWallet function check
+
+
+task on - 9 - March
+statusmessage working with messageId if customer not found ---- done
+metaflow-commonroutes merge in internal with 60 files conflicts remove
+statusMessgae working for customerData merge in interal statusMEssage and live
+bulkandsingle merge in internal-broadcast and conflicts remove and live
+internal merge in master and conflicts remove and live
+
+
+changes as on 8-March	------
+sendTemplate customers and app chatGlobalTempFunction created
+createLinkObjs sentTemplateObj global functions added  
+sendPrepaid template on order payment status change
+sendTempShipping on fullfillment
+createSample file for broadcast buttonText multiple working
+broadcast multiple url template working
+add template, add localization, view template url working
+button working in interactive ecommerce
+shippingcouriers working in order
+woocommerce new working
+failed number remove if customer messages 
+check open or close window and free messages working
+socket server code change 
+
+
+task on - 11 - March
+all errors solve in live
+0 buttons working in template
+customer create removed and customer updateOne added
+wallet and window check function update
+internal merge in master
+
+task on - 12 - March
+temmemberDeleteAndAssignOther merge in internal
+notification common app merge in internal and 27 files conflicts remove
+internal merge in websocket3 and conflicts remove
+
+task on - 13 - March
+walletinvoice merge in internal
+multiple-buttons-template-ui merge in internal
+getTier api working for getting unique customers counts without failed messages
+statusMessage working for inbound and customers
+
+
+task on - 14 - March
+kaushal schedule Template working
+await generateID commented 
+broadcast csv validation inprogress - test remaining
+signup code change admin and live
+
+task on - 15 - March
+vandan chats changes and sunil bhai excel changes merge 
+functioncall merge in main 
+planexpire working merge in main admin
+master merge over internal
+embedded signup view error fix
+
+task on - 16 - March
+cron working for notification and template merge in main admin
+openAPi sendtemplate sendTo with space remove - live
+cron working for templatesend message working and update
+
+task on - 18 - March
+headerDynamic code change and merge in internal
+websocket code merge and conflicts removed done
+customer update using inbound and messageID check merge in internal  statusMessage
+charge add NaN error solve in statusMessage
+templates with both approved and rejected localization show, not show rejected
+
+template report export error solve and update
+teammember delete working change
+customer excel export new code
+show first message of new customer on send
+global function for notification created and used
+
+todo====
+notification working kaushal notifyapp branch - done - merge remaining
+customers email working template 
+notification of ticket create
+notification stop to spam customer - done - check 
+multiple button view working and autoreply - done
+meta onboarding on admin - done
+inbound timeout error
+
+Template Report Mai time nhi aa raha hai - done
+broadcast csv fields name change     =-----------------------------
+upload csv broadcast working empty - in progress
+Meta lead first time set/active karte hai toh app mai enable ho jata hai but permission se woh 403 show karta cllick ka baad
+Toh use permision automactic mil jaaye
+template report responded and first template to new customer - done - merge remaining - done
+https://chat.openai.com/share/caf3f635-2c5f-4a31-b143-a3548476ba7d - done -  to add in broadcast
+statusmessage working with messageId if customer not found ---- done
+broadcast default country selected - - - - - discussion to implement
+response manage for wallet low balance - done
+
+
+
+task on - 19 - March
+code change for template send working and dynamic body - admin
+added text on live for country code alert message
+template scheduler test & code optimization and update linkObj with messageId	
+template schedular merge in internal and cinflict remove
+static url get blanked error solve in template create and add localization
+signupFb-om merge in main
+Development and production seperation for googleCredentials and common file
+google-drive merge in master and conflict remove
+
+task on - 20 - March
+bhadewala customer and inbound update
+broadcast schedule alert error solve
+Angular learning
+
+task on - 21 - March
+master merge in internal and conflicts remove
+queue chat moved to archive teammember
+
+
+task on - 23 - March
+quick-sms-flow merge in internal
+VASTRA_APIKEY added in dotenv
+assignResponse merge in interal
+statusmessage branch merge and live
+ng-disabled and ng-if added at required placed for export
+opt working merge in internal
+
+
+working done as on 23*March
+driveData.fileName drive working
+assign teammember list working with responded not responded list and export
+sendTemplate schedule later working
+template list api to get template with Approved languages
+template responded list and report
+quickSmsFlow working
+vasta .env added for apiKey
+valid extension show in openApi sentTemplate
+chat view sticker working
+static default selected during template creation
+template preview at list
+opt working
+
+task on - 26 - March
+Azure cloud storage file upload function testing
+opt-in working in internal
+
+
+task on - 27 - March
+sakhiya NaN fix
+minwalletTemplate merge in main admin and live
+Ticket Working merge in main
+account disable then dont use sendTemplate and sendBulkTemplate openAPis 
+assignChatToMe error solve
+response manage in openApis sendTemplate and bulk for wallet insufficient
+
+
+
+
+task on - 28 - March
+response manage in openApis sendTemplate and bulk for wallet insufficient live
+internal merge in App-demo commonroutes and conflicts remove
+Kaushal code change for template openApi authToken validation
+validauthtoken merge in internal
+44 users set to "minWalletBalance" : 1 
+
+task on - 29 - March
+error sovle during getSignupUserById admin
+getProfile data working merge and change
+milkpalace-coupon merge in internal
+chat-fix-sagar merge and conflict in internal
+multiple-buttons-template-ui merge in internal
+master merge in internal and live
+
+working done as on 29*March
+sending media from chat with sort Url
+coupon export import / milkPalace working
+opt working
+profile data show same names as verified name at whatsappBusiness Name
+crmUser id in teammember save
+check user using originWebsites to insert errDoc in db
+dont send Template from openAPi if account disabled
+walletInvoice changes
+
+task on - 30 - March
+azure added and s3 removed
+script to add container
+
+task on - 02 - April
+invoice-sagar merge in internal
+business-address-sagar merge in main admin
+user db update script to add address run
+export_customer merge in internal
+internal merge over master and live
+
+task on - 03 - April
+Aagam data send of inbound for mail purpose
+master merge over internal
+https://internal.11za.in/apis/testingUrl created with db entry on interal
+SignupChang-om merge in main admin
+isinboundWebhook-om merge in main admin
+
+task on - 04 - April
+template loop working change during template create merge in  internal
+autoTempCheck-sagar merge in internal
+dup customer delete function working
+show template/interactive during autoreply create, autoTempCheck-sagar branch merge in internal
+admin azure working in progress
+
+
+task on - 05 - April
+Azure cloud upload admin error solve and done
+internal merge in Appdemo for new code and shopify testing
+funny bones error finding in shopify template send abc, ordercreate, update
+id error solve in inbound sendNotification
+azure working merge in main admin and live
+
+
+working as on 06 - April - 24
+check for existing interactive and template on creating autoreply
+shopify product image working
+date of creation in template list
+app side working to + add during template create
+woocommerce old pattern to new pattern for template save
+
+
+task on - 06 - April
+woo-sagar merge in internal
+internal merge over master and live
+broadcast estimate cost error solve, optimization remains
+openchat socket client link change
+balanceuses cost NaN solve, optimization remains
+
+task on - 09 - April
+internal merge in main statusMessage
+admin uttil form entry added in database as fb error occured
+status message validation
+
+task on - 15 - April
+script to get latest timeStamp of messageStatus for all users done
+companyName filter using aggragatePaginate admin complated
+add plan details in user script run done live
+script run to add admin_43968-34 transactional details on admin done 
+add wabaName in userscollection admin done
+customerchang-om merge in main done 
+
+task on - 18 - April
+totalNewMessages/ parentUnseenChatcounter api created 
+totalteamMemberscount api created
+totalteamCustomerscount api created
+totalRolescount api created
+message status to seen working for app done
+forgot password working
+
+task on - 23 - April
+Master App working 
+--getSessionData api working
+--getClientList api optimization
+--login from localStorage working
+--socketworking remove
+
+task on - 23 - April
+customerchang-om merge in main
+walletInvoice---om merge in main and conflict remove
+
+task on - 29 - April
+Admin live
+report view code optimization in shopifyFlow
+inbound response data push code add
+
+task on - 30 - April
+laxmi blocks all customer delete
+cronJob file seperate from app.js
+export-permission working merge in internal and conflict remove
+master merge over internal and conflicts remove
+"export" key add in permission collection script for database update
+permission api teammember data load for accurate role check
+
+--[29-Mar 12:44] Denish Ubhal
+Server key and Sender ID for vastra app notification:
+ 
+Server key: AAAAfrnKcHo:APA91bFQaMZsapzTxql6MPYOKftPiqZoEMqy4YW9Kh96p5wFxxuXSLTY8bW462VC7G2HF4pz7sWfjWZqpMDI7Pm9R5RVphfYbb-yvuvxw80pbZoBRExkIhEjGfl4_TAw70GRY-fo35_H
+ 
+Sender ID: 544282931322
+
+
+task on - 1 - May
+chatbot box view and configuration working
+
+
+
+task on - 2 - May
+script to add templates individually in clients database by fetching from fb
+button for adding dynamic variable in template body create
+filters-om merge in main and live
+all customers delete in db_arcedior_india
+new_permission merge in internal
+vasta cron opt working
+
+task on - 3 - May
+vasta cron opt working
+openApi dynamic body more than template working
+teamMeber permission for notification working in progress
+Woo-commerce Add pluginAPIkey merge in main and live admin
+woocommerce-plugin merge in internal
+varsta otp code added in master and live
+permission export error fix and test
+internal merge in master and live
+schedule working for key true false
+carousel merge in internal-1 and conflicts remove
+script run to add export permission in all Administrator role
+
+await notifyHelper.fireBaseNotification(
+
+changes as on 3-May
+able to export reports if have export permission in role ,to test
+send objectId instead of messageId for bulkMessage to app socket,to test using mobile app
+checking teamMember roleId from Db instead for token cookie, not to test
+csv field name validation during broadcast create - example Customer_Name, Customer_Mobile,to test
+add dynamic variable button in template body on creating,to test
+profile.businessDetails validation on profile save,to test
+{{name}} dynamic customer name working in autoreply,to test
+dont assign to same teammember again on autorely ,to test
+shopify review working using number rating on inbound,to test
+otp expirey and resend otp interactive working using cron working vastraflow
+openApi dynamic body more than templates dynamic body then let it work,to test
+cron file working, not to test
+broadcast overflow set for selected customer,to test
+static image url change for azure, not to test
+woocommerce wroking and cron working
+
+
+task on - 4 - May
+master merge in internal
+internal merge in master
+internal merge in teammember-notification
+/[\r\n\t]| {5,}/g added for openAPis template dynamic body to check and replace and live
+masterUser marge in main admin
+
+
+                            } else if (productUser.database == 'db_engeesecompvtltd_india' || productUser.database == 'db_vastraapp02_india' || productUser.database == 'db_anjalitextilemills_india' || productUser.database == 'db_kizzyfashion_india' || productUser.database == 'db_nakodafashion_india' || productUser.database == 'db_scaryjeans_india') {
+
+
+todo----
+check live users using status from inbound ---- done
+statusMessage and inbound in one document
+admin short url working on billing
+statusMessage cost add optimization for other country code like america
+script to get duplicated customers and also update and delete it - completed
+broadcast amount calculate -- done test remians
+Off sending message on account disable -- done
+autoreply assign working, assign to same teammember every autoreply trigger
+
+
+task on - 6 - May
+add permission error response merge in internal
+subdomain-om merge in main
+
+
+task on - 7 - May
+filesizeinMb error solve in interactive
+teammember notification through permission completed, global function, teammeber profile page
+teammember-notification merge in internal and conflicts remove
+Aagam broadcast issue testing
+
+to merge  and test--
+endDateset-om admin
+
+
+task on - 8 - May
+endDateSet-om merge in main admin and live
+sunil bhai statusMessage working explain
+sorting on _id in logs list and dont update endcustomer before sending message openAPis, live
+endDate field add in users collection, script run admin
+admin subdomain, cusname, dataStore name correction and remove invisible character and live
+
+
+todo--
+openApi logs sorting- done
+customers last message times get updated even after message fails or not sended for openAPi- done
+chatbox-view setting working
+
+task on - 9 - May
+autoreply edit load page error check
+internal-1 merge in internal-2-carousal and conflicts remove
+carousel-template-broadcast merge in internal-carousal and conflicts remove
+autologout on browser if login with same credentials made on diffrent device
+autologout-web merge in internal
+master merge in internal and conflicts remove
+dynamic file name working in openAPis template send
+
+todo---
+on assing me from queue, sendTemplate window remains off
+customers last message times get updated even after message fails or not sended for everywhere
+tags not saving in db on new custmer create with new tag
+template image preview during template create
+dont add veriable on writing in template body
+
+task on - 10 - May
+adminCustomers api optimization
+internal merge in internal-2-carousel
+parentUnseenCounterChat api loop remove and optimization 
+script created to add notification object in all teammembers
+internal-2-carousal merge in internal
+vastraflow enable toggle working merge in main admin and live
+database remove and productUser.iscustomProductFlowVastra added
+
+
+task on - 11 - May
+client Dashboard app - error check and query change for totalUnseenChatCounter
+db condition removed from check permission
+assign teammember id of admin in zoivane pets customers
+internal merge in master and live
+broadcast merge and live
+
+
+
+changes as on 10-May
+autoreply businessworkinghoursstate and priority validation in backend
+carousel working for broadcast, autoreply and chat
+adminCustomers or otherchats api optimization 
+permission wise notification working for mobileApp, and global function correction for same, new page
+parentUnseenCounterChat api optimization, this give counts of myChat, otherChats and team 
+on adding customers or creating, also create new tags in db
+getAllCustomerList api to get all customers
+duplicate interactive message, editable
+autologout on web, if login with same credentials are made on other device - for web 
+valid permission error showing on web
+entry in transient db for businessNotification webhook other than template update
+inbound and autoreply - sendNotification function is made common
+myfileName working in openApi sendTemplate, client can set predefined name for their headerFile
+google sheet working
+resync template cron updater 1 hr interval
+
+
+task on - 13 - May
+internal merge in websocketClient4 webApp
+internal merge in newWebSocketClient statusMessage app
+customerExport-om merge in main admin and live
+validation added in shopify.js openApis
+logs export working changed from xlsx to csv and optimized 
+--todo
+when syncing the profile also update the primary db along with secondary -done
+
+task on - 14 - May
+internal merge in websocketClient4 webApp
+kubernetes working
+
+
+task on - 15 - May
+scrapbazar formData update
+$window error solve in broadcast page
+authenticate template cretae and check
+kubernetes working
+
+
+task on - 16 - May
+customerReport1=om merge in main and conflicts remove
+reportlist api code change and optimization on admin -  customer report page
+script for deleting duplicate customer and also to update existing inbound collection, delete duplicate customers cron updated
+db_anjalitextilemills_india - deleted duplicate customers and inbounds
+customer import with country code working, Customer Mobile with Country Code- text added in csv
+master merge in internal
+
+anjali textile duplicate customer remove, - done
+add country code working in customer export - done
+
+task on - 17 - May
+accountStatus key add in excel report - customerExport-om merge in main admin and live
+partnerDashboard_crud merge in main originated branch partnerDashboard_crud-main and 16 file conflicts remove
+test_statusmessage merge in internal originated branch test_statusmessage-main 
+app_config merge in app_config-main originated from internal and 4 file conflicts remove
+admin customer report list time query error fix
+websocket integrated in OpenChats app
+
+task on - 18 - May
+customerchange-om merge in main
+script run to add status=true in metaleadtemps collection of all users with fb pageid
+reference working on admin for saving, schema, excel export
+createdAt added in excel, query change, also check for if key is not present - customers list admin
+inboundwebhook working templateName and interactiveName working added
+
+customerchange-om merge in main for selectPlan error 
+
+task on - 20 - May
+leads update subdomain working and correction
+email notification and template send working on admin for lowBalance, and planExpire
+inboundwebhook validation and test, also sending template name
+
+task on - 21 - May
+customer_view-om merge in main
+endDate add when creating lead from signup request
+adminlogs merge in PartnerDashboard_crud-main and conflicts remove
+cron-notify merge in main
+partner_newChnages merge in PartnerDashboard_crud-main
+Notification setting on customer page admin, cron working for email and template send
+
+
+task on - 22 - May
+partner_newChanges merge in PartnerDashboard_crud-main admin
+reference working for Vastra App toggle done
+notification-om merge in main, saveNotification api validation add
+create lead startDate error fix, when creating from signup Request
+
+task on - 23 - May
+Razorpay will charge an additional 2% fee on each transaction. text added
+Forgot Password Working on WebApp
+
+task on - 24 - May
+app_config_newChanges merge in app_config-main app
+new_access merge in partnerDashboard_crud-main admin
+password forgot working
+internal merge in master and live
+
+changes as on 24-May
+copy autoreply working
+birthDay and anniversary working
+queue spam count exclude
+send Template Test Broadcast working
+duplicate customers remove cron optimization
+country code wise customer import and also birthDay working
+logs export csv working, excel working removed
+on updating profile data, also update users collection
+generate invoice, gstNo, business_Address,businessname include
+billing address working with timeline on wallet page
+inboundwebhook working for template name and interactiveTitle, also repeat response error solve
+woocommerce abc repeat template send error sole
+shipturtle working
+cron for birthDay and Anniversary 
+optin and optout message send working
+
+It seems like you're listing various features and functionalities of a system or application. Here's a brief summary of each:
+
+1. **Copy Autoreply**: Duplicate Autoreply can be created using this feature.
+
+2. **Birthday and Anniversary**: Handles notifications or actions related to user birthdays and anniversaries.
+
+3. **Queue Spam Count Exclusion**: Excludes spam messages from the count in a message queue.
+
+4. **Send Template Test Broadcast**: Allows sending test broadcasts using predefined templates, during broadcast creating.
+
+5. **Duplicate Customer Removal Cron Optimization**: Optimizes cron job for removing duplicate customers.
+
+6. **Country Code-wise Customer Import**: Imports customers based on country codes, possibly for targeted campaigns or analysis.
+
+7. **Logs Export CSV Working**: Enables exporting logs to CSV format for analysis or reporting.
+
+8. **On Updating Profile Data, Update Users Collection**: Ensures that profile updates reflect in the users' collection.
+
+9. **Opt-in and Opt-out Message Sending**: Sends messages for opt-in and opt-out processes, likely for marketing or communication preferences.
+
+
+10. **GST No, Business Address, Business Name Inclusion**: Includes GST number, business address, and business name in relevant processes or documents during creating invoice.
+
+11. **Billing Address with Timeline on Wallet Page**: Displays billing addresses with a timeline on the wallet page for tracking billing address details.
+
+12. **Inbound Webhook for Template Name and Interactive Title**: Handles inbound webhooks for template names and interactive titles.
+
+13. **WooCommerce ABC Repeat Template Send Error Solution**: Resolves errors in sending repeat templates for WooCommerce.
+
+14. **Shipturtle Working**: Ensures functionality or integration with Shipturtle, likely for shipping processes.
+
+15. **Cron for Birthday and Anniversary**: Implements cron jobs for handling birthday and anniversary notifications or actions.
+
+
+These features cover a range of functionalities, from automated responses to data management and integration with external services.
+
+
+task on - 25 - May
+forgot password working completed 
+password-forgot merge in internal
+load testing for statusMessage
+Gorek technologies endcustomers delete containing 000000 in mobileNo
+dnsConfiguration merge in partnerDashboard_crud-main
+email verification working
+
+task on - 27 - May
+isSpam working on web from chat profile set
+Admin reference/ filter working error solve
+app_new-changes merge in app_cofig-main
+arihantfashion all doubles entries deleting
+companyname and database name validation on convert lead to customer
+referral_conversion working for message send and checking
+internal merge in master and live
+
+changes as on 24-May
+isSpam working on web from chat profile set
+forgot password working - commented
+woocommerce tracking url working
+referral_conversion working, sending message after checking window
+
+task on - 28 - May
+11za Demo to 11za demo tag, customers updated
+PartnerDashboard_crud-main merge in branch sunil-main-partner generated from main, g file coflits remove
+referal conversation learning and also other conversations
+email verification working
+
+task on - 29 - May
+teamMember email verification working completed
+email-verification merge in internal
+partner dashboard live and permission, roles creating
+kubernetes working and testing
+
+task on - 30 - May
+Maiora Diamond all endCustomers delete
+vastraProductId working for openAPis
+all yamls configured in kubernetes app
+dont send any type of message and create broadcast if accountStatus is false
+
+task on - 31 - May
+open-api-create-template merge in internal
+carousel-file-upload merge in internal
+use-template-media-carousel merge in internal broadcast
+openApis software.js sendTemplate error handling and logs working
+master merge in internal
+internal merge in bulkandsingle broadcast
+
+saud241120@gmail.com
+Admin@1234
+
+
+working as on 31-May
+dont send any type of message and create broadcast if accountStatus is false
+email verification working for teammember on my profile pge
+upon receiving media from customer, validation added
+vastraflow maincat working
+openApis teamMember create api working
+vastraProductId working for openApis sendTemplate
+woocommerce existingOrder check validation
+autoreply {{name}} working
+forgot password working
+ecommerce, indiaMart, metalead configuration from used side
+iThink working
+openApis software.js sendTemplate error handling and logs working
+autoreply carousel working fileSelectedCarouselMedia function
+new template carousel working, fileSelectedforCarouselMedia
+useTemplateMedia working in broadcast for carousel
+openAPi createTemplate api
+error message show for insufficient in sendTemplate web
+
+
+task on - 1 - June
+zorko duplicate customer filter and delete, and code update
+add custom invoice number working on admin and live
+walletinvoiceNumber-om merge in main admin
+container create code commented,also add isEmailVerified: true when teamMember makes forgotPassword
+internal merge in master and live
+
+Done-----
+delete unwanted branches -- Garvit bhai
+logs working in softwarjs templatesend -- done
+statusMessage test by hitting simultaniously -- done
+- Wallet notification - through mail - mail id field required -- done
+- Forget pwd in customer side -- done
+identity authentication azure working code to garvit bhai - done
+- Verification mail id - customer end -- done
+- Account status should get off after expiry -- done, merge remaining
+1. Report Spam From Web -- done
+6. Remove Spam Users from Queue Count -- done
+
+
+task on - 3 - June
+template syncing working before triggering in broadcastApp
+tags add and update working in sendQuickTemplate api app
+ReferenceError: mobileNo is not defined error solve and live
+teamMember list api for app
+
+task on - 4 - June
+internal merge in master and live
+url and fileHandle working in sendQuickTemplate for app
+db_fourpillars_india url redirect error solve
+login working for shopifyApp with teamMember created	
+
+working as on 4-June
+teammember crmUser openApis working, create, delete, list
+sendQuicktemplate with tags add in customer working
+teammember list api for app with pagination and search
+
+task on - 5 - June
+teamember check/create with roles and permission done along with login working
+shopifyApp view and redirection working
+InteractiveError send from app solve
+
+template add button shopifyApp remaining
+
+
+garbage collection
+pupeeteer new module
+fs module instead for, global function
+mongoose update to version 8 in webApp and all
+fluentD learning
+give notification setting to customer for low wallet, customer will set wallet amount on which he wants email notification
+GreenTick filter on admin, also dedicated pod to these customers on kuber
+email service dedicated app ,
+message send count if bulk or more then email notification to us for upgrade node
+downtime noification on email, whatsapp, firebase including parthners
+new feature launch notification ^^^^
+add extra time in broadcast that are scheduled and have header as full url
+none button working in template create
+apache airflow
+image scrollable in template create
+template resync during template send
+send quick Message tag working and image dont select
+
+
+
+Sagar Kheni - 
+broadcast view like template create and move test working below template view
+iThink working seperate app outside, if shopify user then show all dynamic values, else show orderId, customerName, TrackingUrl and TrackingNumber

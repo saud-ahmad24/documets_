@@ -1,0 +1,47 @@
+<script>
+console.log('test-------------');
+async function init(){
+const cookiee = getCookie('refkey');
+if(cookiee){
+var data = {
+        refkey : cookiee,
+        event: "checkout",
+       // details: cartData, 
+      };
+      console.log('data---obj',data)
+      // Send data to your API using AJAX
+      sendDataToAPI(data);
+}
+console.log('cookiee',cookiee )
+}
+init();
+function sendDataToAPI(data) {
+  console.log('sendDataToAPI',data)
+  $.ajax({
+    url: "https://internal.11za.in/shopifyref",
+    type: 'POST',
+    dataType: "json",
+    contentType: "application/x-www-form-urlencoded",
+    data: data,
+    success: function (response) {
+      // Handle success
+      console.log("Data sent successfully:", response);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      // Handle error
+      console.error("Error sending data:", errorThrown);
+    },
+  });
+}
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    const cookieParts = cookie.split('=');
+      if (cookieParts[0] === name) {
+        return decodeURIComponent(cookieParts[1]);
+      }
+    }
+    return null;
+  }
+</script>

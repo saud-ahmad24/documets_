@@ -1,0 +1,16 @@
+engees@app:~/11za/admin-demo$ sudo su
+root@app:/home/engees/11za/admin-demo# cd /etc/nginx/sites-available/
+root@app:/etc/nginx/sites-available# ls
+admin  app  broadcast  default  garytest  gramslocker  openchat  statusmsg
+root@app:/etc/nginx/sites-available# cp admin admin-demo
+root@app:/etc/nginx/sites-available# vi admin-demo
+root@app:/etc/nginx/sites-available# ln -s /etc/n
+nanorc               netconfig            network/             networks             nftables.conf        nsswitch.conf
+needrestart/         netplan/             networkd-dispatcher/ newt/                nginx/               nvme/
+root@app:/etc/nginx/sites-available# ln -s /etc/nginx/sites-available/admin-demo /etc/nginx/sites-enabled/
+root@app:/etc/nginx/sites-available# nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+root@app:/etc/nginx/sites-available# systemctl restart nginx
+
+engees@app:~/11za/admin-demo$ pm2 start bin/www --name admin-test

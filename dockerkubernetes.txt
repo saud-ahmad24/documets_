@@ -1,0 +1,146 @@
+Certainly! Here's a list of commonly used Docker commands:
+
+1. **Building Images:**
+   - Build an image from a Dockerfile:
+     ```bash
+     docker build -t image_name:tag .
+     ```
+   - List all local images:
+     ```bash
+     docker images
+     ```
+
+2. **Running Containers:**
+   - Run a container from an image:
+     ```bash
+     docker run -it image_name:tag
+     ```
+   - Run a detached container:
+     ```bash
+     docker run -d image_name:tag
+     ```
+   - Run a container with port mapping:
+     ```bash
+     docker run -p host_port:container_port image_name:tag
+     ```
+   - Run a container with volume mounting:
+     ```bash
+     docker run -v host_path:container_path image_name:tag
+     ```
+
+3. **Managing Containers:**
+   - List running containers:
+     ```bash
+     docker ps
+     ```
+   - List all containers (including stopped ones):
+     ```bash
+     docker ps -a
+     ```
+   - Stop a running container:
+     ```bash
+     docker stop container_id_or_name
+     ```
+   - Remove a container:
+     ```bash
+     docker rm container_id_or_name
+     ```
+
+4. **Managing Images:**
+   - Remove an image:
+     ```bash
+     docker rmi image_id_or_name
+     ```
+
+5. **Viewing Container Logs:**
+   - View logs for a specific container:
+     ```bash
+     docker logs container_id_or_name
+     ```
+
+6. **Executing Commands in a Running Container:**
+   - Execute a command in a running container:
+     ```bash
+     docker exec -it container_id_or_name command
+     ```
+
+7. **Networking:**
+   - Show network details for a container:
+     ```bash
+     docker inspect --format='{{json .NetworkSettings.IPAddress}}' container_id_or_name
+     ```
+
+8. **Cleaning Up:**
+   - Remove all stopped containers:
+     ```bash
+     docker container prune
+     ```
+   - Remove all unused images:
+     ```bash
+     docker image prune
+     ```
+
+9. **Miscellaneous:**
+   - Pull an image from a registry:
+     ```bash
+     docker pull image_name:tag
+     ```
+   - Tag an image:
+     ```bash
+     docker tag source_image:source_tag new_image:new_tag
+     ```
+
+Remember to replace placeholders like `image_name`, `tag`, `container_id_or_name`, etc., with your actual values. Additionally, Docker commands might vary slightly depending on your operating system and Docker version. Check the official Docker documentation for the most up-to-date information.
+
+
+	
+. awsume admin@11za
+aws eks get-token --cluster-name engees-11za-eks --region ap-south-1
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 934858809258.dkr.ecr.ap-south-1.amazonaws.com
+
+docker build -t 934858809258.dkr.ecr.ap-south-1.amazonaws.com/engees/web .
+docker push 934858809258.dkr.ecr.ap-south-1.amazonaws.com/engees/web:latest
+
+kubectl proxy
+
+kubectl get pods --all-namespaces
+kubectl get nodes
+kubectl get namespaces
+aws ec2 describe-instances
+aws s3 ls
+aws eks list-clusters
+aws rds describe-db-instances
+aws lambda list-functions
+aws iam list-users
+
+kubectl apply -f ubuntu-pod.yaml
+kubectl get pods
+kubectl exec -it ubuntu-pod -- /bin/bash
+kubectl delete pod ubuntu-pod
+
+minikube start
+minikube stop
+minikube service prometheus-server-ext      ----to start particular service
+kubectl expose service prometheus-server --type=NodePort --target-port=9090 --name=prometheus-server-ext
+kubectl port-forward service/prometheus-server-ext 4425:80
+minikube delete
+ip a
+helm install prometheus prometheus-community/prometheus
+minikube addons enable metrics-server
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+minikube dashboard
+minikube status
+
+
+//download lastest version of minikube
+wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+minikube and kubectl configuration
+https://vegastack.com/tutorials/how-to-install-kubernetes-with-minikube-on-ubuntu-20-04-lts/
+
+Deploying Node.js apps in a local Kubernetes cluster (learnk8s.io)
+https://learnk8s.io/deploying-nodejs-kubernetes
+
+10.1.114.6
+QoS Class
+Burstable

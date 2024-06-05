@@ -1,0 +1,3 @@
+kubectl
+az aks get-credentials --resource-group engees11zadev-centralindia-rg --name engees11zadev-aks --overwrite-existing
+kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 8443:443
