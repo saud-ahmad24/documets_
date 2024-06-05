@@ -1269,7 +1269,8 @@ teamember check/create with roles and permission done along with login working
 shopifyApp view and redirection working
 InteractiveError send from app solve
 
-template add button shopifyApp remaining
+
+template add button shopifyApp remaining -- done
 
 
 garbage collection
