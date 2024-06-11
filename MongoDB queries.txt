@@ -1,4 +1,4 @@
-MongoDB queries
+MongoDB queries 
 
 const cursor = db.collection('inventory').find({
   'size.h': { $lt: 15 },
