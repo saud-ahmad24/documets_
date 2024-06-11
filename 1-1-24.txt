@@ -1269,13 +1269,61 @@ teamember check/create with roles and permission done along with login working
 shopifyApp view and redirection working
 InteractiveError send from app solve
 
+task on - 6 - June
+productImage src error solve in shopifAbcCron
+delete, save, update api created n configured for teamMember mobile
+invoiceNumbergenerate-om merge in main and conflicts remove - live
+
+task on - 7 - June
+isSuperAdmin notification error solve,all notification default set to true
+notificationObj add in admin
+invoice working optimization, invoiceNumberWorking-om merge in internal
+template edit api check and testing
+master merge in internal
+
+
+working as on 7-June
+ecommexpress working
+other possible birthDay date format added in customerExport
+iThink working
+shipTurtle working
+notification object set to true by default on teamMember create
+checkOpenChat api for openCHat
+autoIncrement invoiceNumber working
+add template group on add template page
+template body getting black error solve on change header
+interactive message send error solved and live
+delete, save, update api created n configured for teamMember mobile
+openApis teamMember create api 
+sendQuicktemplate api for app, media sent without selection - commented
+
+task on - 8 - June
+customers counts user wise,template sended count from client side - script create and run
+Branch check and delete from Azure
+multiple scripts to get every uniques or common endCustomers from all clients
+
+task on - 10 - June
+teammemberVelidaction-om merge in main
+accountStatus off working using cron
+admin signup list load blank error solve
+customerCreate error solve for tags
+Satvachan Sarees, error check, old account details updated with new one
+
+
+
+-----------------------------------------------------------------------------------
+urgentTask - vasta assign wroking openAPis, assign to default ansnot multiplte tims -- not to implement
+customer profile update two apis, address, tags
+-----------------------------------------------------------------------------------
 
 template add button shopifyApp remaining -- done
+	
+Account status should get off after expiry -- done, merge remaing
 
 
 garbage collection
 pupeeteer new module
-fs module instead for, global function
+fs module instead for, global function -- 
 mongoose update to version 8 in webApp and all
 fluentD learning
 give notification setting to customer for low wallet, customer will set wallet amount on which he wants email notification
@@ -1284,12 +1332,14 @@ email service dedicated app ,
 message send count if bulk or more then email notification to us for upgrade node
 downtime noification on email, whatsapp, firebase including parthners
 new feature launch notification ^^^^
-add extra time in broadcast that are scheduled and have header as full url
+add extra time in broadcast that are scheduled and have header as full url -- done, branch merge remaining
 none button working in template create
 apache airflow
 image scrollable in template create
-template resync during template send
-send quick Message tag working and image dont select
+template resync during broadcast send  -- done
+send quick Message tag working and image dont select -- done
+username duplicate validation on admin on teamMember create -- Om
+dont check login details from disables account -- done
 
 
 
