@@ -1,1 +1,371 @@
 db.getCollection("endcustomers").updateMany({ "groupData.teamMemberReply":null }, { $set: { "groupData.teamMemberReply": ObjectId("64a6f75db141e5443f034416"),"groupData.assignedBy" : "Chat Assigned By Someone to you" } })
+
+
+
+----------------------------------------------------------------------
+
+			
+const duplicateCustomers = await secondary.model(constants.MODELS.endcustomers, endCustomers).aggregate([
+                            { $match: { isDelete: false, mobileNo: { $type: "string", $regex: /^[0-9]+$/ } } },
+                            {
+                                $addFields: {
+                                    lastNineDigits: {
+                                        $cond: {
+                                            if: { $gte: [{ $strLenCP: "$mobileNo" }, 10] },
+                                            then: {
+                                                $substrBytes: [
+                                                    "$mobileNo",
+                                                    { $subtract: [{ $strLenCP: "$mobileNo" }, 10] },
+                                                    10
+                                                ]
+                                            },
+                                            else: null
+                                        }
+                                    }
+                                }
+                            },
+                            { $group: { _id: '$lastNineDigits', dups: { $push: "$_id" }, count: { $sum: 1 } } },
+                            { $match: { count: { $gt: 1 } } }
+                        ]);
+
+
+----------------------------------------------------------------------
+
+const pipeline = [
+                    {
+                        $match: {
+                            broadcastData: { $exists: true },
+                            timestamp: { $gte: startTimestamp, $lte: endTimestamp }
+                        },
+                    },
+                    {
+                        $lookup: {
+                            from: 'msgstatuses',
+                            localField: 'messageId',
+                            foreignField: 'messageId',
+                            as: 'userData',
+                        },
+                    },
+                    {
+                        $lookup: {
+                            from: 'broadcasts',
+                            localField: 'broadcastData.broadcastId',
+                            foreignField: '_id',
+                            as: 'broadcastdata',
+                        },
+                    },
+                    {
+                        $unwind: '$broadcastdata',
+                    },
+                    {
+                        $unwind: '$userData',
+                    },
+                    {
+                        $group: {
+                            _id: '$to',
+                            Bdata: {
+                                $push: {
+                                    BroadCastData: '$broadcastdata.broadcastcustomename',
+                                    Template: '$sentTemplate.name',
+                                    Date: "$broadcastdata.timestamp",
+                                    Status: '$userData.status',
+                                },
+                            },
+                            customername: {
+                                $first: {
+                                    $cond: [
+                                        {
+                                            $and: [
+                                                { $ne: ['$broadcastData.Customer_Name', null] },
+                                                { $ne: ['$broadcastData.Customer_Name', ''] },
+                                            ],
+                                        },
+                                        '$broadcastData.Customer_Name',
+                                        '',
+                                    ],
+                                },
+                            },
+                        },
+                    },
+                ]
+
+----------------------------------------------------------------------
+
+if (status !== "notsent") {
+                            if (status != "") {
+                                query.status = status;
+                            }
+                            pipeline.push(
+                                {
+                                    $lookup: {
+                                        from: 'msgstatuses',
+                                        localField: 'messageId',
+                                        foreignField: 'messageId',
+                                        as: 'userData',
+                                    },
+                                },
+                                {
+                                    $unwind: {
+                                        path: '$userData',
+                                        preserveNullAndEmptyArrays: true,
+                                    },
+                                },
+                                {
+                                    $addFields: {
+                                        status: { $ifNull: ['$userData.status', ''] },
+                                        detail: { $ifNull: ['$userData.details.message', ''] },
+                                        timestamp: { $ifNull: ['$userData.timestamp', ''] },
+                                    },
+                                },
+                                {
+                                    $match: query
+                                }
+                            );
+                        } else {
+                            pipeline.push(
+                                {
+                                    $match: {
+                                        $or: [
+                                            { messageId: { $exists: false } },
+                                            { messageId: null },
+                                        ],
+                                    },
+                                }
+                            );
+                        }
+                        pipeline.push(
+                            {
+                                $project: {
+                                    userData: 0,
+                                }
+                            }
+                        );
+
+                        var options = {
+                            page: page,
+                            limit: parseInt(limit),
+                            sort: { created_time: filterSort },
+                            lean: true
+                        }
+                        let Data = secondary
+                            .model(constants.MODELS.metaleadgens, metaleadgensModel).aggregate(pipeline);
+
+                        secondary.model(constants.MODELS.metaleadgens, metaleadgensModel).aggregatePaginate(Data, options).then((results) => {
+                            const finalData = results.docs.map(processMetalead);
+                            results.docs = finalData;
+                            return ResponseManager.onSuccess("Meta Lead List", results, res);
+                        })
+
+----------------------------------------------------------------------
+
+query = {
+                planDetails: { $exists: true },
+                'enabledNotification.status': true,
+                $expr: {
+                    $eq: [
+                        {
+                            $dateDiff: {
+                                startDate: new Date(),
+                                endDate: { $toDate: "$planDetails.endDate" },
+                                unit: "day"
+                            }
+                        },
+                        daysBeforeExpiration
+                    ]
+                }
+            };
+
+
+----------------------------------------------------------------------
+
+{
+                                    $addFields: {
+                                        status: { $ifNull: ['$userData.status', ''] },
+                                        detail: { $ifNull: ['$userData.details.message', ''] },
+                                        timestamp: { $ifNull: ['$userData.timestamp', ''] },
+                                    },
+                                },
+
+----------------------------------------------------------------------
+
+const pipeline = [{
+                $lookup: {
+                    from: "inbounds",
+                    let: { mobileNo: "$mobileNo" },
+                    pipeline: [
+                        {
+                            $match: {
+                                content: { $exists: true },
+                                $expr: {
+                                    $or: [
+                                        { $eq: ["$to", "$$mobileNo"] },
+                                        { $eq: ["$from", "$$mobileNo"] }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            $sort: { "_id": -1 }
+                        },
+                        { $limit: 1 }
+                    ],
+                    as: "latestInbound"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$latestInbound",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $match: {
+                    ...query,
+                    'groupData.teamMemberReply': req.token.teamMemberId,
+                    'groupData.teamId': null,
+                    $or: [
+                        { isSpam: false },
+                        { isSpam: { $exists: false } }
+                    ],
+                    isDelete: { $ne: true },
+                    $and: [
+                        {
+                            $or: [
+                                { name: regex },
+                                { mobileNo: regex }
+                            ]
+                        },
+                        {
+                            $or: [
+                                { isSpam: false },
+                                { isSpam: { $exists: false } }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                $facet: {
+                    totalDocs: [
+                        { $count: "total" }
+                    ],
+                    docs: [
+                        { $skip: (page - 1) * limit },
+                        { $limit: limit },
+                    ]
+                },
+            }]
+
+
+-----------------------------------------------------------------------
+
+
+let results = await secondary.model(constants.MODELS.inbounds, inBounds).aggregate([
+                {
+                    $match: { "broadcastData.broadcastId": config.mongoose.Types.ObjectId(req.body.bid) }
+                },
+                {
+                    $lookup: {
+                        from: constants.MODELS.msgstatus,
+                        localField: "messageId",
+                        foreignField: "messageId",
+                        as: "join1"
+                    }
+                },
+                {
+                    $unwind: "$join1"
+                },
+                {
+                    $lookup: {
+                        from: constants.MODELS.links,
+                        let: { join1Field3: "$join1.messageId" },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $or: [
+                                            { $eq: ["$meta_message_id", "$$join1Field3"] },
+                                            { $eq: ["$meta_message_id", null] } // Include documents with no match in collection3
+                                        ]
+                                    }
+                                }
+                            }
+                        ],
+                        as: "join2"
+                    }
+                },
+                {
+                    $unwind: { path: "$join2", preserveNullAndEmptyArrays: true }
+                },
+                {
+                    $project: {
+                        messageid: "$messageId",
+                        from: "$from",
+                        to: "$to",
+                        customer: "$broadcastData.Customer_Name",
+                        channel: "WhatsApp",
+                        status: "$join1.status",
+                        response: "$broadcastData.Response",
+                        reason: { $ifNull: ["$join1.details.message", ""] },
+                        clicks: { $ifNull: ["$join2.clicks", 0] },
+                        date: new Date()
+                    }
+                }
+            ])
+
+-----------------------------------------------------------------------------
+
+
+
+let results = await secondary.model(constants.MODELS.inbounds, inBound).aggregate([
+                                    {
+                                        $match: { "sentTemplate._id": tid, "timestamp": { "$gte": starttimestamp, "$lte": endtimestamp } }
+                                    },
+                                    {
+                                        $lookup: {
+                                            from: constants.MODELS.msgstatus,
+                                            localField: "messageId",
+                                            foreignField: "messageId",
+                                            as: "join1"
+                                        }
+                                    },
+                                    {
+                                        $unwind: {
+                                            path: "$join1",
+                                            preserveNullAndEmptyArrays: true  // Preserve documents even if there's no matching entry in the lookup collection
+                                        }
+                                    },
+                                    {
+                                        $lookup: {
+                                            from: constants.MODELS.links,
+                                            let: { join1Field3: "messageId" },
+                                            pipeline: [
+                                                {
+                                                    $match: {
+                                                        $expr: {
+                                                            $or: [
+                                                                { $eq: ["$meta_message_id", "$$join1Field3"] },
+                                                                { $eq: ["$meta_message_id", null] } // Include documents with no match in collection3
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            as: "join2"
+                                        }
+                                    },
+                                    {
+                                        $unwind: { path: "$join2", preserveNullAndEmptyArrays: true }
+                                    },
+                                    {
+                                        $project: {
+                                            from: "$from",
+                                            to: "$to",
+                                            messageid: "$messageId",
+                                            status: { $ifNull: ["$join1.status", "$messageStatus.status"] },
+                                            response: { $ifNull: ["$broadcastData.Response", ""] },
+                                            clicks: { $ifNull: ["$join2.clicks", 0] },
+                                            date: new Date("$timestamp")
+                                        }
+                                    }
+                                ])
