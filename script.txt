@@ -2,7 +2,7 @@
 console.log('test-------------');
 async function init(){
 const cookiee = getCookie('refkey');
-if(cookiee){
+if(cookiee){ 
 var data = {
         refkey : cookiee,
         event: "checkout",
