@@ -1323,7 +1323,7 @@ internal merge in app_config-main web, 7 files conflits solve
 
 task on - 13 - June
 wholetex endCustomer error check - Aagam
-
+statusMessage duplicate customer check and soft Delete working
 
 vastra admin and web test
 admin signup request authToken working
