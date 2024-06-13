@@ -369,3 +369,43 @@ let results = await secondary.model(constants.MODELS.inbounds, inBound).aggregat
                                         }
                                     }
                                 ])
+
+
+-----------------------------------------------------------------------------
+
+
+const rulesMessages = await secondary.model(constants.MODELS.inbounds, inBound).aggregate([
+            { $match: { autoreplyruleid: config.mongoose.Types.ObjectId(arid) } },
+            { $sort: { timestamp: 1 } },
+            {
+                $lookup: {
+                    from: constants.MODELS.inbounds,
+                    localField: 'messageId',
+                    foreignField: 'context.messageId',
+                    as: 'userMessages'
+                }
+            },
+            { $unwind: "$userMessages" },
+            {
+                $project: {
+                    from: "$userMessages.from",
+                    to: "$userMessages.to",
+                    business_messageid: "$messageId",
+                    user_messageid: "$userMessages.messageId",
+                    response: {
+                        $ifNull: [
+                            "$userMessages.whatsapp.text",
+                            {
+                                $ifNull: [
+                                    "$userMessages.whatsapp.title",
+                                    "$userMessages.content.text"
+                                ]
+                            }
+                        ]
+                    },
+                    date: "$userMessages.timestamp"
+                }
+            }
+        ]);
+
+-------------------------------------------------------------------------------

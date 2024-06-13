@@ -1309,21 +1309,39 @@ admin signup list load blank error solve
 customerCreate error solve for tags
 Satvachan Sarees, error check, old account details updated with new one
 
+task on - 11 - June
+shopify public app troubleShooting
+internal merge in Appdemo-commonroutes
+followUpfilter merge in main admin and live
+template report multiple button url  in sheet working
 
+task on - 12 - June
+COUNSELVISE sigup request data added manually
+main merge in sunil-main-partner2, 11 file conflits solve and live
+internal merge in app_config-main web, 7 files conflits solve
+
+
+task on - 13 - June
+wholetex endCustomer error check - Aagam
+
+
+vastra admin and web test
+admin signup request authToken working
+
+Need option to multiple select of rules and delete All rules 
+Add this in our Working List...
 
 -----------------------------------------------------------------------------------
-urgentTask - vasta assign wroking openAPis, assign to default ansnot multiplte tims -- not to implement
 customer profile update two apis, address, tags
 -----------------------------------------------------------------------------------
 
-template add button shopifyApp remaining -- done
-	
+
+
+template add button shopifyApp remaining -- done	
 Account status should get off after expiry -- done, merge remaing
-
-
 garbage collection
 pupeeteer new module
-fs module instead for, global function -- 
+fs module instead for, global function -- in progress
 mongoose update to version 8 in webApp and all
 fluentD learning
 give notification setting to customer for low wallet, customer will set wallet amount on which he wants email notification
@@ -1341,6 +1359,14 @@ send quick Message tag working and image dont select -- done
 username duplicate validation on admin on teamMember create -- Om
 dont check login details from disables account -- done
 
+1. Report Spam From Web --done
+2. Upload Files Direct for Carousel Message --done
+3. Instruction for Repeated Auto Reply Messages - Add A Page Break and Update the (i) tab in each section.
+4. Option to Copy Same Card Body to Each Header Image.
+5. Auto Scrolling for Card Message for Preview. - 5-Secods
+6. Remove Spam Users from Queue Count --done
+7. Buttons not visible in Auto Reply Template Preview.
+8. OPT In Management -  To be Update for all existing customer.
 
 
 Sagar Kheni - 
