@@ -14,3 +14,5 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 root@app:/etc/nginx/sites-available# systemctl restart nginx
 
 engees@app:~/11za/admin-demo$ pm2 start bin/www --name admin-test
+engees@app:~/11za/client-dashboard$ pm2 save	
+

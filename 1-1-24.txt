@@ -1324,15 +1324,43 @@ internal merge in app_config-main web, 7 files conflits solve
 task on - 13 - June
 wholetex endCustomer error check - Aagam
 statusMessage duplicate customer check and soft Delete working
+mobile app api create /savetagstoCustomer
+
+task on - 14 - June
+mobile app api create /saveaddresstoCustomer
+mobile app api create /savetagstoCustomer
+
+
+task on - 20 - June
+db_startuparena_india, broadcast status code add in app-demo and status update
+masteruser reset password working and email working
+internal merge in internal-ws
+internal merge in newWebSocketClient
+statusMessage Kubernetes error troubleshooting
+clientstotalUnseenCount error fix in ClientDashboard
+facebook product sync working, happiness creating
+
+
+task on - 21 - June
+sakhiya admin user create
+facebook productid to number and sync key to true set
+master merge in internal
+internla merge in internal-ws
+internla merge in master and live
+11za form manual entry for Genmed Shoppes Private Limited
+admin save businessConfiguration error solve live
+quickMessage without image selection
 
 vastra admin and web test
-admin signup request authToken working
+admin signup request authToken working - not to do
 
 Need option to multiple select of rules and delete All rules 
 Add this in our Working List...
 
 -----------------------------------------------------------------------------------
-customer profile update two apis, address, tags
+customer profile update two apis, address, tags -- done
+customer search me special cr. remove
+Duplicate/ Merge Customer and Delete Customer 
 -----------------------------------------------------------------------------------
 
 

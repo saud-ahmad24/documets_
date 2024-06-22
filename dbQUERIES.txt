@@ -409,3 +409,19 @@ const rulesMessages = await secondary.model(constants.MODELS.inbounds, inBound).
         ]);
 
 -------------------------------------------------------------------------------
+
+
+db.getCollection("products").find({}).forEach(function(doc) {
+    if (typeof doc.productId === "string") {
+        var numericalProductId = parseFloat(doc.productId);
+        console.log(numericalProductId)
+        db.getCollection("products").updateOne(
+            { _id: doc._id },
+            { $set: {  productId: numericalProductId } }
+        );
+    }
+});
+
+
+
+-------------------------------------------------------------------------------------
