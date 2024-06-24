@@ -1355,11 +1355,13 @@ excelConvert-CSV merge in internal/internal merge in internal-ws and conflicts r
 
 
 task on - 24 - June
-internal merge in internal-ws
+internal merge in internal-ws/ pod restart
 deleteCustomer-button merge in internal
+customerViewSet merge in internal
+editTemplate merge in kaushal-internal
 
 
-
+https://github.com/hantsy/nestjs-rest-sample/blob/master/src/auth/auth.service.ts
 vastra admin and web test
 
 db.getCollection("inbounds").deleteMany({$or:[{to:'919573084874'},{from:'919573084874'}]})
@@ -1387,11 +1389,3 @@ send quick Message tag working and image dont select -- done
 username duplicate validation on admin on teamMember create -- Om
 dont check login details from disables account -- done
 
-1. Report Spam From Web --done
-2. Upload Files Direct for Carousel Message --done
-3. Instruction for Repeated Auto Reply Messages - Add A Page Break and Update the (i) tab in each section.
-4. Option to Copy Same Card Body to Each Header Image.
-5. Auto Scrolling for Card Message for Preview. - 5-Secods
-6. Remove Spam Users from Queue Count --done
-7. Buttons not visible in Auto Reply Template Preview.
-8. OPT In Management -  To be Update for all existing customer.
