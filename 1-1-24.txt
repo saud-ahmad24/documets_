@@ -1342,27 +1342,27 @@ facebook product sync working, happiness creating
 
 
 task on - 21 - June
-sakhiya admin user create
 facebook productid to number and sync key to true set
-master merge in internal
-internla merge in internal-ws
+master merge in internal/internla merge in internal-ws
 internla merge in master and live
 11za form manual entry for Genmed Shoppes Private Limited
 admin save businessConfiguration error solve live
-quickMessage without image selection
+quickMessage without image selection bug fix and live
+
+task on - 22 - June
+delete/merge duplicate customers working on customers list page/ also cron change
+excelConvert-CSV merge in internal/internal merge in internal-ws and conflicts remove
+
+
+task on - 24 - June
+internal merge in internal-ws
+deleteCustomer-button merge in internal
+
+
 
 vastra admin and web test
-admin signup request authToken working - not to do
 
-Need option to multiple select of rules and delete All rules 
-Add this in our Working List...
-
------------------------------------------------------------------------------------
-customer profile update two apis, address, tags -- done
-customer search me special cr. remove
-Duplicate/ Merge Customer and Delete Customer 
------------------------------------------------------------------------------------
-
+db.getCollection("inbounds").deleteMany({$or:[{to:'919573084874'},{from:'919573084874'}]})
 
 
 template add button shopifyApp remaining -- done	
@@ -1395,8 +1395,3 @@ dont check login details from disables account -- done
 6. Remove Spam Users from Queue Count --done
 7. Buttons not visible in Auto Reply Template Preview.
 8. OPT In Management -  To be Update for all existing customer.
-
-
-Sagar Kheni - 
-broadcast view like template create and move test working below template view
-iThink working seperate app outside, if shopify user then show all dynamic values, else show orderId, customerName, TrackingUrl and TrackingNumber
