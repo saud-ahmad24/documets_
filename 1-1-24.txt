@@ -1359,7 +1359,32 @@ internal merge in internal-ws/ pod restart
 deleteCustomer-button merge in internal
 customerViewSet merge in internal
 editTemplate merge in kaushal-internal
+pabbly working
+9558272850
 
+task on - 25 - June
+pabbly auth-Token problem troubleShoot and fix
+teamMember save regex change
+locker image and domain error solve
+master merge in internal/ internal merge in internal-ws
+nestJS learning
+
+task on - 26 - June
+isDocLocker key condition added/ internal merge in internal-ws
+tempEdit merge in kaushal-internal and conflicts remove
+Global inbound seperate app created for inbound working for every developer
+ping pong working for websocket server and webApp
+
+task on - 26 - June
+checkTeamMember working removed / Shopify-public-App-2 merge in shopifyAPP-internal / 10 file conflicts remove / configMap updated for web shopifyApp-internal
+listApi-optimize merge in internal/ internal merge in internal-ws
+unSeenCounter error solve/ socketCode remove
+
+
+
+SHOPIFY_API_VERSION
+
+template delete working -------
 
 https://github.com/hantsy/nestjs-rest-sample/blob/master/src/auth/auth.service.ts
 vastra admin and web test
