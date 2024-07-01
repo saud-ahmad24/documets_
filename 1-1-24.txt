@@ -1375,16 +1375,41 @@ tempEdit merge in kaushal-internal and conflicts remove
 Global inbound seperate app created for inbound working for every developer
 ping pong working for websocket server and webApp
 
-task on - 26 - June
+task on - 27 - June
 checkTeamMember working removed / Shopify-public-App-2 merge in shopifyAPP-internal / 10 file conflicts remove / configMap updated for web shopifyApp-internal
 listApi-optimize merge in internal/ internal merge in internal-ws
 unSeenCounter error solve/ socketCode remove
 
 
+task on - 28 - June
+delete_temp merge in internal / conflicts remove
+internal merge in internal-ws
+internal merge in master and live
 
-SHOPIFY_API_VERSION
 
-template delete working -------
+autoreply working, getmessagebyID app testing
+retarget template message
+
+// working done as on 28-June
+autoreply report/ broadcast report/ interactive Message / template report/ wallet report
+customer list-load, getTemplateList,roles list(assing count working) - -  optimization
+delete-duplicate customer-cron working, save in different collection/ button working(merge duplicate customers)
+select or specifiet fields are use on list apis(autorepyl, productAutoreply,productList, 
+immediate template delete working - within 1 hour 
+productUser.isDocLocker == true added in inbound
+delete meta template cron set to 1 hour from 15min
+broadcast edit page view fix
+delete multiple autoreply working
+
+task on - 1 - July
+lastdate working remove working in admin and live
+autoreply mediaset notification error done and live
+
+
+PARTNER WORKING completed
+template edit working
+
+template delete working merged and live
 
 https://github.com/hantsy/nestjs-rest-sample/blob/master/src/auth/auth.service.ts
 vastra admin and web test
