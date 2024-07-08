@@ -1,0 +1,89 @@
+                            let stringValue = $scope.selectedTemplate.category == "AUTHENTICATION" ? "{{1}}" : $scope.selectedTemplate.localizations[i].components[j].text;
+
+
+    $scope.onFooterforAuthKeyUp = () => {
+
+
+
+
+
+
+$scope.changeCategory = () => {
+        if ($scope.templates.category == "MARKETING") {
+            $scope.headers.push({ text: "Carousel", value: "CAROUSEL" });
+            if ($scope.templates.localizations.length > 0) {
+                $scope.templates.localizations[$scope.selectedLocalization].components =
+                    $scope.templates.localizations[$scope.selectedLocalization].components.filter(function (component) {
+                        return component.type !== "BUTTONS";
+                    });
+            }
+        } else {
+            // console.log('$scope.templates::::', $scope.templates);
+            if ($scope.templates.localizations.length > 0) {
+                $scope.headers = $scope.headers.filter(function (item) {
+                    return item.value !== "CAROUSEL";
+                });
+                $scope.templates.localizations[$scope.selectedLocalization].components =
+                    $scope.templates.localizations[$scope.selectedLocalization].components.filter(function (component) {
+                        return component.type !== "CAROUSEL";
+                    });
+            }
+        }
+        if ($scope.templates?.localizations) {
+            $scope.templates.localizations = $scope.templates.localizations.map((localization) => {
+                localization.components = localization.components
+                    .filter((component) => {
+                        if ($scope.templates.category === 'AUTHENTICATION') {
+                            if (['FOOTER', 'HEADER', 'BUTTONS'].includes(component.type)) {
+                                return false;
+                            }
+                        } else {
+                            if (component.type !== 'BODY' && component.type !== 'BUTTONS') {
+                                return false;
+                            }
+                        }
+                        return true;
+                    })
+                    .map((component) => {
+                        if ($scope.templates.category === 'AUTHENTICATION') {
+                            if (component.type === 'BODY') {
+                                return { type: "BODY", addSecurityRecommendation: true };
+                            }
+                        } else {
+                            if (component.type === 'BODY') {
+                                return { type: "BODY", text: "" };
+                            } else if (component.type === 'BUTTONS') {
+                                return { type: "BUTTONS", buttons: [{ type: "QUICK_REPLY", text: "" }] };
+                            }
+                        }
+                        return component;
+                    });
+                if ($scope.templates.category !== 'AUTHENTICATION' && !localization.components.some(component => component.type === 'BUTTONS')) {
+                    localization.components.push({ type: "BUTTONS", buttons: [{ type: "QUICK_REPLY", text: "" }] });
+                }
+                if ($scope.templates.category === 'AUTHENTICATION') {
+                    localization.selectedThings = { selectedHeader: "", selectedInteractiveButton: "" };
+                } else {
+                    localization.selectedThings = { selectedHeader: "", selectedInteractiveButton: "ALL_BUTTONS" };
+                }
+                localization.isButtonType = true;
+                return localization;
+            });
+        }
+    }
+
+
+
+
+
+
+<div class="bodyText mb-1" ng-if="templates.category == 'AUTHENTICATION'">
+											<pre><span class="angularBrackets">1</span> is your verification code. <span ng-if="templates.localizations[selectedLocalization].components[comIndex('BODY')].addSecurityRecommendation == true"> For your security, do not share this code.</span></pre>
+										</div>
+										<div class="footerText" ng-if="templates.category == 'AUTHENTICATION'">
+											<pre>This code expires in {{
+												templates.localizations[selectedLocalization].components[
+													comIndex('FOOTER')
+												].codeExpirationMinutes
+											}} minutes.</pre>
+										</div>

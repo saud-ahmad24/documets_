@@ -1405,8 +1405,47 @@ task on - 1 - July
 lastdate working remove working in admin and live
 autoreply mediaset notification error done and live
 
+task on - 2 - July
 
-PARTNER WORKING completed
+partner dashboard error find
+Prima Foodtech Private Ltd admin onboarding error solve/ lead create
+partner_reference added while creating lead to customer/ originwebsite error solve /
+only send notification whose accountStatus is true/ allCountsMaster updated
+
+internal merge in internal-ws/ master merge in internal/ master merge in internal
+masteruserVelidaction- masteruser add validation merge in main/ referenceVelidaction merge in main/ fsstreamworking meagre in main /vastraText merge in main admin
+
+task on - 5 - July
+switch position disable error solve
+carousel word added only for marketing
+metaapiWoring branch check and live - merge remaining
+
+task on - 6 - July
+sunil-main-partner2 merge in admin-internal/ 12 file conflits remove
+app_config-main partner working merge in partner-internal/ 5 file conflits remove
+partner-internal merge in pertner-ws/ 7 file conflits remove
+mediaSet socket worrking added for app and web
+interactive message inboundEntry error solve ,with normal message working
+facebook product sync for we shine
+
+task on - 8 - July
+newchange-adminInternal merge in admin-internal
+add-media-mediaset merge in internal/ internal-ws
+autoreplayExport-datePicker merge in internal/ internal-ws
+internal-ws merge in kaushal-internal
+originWebsites error solve / partner reference added in 45 users
+browser notification working for websocket
+
+BRanches to merge
+tempEdit - kaushal
+excelConvert-CSV - sunil
+assign_optimize - kaushal
+
+partnerUserView = Admin
+walletStatus  =  Admin
+ 
+
+PARTNER WORKING completed with testing
 template edit working
 
 template delete working merged and live
