@@ -1,0 +1,12 @@
+redis-cli -h 192.168.x.x -p 6379
+sudo systemctl restart redis-server
+sudo nano /etc/redis/redis.conf
+ip addr show
+redis-cli ping
+sudo systemctl status redis-server
+sudo systemctl start redis-server
+sudo systemctl enable redis-server
+sudo apt install redis-server
+
+sudo apt purge nodejs
+sudo apt clean

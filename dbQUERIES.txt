@@ -425,3 +425,65 @@ db.getCollection("products").find({}).forEach(function(doc) {
 
 
 -------------------------------------------------------------------------------------
+
+
+
+var aggregate = secondary.model(constants.MODELS.balanceuses, balanceusesModel).aggregate()
+				aggregate.match({
+					timestamp: { $gte: startDate, $lte: endDate }
+				})
+					.group({
+						_id: {
+							origin: "$whatsapp.conversation.origin",
+							createdAt: {
+								$dateToString: {
+									format: "%Y-%m-%d",
+									date: "$timestamp"
+								}
+							}
+						},
+						messageCount: {
+							$sum: 1
+						},
+						messageCost: {
+							$sum: "$messageCost"
+						}
+					})
+					.sort({
+						"_id.createdAt": 1,
+						messageCount: -1
+					})
+					.group({
+						_id: "$_id.createdAt",
+						totalMessageCount: {
+							$sum: "$messageCount"
+						},
+						totalMessageCost: {
+							$sum: "$messageCost"
+						},
+						origins: {
+							$push: {
+								origin: "$_id.origin",
+								messageCount: "$messageCount",
+								messageCost: "$messageCost"
+							}
+						}
+					})
+					.sort({
+						_id: -1
+					})
+				var options = {
+					page: page,
+					limit: parseInt(limit),
+					sort: { _id: -1 },
+					lean: true
+				}
+				secondary.model(constants.MODELS.balanceuses, balanceusesModel).aggregatePaginate(aggregate, options).then(function (results) {
+					// console.log("results:::::",results);
+					return ResponseManager.onSuccess("balance and usage", results, res);
+				}).catch(function (err) {
+					console.log(err);
+				})
+
+
+--------------------------------------------------------------------------------

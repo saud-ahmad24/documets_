@@ -1430,11 +1430,53 @@ facebook product sync for we shine
 
 task on - 8 - July
 newchange-adminInternal merge in admin-internal
-add-media-mediaset merge in internal/ internal-ws
-autoreplayExport-datePicker merge in internal/ internal-ws
-internal-ws merge in kaushal-internal
+add-media-mediaset, autoreplayExport-datePicker merge in internal/ internal-ws, / internal-ws merge in kaushal-internal
 originWebsites error solve / partner reference added in 45 users
 browser notification working for websocket
+nestJS working/learning
+
+task on - 9 - July
+bulkandsingle merge in internal-broadcast merge in main - pipeline branch change
+newchange-adminInternal merge in admin-internal
+tally sendTemplate multipleMobile number working
+countries-addFields merge in admin-internal and live
+multiple origin/window working
+
+task on - 10 - July 
+authentication working in webApp
+authentication charge working in statusMEssage / internal merge in webSocket
+multiple origin/window working
+partnerUserView merge in admin-internal/ countries-addFields merge in admin-internal/ newchange-adminInternal / internal merge in internal-ws
+
+task on - 11 - July
+app-documentation merge in internal
+multiorigins merge in internal-ws
+multi / origins wibdow open working
+internal merge in master and live 
+
+
+task on - 12 - July
+raaj investment customers delete duplicate
+customer_permission merge in admin-internal/ partneruserWorking-om merge in admin-internal/ partnerAdminuser-adminInternal merge in admin-internal
+hide create button on template list for auth templates
+khaitnan jewels endcustomers update space and \n remove
+
+task on - 13 - July
+ivy status update for broadcast
+partneruser-Wallet-om merge in admin-internal
+
+---------------------
+dont hide deleted multiple loc template -- Vandan
+tempEdit correction and testing
+statusMessage multiple window working - done
+broadcast check for inbound/statusMessage webhooks
+tally sentTemplate working numbers with comma working done
+common repo for nestJS done
+
+
+task on - 15 - July
+setupChange-adminInternal merge in admin-internal
+
 
 BRanches to merge
 tempEdit - kaushal

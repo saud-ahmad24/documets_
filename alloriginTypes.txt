@@ -1,0 +1,149 @@
+{
+  "messageId": "f607a1aa-a89d-4221-bc58-53415735a418",
+  "channel": "whatsapp",
+  "event": "MessageStatus::delivered",
+  "deliveryChannel": "whatsapp",
+  "status": "delivered",
+  "timestamp": "2024-07-09T10:22:59Z",
+  "to": "917016875366",
+  "whatsapp": {
+    "conversation": {
+      "conversationId": "617ebb1b74ca365defa0baecdac28242",
+      "origin": "utility",
+      "expiresAt": "2024-07-10T07:13:00Z"
+    },
+    "conversationId": "617ebb1b74ca365defa0baecdac28242",
+    "pricingModel": "CBP",
+    "billable": true
+  },
+  "details": {
+    "from": "918866186841"
+  },
+  "from": "918866186841",
+  "mongoId": "62ac22d7c2f7b29a1bb05017"
+}
+
+{
+  "messageId": "726f51b9-7d49-4de5-b10c-ce80fd728501",
+  "channel": "whatsapp",
+  "event": "MessageStatus::delivered",
+  "deliveryChannel": "whatsapp",
+  "status": "delivered",
+  "timestamp": "2024-07-09T10:26:52Z",
+  "to": "917016875366",
+  "whatsapp": {
+    "conversation": {
+      "conversationId": "617ebb1b74ca365defa0baecdac28242",
+      "origin": "utility",
+      "expiresAt": "2024-07-10T07:13:00Z"
+    },
+    "conversationId": "617ebb1b74ca365defa0baecdac28242",
+    "pricingModel": "CBP",
+    "billable": true
+  },
+  "details": {
+    "from": "918866186841"
+  },
+  "from": "918866186841",
+  "mongoId": "62ac22d7c2f7b29a1bb05017"
+}
+
+{
+  "messageId": "ef0fd5dc-137d-4f4d-963b-e86e21ec1061",
+  "channel": "whatsapp",
+  "event": "MessageStatus::delivered",
+  "deliveryChannel": "whatsapp",
+  "status": "delivered",
+  "timestamp": "2024-07-09T10:24:04Z",
+  "to": "917016875366",
+  "whatsapp": {
+    "conversation": {
+      "conversationId": "9b9e264a0e1e361b735bf928a366cca1",
+      "origin": "marketing",
+      "expiresAt": "2024-07-10T10:25:00Z"
+    },
+    "conversationId": "9b9e264a0e1e361b735bf928a366cca1",
+    "pricingModel": "CBP",
+    "billable": true
+  },
+  "details": {
+    "from": "918866186841"
+  },
+  "from": "918866186841",
+  "mongoId": "62ac22d7c2f7b29a1bb05017"
+}
+
+{
+  "messageId": "19f95077-adfc-4c37-b541-7256f2e7cd09",
+  "channel": "whatsapp",
+  "event": "MessageStatus::delivered",
+  "deliveryChannel": "whatsapp",
+  "status": "delivered",
+  "timestamp": "2024-07-09T10:24:41Z",
+  "to": "917016875366",
+  "whatsapp": {
+    "conversation": {
+      "conversationId": "9b9e264a0e1e361b735bf928a366cca1",
+      "origin": "marketing",
+      "expiresAt": "2024-07-10T10:25:00Z"
+    },
+    "conversationId": "9b9e264a0e1e361b735bf928a366cca1",
+    "pricingModel": "CBP",
+    "billable": true
+  },
+  "details": {
+    "from": "918866186841"
+  },
+  "from": "918866186841",
+  "mongoId": "62ac22d7c2f7b29a1bb05017"
+}
+
+{
+  "messageId": "5b677fc8-f83f-4256-9781-e211cdcedc5a",
+  "channel": "whatsapp",
+  "event": "MessageStatus::delivered",
+  "deliveryChannel": "whatsapp",
+  "status": "delivered",
+  "timestamp": "2024-07-09T10:28:57Z",
+  "to": "917016875366",
+  "whatsapp": {
+    "conversation": {
+      "conversationId": "de6bf967a59f6a657a26fd6e48a2c6c2",
+      "origin": "authentication",
+      "expiresAt": "2024-07-10T10:29:00Z"
+    },
+    "conversationId": "de6bf967a59f6a657a26fd6e48a2c6c2",
+    "pricingModel": "CBP",
+    "billable": true
+  },
+  "details": {
+    "from": "918866186841"
+  },
+  "from": "918866186841",
+  "mongoId": "62ac22d7c2f7b29a1bb05017"
+}
+
+{
+  "messageId": "bf1614f9-3d86-4d8d-9174-acad31941e8a",
+  "channel": "whatsapp",
+  "event": "MessageStatus::delivered",
+  "deliveryChannel": "whatsapp",
+  "status": "delivered",
+  "timestamp": "2024-07-09T10:29:24Z",
+  "to": "917016875366",
+  "whatsapp": {
+    "conversation": {
+      "conversationId": "de6bf967a59f6a657a26fd6e48a2c6c2",
+      "origin": "authentication",
+      "expiresAt": "2024-07-10T10:29:00Z"
+    },
+    "conversationId": "de6bf967a59f6a657a26fd6e48a2c6c2",
+    "pricingModel": "CBP",
+    "billable": true
+  },
+  "details": {
+    "from": "918866186841"
+  },
+  "from": "918866186841",
+  "mongoId": "62ac22d7c2f7b29a1bb05017"
+}

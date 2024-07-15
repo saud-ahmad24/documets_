@@ -1,0 +1,1149 @@
+const { v1: uuidv1 } = require('uuid');
+const config = require("../../config");
+let superagent = require("superagent");
+const helper = require('../../utilities/helper');
+const constants = require('../../utilities/constants');
+const endCustomers = require("../../models/customers/end_customers.model");
+const inbounds = require("../../models/customers/inbound");
+const metaFunctions = require('../../utilities/metaFunctions');
+let fileManager = require('../../models/customers/file_manager');
+let response = require("../../utilities/response.manager");
+let AwsCloud = require("../../utilities/azurecloud");
+const axios = require('axios');
+let async = require('async');
+const mongoConnection = require('../../utilities/connections');
+const resendotpModel = require('../../models/customers/resendotp.model');
+const { customerUpdateWithInboundCreate } = require('../../utilities/customercreate');
+exports.customProductFlowVastraAppFun = async (reqData, productUser, secondary, responseContent, contextInboundData) => {
+	let customerData = await secondary.model(constants.MODELS.endcustomers, endCustomers).findOne({ mobileNo: reqData.from }).lean();
+	let postbackData = reqData.postback?.data?.split('#')
+	try {
+		let toMobileNumber = "";
+		if (reqData.to !== "") {
+			toMobileNumber = reqData.to.replace(/\D/g, '');
+			toMobileNumber = toMobileNumber.slice(-10);
+		}
+		let fromMobileNumber = "";
+		if (reqData.from !== "") {
+			fromMobileNumber = reqData.from.replace(/\D/g, '');
+			fromMobileNumber = fromMobileNumber.slice(-10);
+		}
+		console.log('responseContent', responseContent);
+		console.log('customerData', customerData.vastraOtpSent);
+		console.log(postbackData, customerData.otpuuid);
+		if (
+			(responseContent === 'Start Shopping' || responseContent === 'Explore Designs' ||
+				(productUser.vastraText?.incomnigMsgs?.status === true &&
+					Array.isArray(productUser.vastraText?.incomnigMsgs?.keywords) &&
+					productUser.vastraText.incomnigMsgs.keywords.includes(responseContent))) ||
+			((typeof postbackData === 'object' && postbackData[0] === customerData?.otpuuid) &&
+				customerData.vastraOtpSent === undefined)
+		) {
+			console.log('I Am Here....................... Start Shopping ..........................');
+			var data = {
+				waba_mobile: toMobileNumber,
+				customer_mobile: fromMobileNumber,
+				vastraLogin: (customerData.vastraLogin) ? true : false
+			};
+
+			console.log('I Am Here....................... Start Shopping Explore Designs..........................', data);
+			console.log('::process.env.VASTRA_DOMAIN_URI:::', process.env.VASTRA_DOMAIN_URI + 'store/weba-check-store-customer-agent');
+			const resp = await superagent
+				.post(process.env.VASTRA_DOMAIN_URI + 'store/weba-check-store-customer-agent')
+				.set('api-key', process.env.VASTRA_APIKEY)
+				.set('device-type', 'Android')
+				.set('udid', '1ca42f8a03a001f0')
+				.set('Content-Type', 'application/json')
+				.send(data);
+			console.log('Vastra APP resp.body:::', JSON.stringify(resp.body));
+			if (resp.body.status == true) {
+				console.log('resp.body.data:::', resp.body.data);
+				console.log("resp.body.data.isStorePrivate === true && resp.body.data.isValidCustomer === true && !customerData.vastraLogin", resp.body.data.isStorePrivate === true && resp.body.data.isValidCustomer === true && !customerData.vastraLogin);
+				console.log(resp.body.data.isStorePrivate, resp.body.data.isValidCustomer, !customerData.vastraLogin);
+				if (resp.body.data.isStorePrivate === true && resp.body.data.isValidCustomer === true && !customerData.vastraLogin) {
+					console.log('isStorePrivate TRUE:::::::::::: isValidCustomer TRUE::::::::::::::::')
+					let msgTxt = resp.body.data.message;
+					sendTextMessage(reqData, msgTxt, productUser, secondary);
+					const expiryOtp = Date.now() + 60000;
+					let uuid = uuidv1();
+					let transientDB = mongoConnection.useDb(constants.TRANSIENT_DB);
+					let metaJsonData = {
+						from: reqData.to,
+						to: reqData.from,
+						channel: "whatsapp",
+						content: {
+							contentType: "interactive",
+							interactive: {
+								subType: "buttons",
+								components: {
+									body: {
+										type: "text",
+										text: "Your OTP has been expired. Do you want to resend it?"
+									},
+									buttons: [
+										{
+											type: 'reply',
+											reply: {
+												payload: uuid,
+												title: "RESEND OTP",
+											}
+										}
+									]
+								}
+							}
+						}
+					};
+					const objforOtp = {
+						registeredMobile: resp.body.data.customerMobile.toString(),
+						mobileNo: reqData.from,
+						expiryOtp: expiryOtp,
+						parentId: productUser._id,
+						apiKey: productUser.apiKey,
+						database: productUser.database,
+						metaJsonData: metaJsonData,
+						resendOTPInteractive: false
+					}
+					console.log("000000000000000000000000011111111111111111111111111-------------------------11111111111111111111111", objforOtp);
+					await transientDB.model(constants.MODELS.resendotp, resendotpModel).updateOne({ mobileNo: reqData.from }, { $set: objforOtp }, { upsert: true });
+					await secondary.model(constants.MODELS.endcustomers, endCustomers).updateOne({ mobileNo: reqData.from }, { $set: { vastraOtpSent: true, otpuuid: uuid }, $unset: { isValidCustomer: 1 } });
+				} else if (resp.body.data.isStorePrivate === true && resp.body.data.isValidCustomer === false) {
+					console.log('isStorePrivate TRUE:::::::::::: isValidCustomer FALSE::::::::::::::::')
+					let msgTxt = resp.body.data.message;
+					sendTextMessage(reqData, msgTxt, productUser, secondary);
+					await secondary.model(constants.MODELS.endcustomers, endCustomers).updateOne({ mobileNo: reqData.from }, { $set: { isValidCustomer: true } });
+				} else if (resp.body.data.isStorePrivate === false || (customerData.vastraLogin && resp.body.data.isStorePrivate === true && resp.body.data.isValidCustomer === true)) {
+					console.log('isStorePrivate FALSE::::::::::::')
+					await secondary.model(constants.MODELS.endcustomers, endCustomers).updateOne({ mobileNo: reqData.from }, { $unset: { vastraOtpSent: 1, expiryOtp: 1, vastraMobile: 1, isValidCustomer: 1 } });
+					(async () => {
+						try {
+							var data = {
+								waba_mobile: toMobileNumber,
+								customer_mobile: fromMobileNumber,
+								keyword: '',
+								category_id: ''
+							};
+							var pageNumber = 1;
+							if (responseContent == 'see more') {
+								pageNumber = parseInt(postbackData[1]);
+							}
+							const resp = await superagent
+								.post(process.env.VASTRA_DOMAIN_URI + 'store/get-all-category-by-mobile?pageno=' + pageNumber)
+								.set('api-key', process.env.VASTRA_APIKEY)
+								.set('device-type', 'Android')
+								.set('udid', '1ca42f8a03a001f0')
+								.set('Content-Type', 'application/json')
+								.send(data);
+							await handleMetaMessage(resp, reqData, productUser, secondary, constants, endCustomers, inbounds, config, metaFunctions);
+
+						} catch (error) {
+							console.error('error', error);
+						}
+					})();
+				}
+			}
+		}
+		if ((responseContent == 'Main Category List') || (responseContent == 'see more' && postbackData != undefined && postbackData[0] == 'mainCatpageNo')) {
+			(async () => {
+				try {
+					var data = {
+						waba_mobile: toMobileNumber,
+						customer_mobile: fromMobileNumber,
+						keyword: '',
+						category_id: ''
+					};
+					var pageNumber = 1;
+					if (responseContent == 'see more') {
+						pageNumber = parseInt(postbackData[1]);
+					}
+					const resp = await superagent
+						.post(process.env.VASTRA_DOMAIN_URI + 'store/get-all-category-by-mobile?pageno=' + pageNumber)
+						.set('api-key', process.env.VASTRA_APIKEY)
+						.set('device-type', 'Android')
+						.set('udid', '1ca42f8a03a001f0')
+						.set('Content-Type', 'application/json')
+						.send(data);
+					await handleMetaMessage(resp, reqData, productUser, secondary, constants, endCustomers, inbounds, config, metaFunctions);
+				} catch (error) {
+					console.error('error', error);
+				}
+			})();
+		}
+
+		if ((postbackData != undefined && postbackData[0] == 'mainCat' && parseInt(postbackData[1]) > 0 && parseInt(postbackData[2]) != '') || (responseContent == 'see more' && postbackData != undefined && postbackData[0] == 'subCatpageNo')) {
+			console.log('postbackData[2]:', postbackData[2])
+			let mainCatId = postbackData[2];
+			let mainCatName = postbackData[3];
+			(async () => {
+				try {
+					var data = {
+						waba_mobile: toMobileNumber,
+						customer_mobile: fromMobileNumber,
+						keyword: '',
+						category_id: mainCatId
+					};
+					var pageNumber = 1;
+					if (responseContent == 'see more') {
+						pageNumber = parseInt(postbackData[1]);
+					}
+					const resp = await superagent
+						.post(process.env.VASTRA_DOMAIN_URI + 'store/get-all-category-by-mobile?pageno=' + pageNumber)
+						.set('api-key', process.env.VASTRA_APIKEY)
+						.set('device-type', 'Android')
+						.set('udid', '1ca42f8a03a001f0')
+						.set('Content-Type', 'application/json')
+						.send(data);
+					await handleMetaMessage(resp, reqData, productUser, secondary, constants, endCustomers, inbounds, config, metaFunctions);
+				} catch (error) {
+					console.error('error', error);
+				}
+			})();
+		}
+
+		if ((postbackData != undefined && postbackData[0] == 'mainCat' && parseInt(postbackData[1]) == 0 && parseInt(postbackData[2]) != '') || (contextInboundData.vastraProductId != undefined && (contextInboundData.vastraType == undefined || contextInboundData.vastraType === "1"))) {
+			let mainCatId = "0";
+			if (postbackData == undefined && contextInboundData.vastraProductId != undefined) {
+				mainCatId = contextInboundData.vastraProductId;
+			} else {
+				mainCatId = (postbackData[2]) ? postbackData[2] : contextInboundData.vastraProductId;
+			}
+			// (async () => {
+			// 	const data =  {
+			// 		waba_mobile: toMobileNumber,
+			// 		category_id: mainCatId
+			// 	};
+			// 	const images = await fetchCategoryDesigns(data);
+			// 	console.log('Collected images:', images);
+			// })();
+			(async () => {
+				try {
+					var data = {
+						waba_mobile: toMobileNumber,
+						category_id: mainCatId
+					};
+					var pageNumber = 1;
+					if (responseContent == 'More Products') {
+						pageNumber = parseInt(postbackData[3]);
+					}
+					console.log('API data:::', data);
+					const resp = await superagent
+						.post(process.env.VASTRA_DOMAIN_URI + 'store/get-category-designs-by-mobile?pageno=' + pageNumber)
+						.set('api-key', process.env.VASTRA_APIKEY)
+						.set('device-type', 'Android')
+						.set('udid', '1ca42f8a03a001f0')
+						.set('Content-Type', 'application/json')
+						.send(data);
+					console.log('Vastra get-category-designs-by-mobile resp.body???????????????:::', resp.body);
+					// resp.body.autoload = true;
+					if (resp.body.status == true && resp.body.autoLoad != 1) {
+						console.log("resp.body.data.length{}{}{}{}}{}{}{}{}{}{}{VASTRAAAAAAA}{}{}{autoLoad++++11111}{}{}{}{}{}{}{}{}{", resp.body.data.length);
+						if (resp.body.data.length > 0) {
+							let msgTxt = '';
+							if (productUser.vastraText.curatingImageMsg &&
+								Object.keys(productUser.vastraText.curatingImageMsg).length) {
+								if (productUser.vastraText.curatingImageMsg.isEnable) {
+									msgTxt = productUser.vastraText?.curatingImageMsg?.msg;
+								} else {
+									msgTxt = ""
+								}
+							} else {
+								msgTxt = "We are curating images for you. Chatbot will start sending images..."
+							}
+							if (msgTxt != "") {
+								sendTextMessage(reqData, msgTxt, productUser, secondary);
+							}
+							async.forEachSeries(resp.body.data, (product, next_product) => {
+								(async () => {
+									if (product.design_number != 'see more') {
+										let { metaJsonData, fileInfo } = await mediaJsonGenrator(product, productUser, reqData);
+										let resps = await metaFunctions.sendMetaMessage(productUser.apiKey, metaJsonData);
+										if (resps.status == 202) {
+											let customerData = await secondary.model(constants.MODELS.endcustomers, endCustomers).findOne({ mobileNo: reqData.from }).lean();
+											metaJsonData.messageId = resps.body.messageId;
+											metaJsonData.timestamp = Date.now();
+											metaJsonData.teamMemberId = config.mongoose.Types.ObjectId(customerData.groupData.teamMemberReply);
+											metaJsonData.content['image'].url = fileInfo.uploadFilePath;
+											await secondary.model(constants.MODELS.inbounds, inbounds).create(metaJsonData);
+											if (fileInfo.uploadFilePath) {
+												const newFile = {
+													from: reqData.from,
+													to: reqData.to,
+													fileType: fileInfo.fileType,
+													url: fileInfo.uploadFilePath,
+													fileName: fileInfo.fileName,
+													parentId: productUser._id
+												};
+												await secondary.model(constants.MODELS.filemanager, fileManager).create(newFile);
+											}
+										} else {
+											// return response.onSuccess("Error while sending to meta!", 0, res);
+										}
+									} else {
+										let btnArray = [];
+										if (productUser.vastraText?.moreproductbtn) {
+											btnArray.push({
+												type: 'reply',
+												reply: {
+													payload: 'mainCat#0#' + mainCatId + '#' + product.pageno,
+													title: "More Products",
+												}
+											},)
+										}
+										if (productUser.vastraText?.categorylistbtn) {
+											btnArray.push({
+												type: 'reply',
+												reply: {
+													payload: 'vastraMainCategory#1',
+													title: "Main Category List",
+												}
+											},)
+										}
+										if (productUser.vastraText?.btnoption && productUser.vastraText?.btnoption != "") {
+											btnArray.push({
+												type: 'reply',
+												reply: {
+													payload: uuidv1(),
+													title: productUser.vastraText?.btnoption,
+												}
+											},)
+										}
+										setTimeout(async function () {
+											let metaJsonDataCart = {
+												from: reqData.to,
+												to: reqData.from,
+												channel: "whatsapp",
+												content: {
+													contentType: "interactive",
+													interactive: {
+														subType: "buttons",
+														components: {
+															body: {
+																type: "text",
+																text: productUser.vastraText?.imglimitmsg || 'Due to system limitations, we can only send 50 images in one go. Click below to continue receiving ðŸ‘‡ \n\n  ðŸ‘‰ *More Products*'
+															},
+															buttons: btnArray
+														}
+													}
+												}
+											};
+											try {
+												let resps = await metaFunctions.sendMetaMessage(productUser.apiKey, metaJsonDataCart);
+												if (resps.status == 202) {
+													let customerData = await secondary.model(constants.MODELS.endcustomers, endCustomers).findOne({ mobileNo: reqData.from }).lean();
+													metaJsonDataCart.messageId = resps.body.messageId;
+													metaJsonDataCart.timestamp = Date.now();
+													metaJsonDataCart.teamMemberId = config.mongoose.Types.ObjectId(customerData.groupData.teamMemberReply);
+													await secondary.model(constants.MODELS.inbounds, inbounds).create(metaJsonDataCart);
+												} else {
+													// return response.onSuccess("Error while sending to meta!", 0, res);
+												}
+											} catch (err) {
+												console.error('err1', err);
+											}
+										}, 30000);
+									}
+									next_product();
+								})().catch((error) => {
+									console.error('error131', error);
+									next_product();
+								});
+							}, () => {
+								console.log('Done..............');
+							});
+						} else {
+							sendTextMessage(reqData, resp.body.message, productUser, secondary);
+						}
+					} else if (resp.body.status == true && resp.body.autoLoad == 1) {
+						const data = {
+							waba_mobile: toMobileNumber,
+							category_id: mainCatId
+						};
+						const images = await fetchCategoryDesigns(data);
+						console.log('Collected images::::::::::::::::VASTRAAAAAAAA:::::::::::::::::::::::::', images.length);
+						if (images.length > 0) {
+							let msgTxt = '';
+							if (productUser.vastraText.curatingImageMsg &&
+								Object.keys(productUser.vastraText.curatingImageMsg).length) {
+								if (productUser.vastraText.curatingImageMsg.isEnable) {
+									msgTxt = productUser.vastraText?.curatingImageMsg?.msg;
+								} else {
+									msgTxt = ""
+								}
+							} else {
+								msgTxt = "We are curating images for you. Chatbot will start sending images..."
+							}
+							if (msgTxt && msgTxt != "") {
+								sendTextMessage(reqData, msgTxt, productUser, secondary);
+							}
+							async.forEachSeries(images, (product, next_product) => {
+								(async () => {
+									let { metaJsonData, fileInfo } = await mediaJsonGenrator(product, productUser, reqData);
+									let resps = await metaFunctions.sendMetaMessage(productUser.apiKey, metaJsonData);
+									if (resps.status == 202) {
+										let customerData = await secondary.model(constants.MODELS.endcustomers, endCustomers).findOne({ mobileNo: reqData.from }).lean();
+										metaJsonData.messageId = resps.body.messageId;
+										metaJsonData.timestamp = Date.now();
+										metaJsonData.teamMemberId = config.mongoose.Types.ObjectId(customerData.groupData.teamMemberReply);
+										metaJsonData.content['image'].url = fileInfo.uploadFilePath;
+										await secondary.model(constants.MODELS.inbounds, inbounds).create(metaJsonData);
+										if (fileInfo.uploadFilePath) {
+											const newFile = {
+												from: reqData.from,
+												to: reqData.to,
+												fileType: fileInfo.fileType,
+												url: fileInfo.uploadFilePath,
+												fileName: fileInfo.fileName,
+												parentId: productUser._id
+											};
+											await secondary.model(constants.MODELS.filemanager, fileManager).create(newFile);
+										}
+									} else {
+										// return response.onSuccess("Error while sending to meta!", 0, res);
+									}
+									next_product();
+								})().catch((error) => {
+									console.error('error131', error);
+									next_product();
+								});
+							}, () => {
+								let btnArray = [];
+								// if (productUser.vastraText?.moreproductbtn) {
+								// 	btnArray.push({
+								// 		type: 'reply',
+								// 		reply: {
+								// 			payload: 'mainCat#0#' + mainCatId + '#' + product.pageno,
+								// 			title: "More Products",
+								// 		}
+								// 	},)
+								// }
+								if (productUser.vastraText?.categorylistbtn) {
+									btnArray.push({
+										type: 'reply',
+										reply: {
+											payload: 'vastraMainCategory#1',
+											title: "Main Category List",
+										}
+									},)
+								}
+								if (productUser.vastraText?.btnoption && productUser.vastraText?.btnoption != "") {
+									btnArray.push({
+										type: 'reply',
+										reply: {
+											payload: uuidv1(),
+											title: productUser.vastraText?.btnoption,
+										}
+									},)
+								}
+								setTimeout(async function () {
+									let metaJsonDataCart = {
+										from: reqData.to,
+										to: reqData.from,
+										channel: "whatsapp",
+										content: {
+											contentType: "interactive",
+											interactive: {
+												subType: "buttons",
+												components: {
+													body: {
+														type: "text",
+														text: productUser.vastraText?.imglimitmsg || 'Due to system limitations, we can only send 50 images in one go. Click below to continue receiving ðŸ‘‡ \n\n  ðŸ‘‰ *More Products*'
+													},
+													buttons: btnArray
+												}
+											}
+										}
+									};
+									try {
+										let resps = await metaFunctions.sendMetaMessage(productUser.apiKey, metaJsonDataCart);
+										if (resps.status == 202) {
+											let customerData = await secondary.model(constants.MODELS.endcustomers, endCustomers).findOne({ mobileNo: reqData.from }).lean();
+											metaJsonDataCart.messageId = resps.body.messageId;
+											metaJsonDataCart.timestamp = Date.now();
+											metaJsonDataCart.teamMemberId = config.mongoose.Types.ObjectId(customerData.groupData.teamMemberReply);
+											await secondary.model(constants.MODELS.inbounds, inbounds).create(metaJsonDataCart);
+										} else {
+											// return response.onSuccess("Error while sending to meta!", 0, res);
+										}
+									} catch (err) {
+										console.error('err1', err);
+									}
+								}, 30000);
+								console.log('Done..............');
+							});
+						} else {
+							sendTextMessage(reqData, resp.body.message, productUser, secondary);
+						}
+					} else {
+						console.log(resp.body);
+					}
+				} catch (error) {
+					console.error('error', error);
+				}
+			})();
+		}
+		if (contextInboundData.vastraProductId != undefined && contextInboundData.vastraType != undefined && contextInboundData.vastraType != "1") {
+			console.log("VVVVVVVVVASTRAAAAAAAAAAAAAAAAAAA");
+			console.log(" INVOICE URLLLLLLLLLLLLLLLL", process.env.VASTRA_DOMAIN_URI + 'order/get-design-images/' + contextInboundData.vastraType);
+			try {
+				var data = {
+					type_ids: contextInboundData.vastraProductId,
+				};
+				const resp = await superagent
+				.post(process.env.VASTRA_DOMAIN_URI + 'order/get-design-images/' + contextInboundData.vastraType)
+				.set('api-key', process.env.VASTRA_APIKEY)
+				.set('device-type', 'Android')
+				.set('udid', '9561152e8acbf4b9')
+				.set('Content-Type', 'application/json')
+				.set('Authorization', 'e944ef90-3ab7-11ef-a169-3756e3d1a9b7')
+				.send(data);
+				console.log("resp.body INVOICE", resp.body);
+			if (resp.body.status == true) {
+				console.log("resp.body.data.length{}{}{}{}}}{}{}{}{}{}{}{", resp.body.data.length);
+				if (resp.body.data.length > 0) {
+					let msgTxt = '';
+					if (productUser.vastraText.curatingImageMsg &&
+						Object.keys(productUser.vastraText.curatingImageMsg).length) {
+						if (productUser.vastraText.curatingImageMsg.isEnable) {
+							msgTxt = productUser.vastraText?.curatingImageMsg?.msg;
+						} else {
+							msgTxt = ""
+						}
+					} else {
+						msgTxt = "We are curating images for you. Chatbot will start sending images..."
+					}
+					if (msgTxt != "") {
+						sendTextMessage(reqData, msgTxt, productUser, secondary);
+					}
+					async.forEachSeries(resp.body.data, (product, next_product) => {
+						(async () => {
+							let { metaJsonData, fileInfo } = await mediaJsonGenratorforInvoice(product, productUser, reqData);
+							let resps = await metaFunctions.sendMetaMessage(productUser.apiKey, metaJsonData);
+							if (resps.status == 202) {
+								let customerData = await secondary.model(constants.MODELS.endcustomers, endCustomers).findOne({ mobileNo: reqData.from }).lean();
+								metaJsonData.messageId = resps.body.messageId;
+								metaJsonData.timestamp = Date.now();
+								metaJsonData.teamMemberId = config.mongoose.Types.ObjectId(customerData.groupData.teamMemberReply);
+								metaJsonData.content['image'].url = fileInfo.uploadFilePath;
+								await secondary.model(constants.MODELS.inbounds, inbounds).create(metaJsonData);
+								if (fileInfo.uploadFilePath) {
+									const newFile = {
+										from: reqData.from,
+										to: reqData.to,
+										fileType: fileInfo.fileType,
+										url: fileInfo.uploadFilePath,
+										fileName: fileInfo.fileName,
+										parentId: productUser._id
+									};
+									await secondary.model(constants.MODELS.filemanager, fileManager).create(newFile);
+								}
+							} else {
+								// return response.onSuccess("Error while sending to meta!", 0, res);
+							}
+							next_product();
+						})().catch((error) => {
+							console.error('error131', error);
+							next_product();
+						});
+					}, () => {
+						console.log('Done..............');
+					});
+				} else {
+					sendTextMessage(reqData, resp.body.message, productUser, secondary);
+				}
+			}
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<AUTO GENERATED BY CONFLICT EXTENSION<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< internal
+			} catch (error) {
+				console.log("error", error);
+			}
+			
+		}
+====================================AUTO GENERATED BY CONFLICT EXTENSION====================================
+		if (contextInboundData.vastraProductId != undefined && contextInboundData.vastraType != undefined && contextInboundData.vastraType != "1") {
+			console.log("VVVVVVVVVASTRAAAAAAAAAAAAAAAAAAA");
+			console.log(" INVOICE URLLLLLLLLLLLLLLLL", process.env.VASTRA_DOMAIN_URI + 'order/get-design-images/' + contextInboundData.vastraType);
+			try {
+				var data = {
+					type_ids: contextInboundData.vastraProductId,
+				};
+				const resp = await superagent
+					.post(process.env.VASTRA_DOMAIN_URI + 'order/get-design-images/' + contextInboundData.vastraType)
+					.set('api-key', process.env.VASTRA_APIKEY)
+					.set('device-type', 'Android')
+					.set('udid', '9561152e8acbf4b9')
+					.set('Content-Type', 'application/json')
+					.send(data);
+				// console.log("resp.body INVOICE", resp.body);
+				if (resp.body.status == true) {
+					console.log("resp.body.data.length{}{}{}{}}}{}{}{}{}{}{}{", resp.body.data.length);
+					if (resp.body.data.length > 0) {
+						let msgTxt = '';
+						if (productUser.vastraText.curatingImageMsg &&
+							Object.keys(productUser.vastraText.curatingImageMsg).length) {
+							if (productUser.vastraText.curatingImageMsg.isEnable) {
+								msgTxt = productUser.vastraText?.curatingImageMsg?.msg;
+							} else {
+								msgTxt = ""
+							}
+						} else {
+							msgTxt = "We are curating images for you. Chatbot will start sending images..."
+						}
+						if (msgTxt != "") {
+							sendTextMessage(reqData, msgTxt, productUser, secondary);
+						}
+						if (resp.body.data.length < 2) {
+							async.forEachSeries(resp.body.data, (product, next_product) => {
+								(async () => {
+									let { fileInfo } = await mediaJsonGenratorforInvoice(product, productUser, reqData);
+									let metaJsonData = {
+										from: reqData.to,
+										to: reqData.from,
+										channel: "whatsapp",
+										content: {
+											contentType: "image",
+											image: {}
+										}
+									};
+									if (fileInfo.singleData) {
+										metaJsonData.content['image'].url = fileInfo.singleData
+									}
+									let resps = await metaFunctions.sendMetaMessage(productUser.apiKey, metaJsonData);
+									if (resps.status == 202) {
+										let customerData = await secondary.model(constants.MODELS.endcustomers, endCustomers).findOne({ mobileNo: reqData.from }).lean();
+										metaJsonData.messageId = resps.body.messageId;
+										metaJsonData.timestamp = Date.now();
+										metaJsonData.teamMemberId = config.mongoose.Types.ObjectId(customerData.groupData.teamMemberReply);
+										metaJsonData.content['image'].url = fileInfo.uploadFilePath;
+										await secondary.model(constants.MODELS.inbounds, inbounds).create(metaJsonData);
+										if (fileInfo.uploadFilePath) {
+											const newFile = {
+												from: reqData.from,
+												to: reqData.to,
+												fileType: fileInfo.fileType,
+												url: fileInfo.uploadFilePath,
+												fileName: fileInfo.fileName,
+												parentId: productUser._id
+											};
+											await secondary.model(constants.MODELS.filemanager, fileManager).create(newFile);
+										}
+									} else {
+										// return response.onSuccess("Error while sending to meta!", 0, res);
+									}
+									next_product();
+								})().catch((error) => {
+									console.error('error131', error);
+									next_product();
+								});
+							}, () => {
+								console.log('Done..............');
+							});
+						} else {
+							let list = [];
+							for (var i = 0; i < resp.body.data.length; i++) {
+								let listoftwenty = resp.body.data.slice((i == 0) ? i : i * 20, (i == 0) ? 20 : (i + 1) * 20);
+								if (listoftwenty.length > 0) {
+									list[i] = [];
+									list[i] = listoftwenty;
+								}
+							}
+							console.log("list", list.length);
+							for (const product of list) {
+								let finalRequest = {
+									from: reqData.to,
+									to: reqData.from,
+									channel: "whatsapp",
+									isbulkmedia: true,
+									messages: []
+								};
+								let dataTodb = {
+									from: reqData.to,
+									to: reqData.from,
+									channel: "whatsapp",
+									isbulkmedia: true,
+									messages: []
+								}
+								await processProduct(product, productUser, reqData, finalRequest, dataTodb, secondary);
+							}
+						}
+
+					} else {
+						sendTextMessage(reqData, resp.body.message, productUser, secondary);
+					}
+				}
+			} catch (error) {
+				console.log("error", error);
+			}
+
+		}
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>AUTO GENERATED BY CONFLICT EXTENSION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> master
+	} catch (err) {
+		console.error('error in sendAutoReplyToUser', err);
+	}
+};
+
+exports.vastraOptcheck = async () => {
+	try {
+		let transientDB = mongoConnection.useDb(constants.TRANSIENT_DB);
+		let currentTime = new Date().getTime();
+		let lastMessaged = "Interactive Message Sent!";
+		let result = await transientDB
+			.model(constants.MODELS.resendotp, resendotpModel)
+			.find({
+				expiryOtp: {
+					$lt: currentTime,
+					$gt: currentTime - 60000
+				}, resendOTPInteractive: false
+			})
+			.lean();
+
+		await transientDB
+			.model(constants.MODELS.resendotp, resendotpModel)
+			.updateMany({
+				expiryOtp: {
+					$lte: currentTime,
+					$gt: currentTime - 60000
+				}, resendOTPInteractive: false
+			}, {
+				$set: { resendOTPInteractive: true }
+			});
+
+		if (result.length === 0) {
+			// console.log("No expired documents found.");
+			return;
+		}
+
+		for (let customer of result) {
+			try {
+				console.log(customer);
+				let secondary = mongoConnection.useDb(customer.database);
+
+				let resps = await metaFunctions.sendMetaMessage(customer.apiKey, customer.metaJsonData);
+
+				if (resps.status === 202) {
+					let metaJsonDatatoDb = customer.metaJsonData; // Assuming this variable is defined somewhere
+					metaJsonDatatoDb.messageId = resps.body.messageId;
+					metaJsonDatatoDb.timestamp = Date.now();
+
+					let customerData = await secondary
+						.model(constants.MODELS.endcustomers, endCustomers)
+						.findOne({ mobileNo: customer.metaJsonData.to })
+						.select('groupData')
+						.lean();
+
+					metaJsonDatatoDb.teamMemberId = config.mongoose.Types.ObjectId(customerData.groupData.teamMemberReply);
+					await secondary.model(constants.MODELS.endcustomers, endCustomers).updateOne({ mobileNo: customer.metaJsonData.to }, { $unset: { vastraOtpSent: 1 } });
+					await customerUpdateWithInboundCreate(secondary, metaJsonDatatoDb, customer.metaJsonData.to, lastMessaged);
+				} else {
+					console.error("Error while sending to meta:", resps);
+					// Handling error response
+				}
+			} catch (error) {
+				console.error('Error during processing:', error);
+			}
+		}
+	} catch (error) {
+		console.error('Error in vastraOptcheck:', error);
+	}
+}
+
+async function mediaJsonGenrator(product, productUser, reqData) {
+	console.log('product::::::::::::::::VSTRA:::::::::::::::::::::', product)
+	const container = productUser.dataStore;
+	let metaJsonData = {
+		from: reqData.to,
+		to: reqData.from,
+		channel: "whatsapp",
+		content: {
+			contentType: "image",
+			image: {}
+		}
+	};
+	let uploadFilePath = "";
+	let fileType = "";
+	let fileName = "";
+
+	if (product.design_image) {
+		let responseUrl
+		await axios.get(product.design_image, { responseType: 'arraybuffer' }).then((data) => {
+			responseUrl = data
+		}).catch((err) => {
+			responseUrl = false
+		});
+		const originalname = product.design_image.split('/').pop();
+		const size = responseUrl.data.byteLength
+		const buffer = Buffer.from(responseUrl.data, "utf-8");
+		const contentType = responseUrl.headers['content-type'];
+		const mimetype = contentType.split(';')[0].trim();
+		let fileData = { originalname, buffer, size, mimetype }
+		const allowFormats = {
+			image: ["png", "jpg", "jpeg"]
+		};
+		const filesizeinMb = parseFloat(parseFloat(fileData.size) / 1000000);
+		const fileExtension = fileData.originalname.split('.').pop()?.toLowerCase();
+		if (!allowFormats['image'].includes(fileExtension)) {
+			console.log('Invalid file! Please select a valid file for the specified contentType');
+		}
+		if (filesizeinMb > 5) {
+			console.log('Maximum file size can be 5 MB for image file supported formates are (JPG / PNG).');
+		}
+
+		const uploadResult = filesizeinMb > 5
+			? await AwsCloud.saveToS3Multipart(fileData.buffer, container, fileData.mimetype, 'Send', fileData.originalname)
+			: await AwsCloud.saveToS3(fileData.buffer, container, fileData.mimetype, 'Send', fileData.originalname);
+
+		if (uploadResult?.data) {
+			uploadFilePath = uploadResult.data.replace(process.env.AWS_BUCKET_URI + container + '/', "");
+			fileType = helper.getFileType(fileData.mimetype);
+			const f1 = uploadFilePath.split("/");
+			fileName = f1[f1.length - 1];
+			if (product.display_design_detail === 1) {
+				metaJsonData.content['image'].caption = `*Design Number : ${product.design_number}*\n*Design Price : ${product.design_price}*`;
+			}
+			metaJsonData.content['image'].url = uploadResult.data;
+		}
+		let fileInfo = { uploadFilePath, fileType, fileName };
+		return { metaJsonData, fileInfo };
+	}
+}
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<AUTO GENERATED BY CONFLICT EXTENSION<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< internal
+async function mediaJsonGenratorforInvoice(product, productUser, reqData) {
+	console.log('product::::::::::::::::VSTRA:: NEWWWWWWWWWWW INVOICEEEEEEEEEEEEEEE:::::::::::::::::::', product)
+	const container = productUser.dataStore;
+	let metaJsonData = {
+		from: reqData.to,
+		to: reqData.from,
+		channel: "whatsapp",
+		content: {
+			contentType: "image",
+			image: {}
+		}
+	};
+	let uploadFilePath = "";
+	let fileType = "";
+	let fileName = "";
+
+	if (product.imageUrl) {
+		let responseUrl
+		await axios.get(product.imageUrl, { responseType: 'arraybuffer' }).then((data) => {
+			responseUrl = data
+		}).catch((err) => {
+			responseUrl = false
+		});
+		const originalname = product.imageUrl.split('/').pop();
+		const size = responseUrl.data.byteLength
+		const buffer = Buffer.from(responseUrl.data, "utf-8");
+		const contentType = responseUrl.headers['content-type'];
+		const mimetype = contentType.split(';')[0].trim();
+		let fileData = { originalname, buffer, size, mimetype }
+		const allowFormats = {
+			image: ["png", "jpg", "jpeg"]
+		};
+		const filesizeinMb = parseFloat(parseFloat(fileData.size) / 1000000);
+		const fileExtension = fileData.originalname.split('.').pop()?.toLowerCase();
+		if (!allowFormats['image'].includes(fileExtension)) {
+			console.log('Invalid file! Please select a valid file for the specified contentType');
+		}
+		if (filesizeinMb > 5) {
+			console.log('Maximum file size can be 5 MB for image file supported formates are (JPG / PNG).');
+		}
+
+		const uploadResult = filesizeinMb > 5
+			? await AwsCloud.saveToS3Multipart(fileData.buffer, container, fileData.mimetype, 'Send', fileData.originalname)
+			: await AwsCloud.saveToS3(fileData.buffer, container, fileData.mimetype, 'Send', fileData.originalname);
+
+		if (uploadResult?.data) {
+			uploadFilePath = uploadResult.data.replace(process.env.AWS_BUCKET_URI + container + '/', "");
+			fileType = helper.getFileType(fileData.mimetype);
+			const f1 = uploadFilePath.split("/");
+			fileName = f1[f1.length - 1];
+			metaJsonData.content['image'].url = uploadResult.data;
+		}
+		let fileInfo = { uploadFilePath, fileType, fileName };
+		return { metaJsonData, fileInfo };
+	}
+}
+async function sendTextMessage(reqData, msgTxt, productUser, secondary) {
+====================================AUTO GENERATED BY CONFLICT EXTENSION====================================
+async function mediaJsonGenratorforInvoice(product, productUser, reqData) {
+	// console.log('product::::::::::::::::VSTRA:: NEWWWWWWWWWWW INVOICEEEEEEEEEEEEEEE:::::::::::::::::::', product)
+	const container = productUser.dataStore;
+	let uploadFilePath = "";
+	let fileType = "";
+	let fileName = "";
+
+	if (product.imageUrl) {
+		let responseUrl
+		await axios.get(product.imageUrl, { responseType: 'arraybuffer' }).then((data) => {
+			responseUrl = data
+		}).catch((err) => {
+			responseUrl = false
+		});
+		const originalname = product.imageUrl.split('/').pop();
+		const size = responseUrl.data.byteLength
+		const buffer = Buffer.from(responseUrl.data, "utf-8");
+		const contentType = responseUrl.headers['content-type'];
+		const mimetype = contentType.split(';')[0].trim();
+		let fileData = { originalname, buffer, size, mimetype }
+		const allowFormats = {
+			image: ["png", "jpg", "jpeg"]
+		};
+		const filesizeinMb = parseFloat(parseFloat(fileData.size) / 1000000);
+		const fileExtension = fileData.originalname.split('.').pop()?.toLowerCase();
+		if (!allowFormats['image'].includes(fileExtension)) {
+			console.log('Invalid file! Please select a valid file for the specified contentType');
+		}
+		if (filesizeinMb > 5) {
+			console.log('Maximum file size can be 5 MB for image file supported formates are (JPG / PNG).');
+		}
+
+		const uploadResult = filesizeinMb > 5
+			? await AwsCloud.saveToS3Multipart(fileData.buffer, container, fileData.mimetype, 'Send', fileData.originalname)
+			: await AwsCloud.saveToS3(fileData.buffer, container, fileData.mimetype, 'Send', fileData.originalname);
+		let singleData = "";
+		if (uploadResult?.data) {
+			uploadFilePath = uploadResult.data.replace(process.env.AWS_BUCKET_URI + container + '/', "");
+			fileType = helper.getFileType(fileData.mimetype);
+			const f1 = uploadFilePath.split("/");
+			fileName = f1[f1.length - 1];
+			singleData = uploadResult.data;
+		}
+		let fileInfo = { uploadFilePath, fileType, fileName, singleData };
+		return { fileInfo };
+	}
+}
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>AUTO GENERATED BY CONFLICT EXTENSION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> master
+async function sendTextMessage(reqData, msgTxt, productUser, secondary) {
+	let metaJsonData = {
+		from: reqData.to,
+		to: reqData.from,
+		channel: "whatsapp",
+		content: {
+			contentType: "text",
+			text: msgTxt,
+		}
+	};
+	try {
+		let resps = await metaFunctions.sendMetaMessage(productUser.apiKey, metaJsonData);
+		if (resps.status == 202) {
+			let customerData = await secondary.model(constants.MODELS.endcustomers, endCustomers).findOne({ mobileNo: reqData.from }).lean();
+			metaJsonData.messageId = resps.body.messageId;
+			metaJsonData.timestamp = Date.now();
+			metaJsonData.teamMemberId = config.mongoose.Types.ObjectId(customerData.groupData.teamMemberReply);
+			await secondary.model(constants.MODELS.inbounds, inbounds).create(metaJsonData);
+		} else {
+			return response.onSuccess("Error while sending to meta!", 0, res);
+		}
+	} catch (err) {
+		console.error('err7', err);
+	}
+}
+
+async function handleMetaMessage(resp, reqData, productUser, secondary, constants, endCustomers, inbounds, config, metaFunctions) {
+	if (resp.body.status !== true) {
+		console.log(resp.body);
+		return;
+	}
+
+	const { data } = resp.body;
+	// const data = resp.body.data.slice(0, 3);
+
+	let metaJsonData = {
+		from: reqData.to,
+		to: reqData.from,
+		channel: "whatsapp",
+		content: {
+			contentType: "interactive",
+			interactive: {}
+		}
+	};
+
+	const createButtonMetaData = (data, productUser) => {
+		const btnData = data.map(item => ({
+			type: 'reply',
+			reply: {
+				payload: item.category_id
+					? `mainCat#${item.child_category_count}#${item.category_id}#${item.category_name}`
+					: `mainCatpageNo#${item.pageno}#mainCat`,
+				title: item.category_name
+			}
+		}));
+		let msgText = "";
+		if (productUser.vastraText.firstmsg.msg && productUser.vastraText.firstmsg.msg !== "" && productUser.vastraText.firstmsg.msg.includes("{{category}}")) {
+			msgText = productUser.vastraText.firstmsg.msg.replace("{{category}}", data.map(category => `â–ª ${category.category_name}`).join('\n'));
+		} else {
+			msgText = productUser.vastraText.firstmsg.msg;
+		}
+		return {
+			subType: "buttons",
+			components: {
+				body: {
+					type: "text",
+					text: msgText
+				},
+				buttons: btnData
+			}
+		};
+	};
+
+	const createListMetaData = (data, productUser) => {
+		const rows = data.map(category => ({
+			payload: category.category_id
+				? `mainCat#${category.child_category_count}#${category.category_id}#${category.category_name}`
+				: `mainCatpageNo#${category.pageno}#mainCat`,
+			title: category.category_name
+		}));
+
+		let msgText = "";
+		if (productUser.vastraText.firstmsg.msg && productUser.vastraText.firstmsg.msg !== "" && productUser.vastraText.firstmsg.msg.includes("{{category}}")) {
+			msgText = productUser.vastraText.firstmsg.msg.replace("{{category}}", data.map(category => `â–ª ${category.category_name}`).join('\n'));
+		} else {
+			msgText = productUser.vastraText.firstmsg.msg;
+		}
+
+		return {
+			subType: "list",
+			components: {
+				body: {
+					type: "text",
+					text: msgText
+				},
+				list: {
+					title: "Categories",
+					sections: [
+						{
+							title: "Check Categories",
+							rows: rows
+						}
+					]
+				}
+			}
+		};
+	};
+
+	if (data.length <= 3) {
+		metaJsonData.content.interactive = createButtonMetaData(data, productUser);
+	} else {
+		metaJsonData.content.interactive = createListMetaData(data, productUser);
+	}
+
+	try {
+		const resps = await metaFunctions.sendMetaMessage(productUser.apiKey, metaJsonData);
+		if (resps.status === 202) {
+			const customerData = await secondary.model(constants.MODELS.endcustomers, endCustomers).findOne({ mobileNo: reqData.from }).lean();
+			metaJsonData.messageId = resps.body.messageId;
+			metaJsonData.timestamp = Date.now();
+			metaJsonData.teamMemberId = config.mongoose.Types.ObjectId(customerData.groupData.teamMemberReply);
+			await secondary.model(constants.MODELS.inbounds, inbounds).create(metaJsonData);
+		} else {
+			// Handle error case if necessary
+			// return response.onSuccess("Error while sending to meta!", 0, res);
+		}
+	} catch (err) {
+		console.error('err10', err);
+	}
+}
+
+
+async function fetchCategoryDesigns(data) {
+	let pageNumber = 1; // Starting page number
+	let Images = [];
+	let hasMorePages = true;
+
+	do {
+		try {
+			const resp = await superagent
+				.post(`${process.env.VASTRA_DOMAIN_URI}store/get-category-designs-by-mobile?pageno=${pageNumber}`)
+				.set('api-key', process.env.VASTRA_APIKEY)
+				.set('device-type', 'Android')
+				.set('udid', '1ca42f8a03a001f0')
+				.set('Content-Type', 'application/json')
+				.send(data);
+
+			if (resp.body.data && resp.body.data.length > 0) {
+				const newImages = resp.body.data;
+				const lastObject = newImages[newImages.length - 1];
+
+				if (lastObject.pageno) {
+					Images.push(...newImages.slice(0, -1)); // Push all except the last object
+					pageNumber = lastObject.pageno; // Update to the next page number
+				} else {
+					Images.push(...newImages); // Push all objects
+					hasMorePages = false; // No more pages to fetch
+				}
+			} else {
+				hasMorePages = false; // No more data to fetch
+			}
+		} catch (error) {
+			console.error('Error fetching category designs:', error);
+			hasMorePages = false; // Stop the loop on error
+		}
+	} while (hasMorePages);
+
+	return Images;
+}
+
+async function processProduct(product, productUser, reqData, finalRequest, dataTodb, secondary) {
+	const promises = product.map(async (file) => {
+		try {
+			let { fileInfo } = await mediaJsonGenratorforInvoice(file, productUser, reqData);
+			let obj = {
+				contentType: "image",
+				image: {
+					url: process.env.AWS_BUCKET_URI + productUser.dataStore + '/' + fileInfo.uploadFilePath,
+					caption: ""
+				}
+			};
+			finalRequest.messages.push(obj);
+
+			let objdataTodb = {
+				contentType: "image",
+				image: {
+					url: fileInfo.uploadFilePath,
+					caption: ""
+				}
+			};
+			dataTodb.messages.push(objdataTodb);
+
+			if (fileInfo.uploadFilePath) {
+				const newFile = {
+					from: reqData.from,
+					to: reqData.to,
+					fileType: fileInfo.fileType,
+					url: fileInfo.uploadFilePath,
+					fileName: fileInfo.fileName,
+					parentId: productUser._id
+				};
+				await secondary.model(constants.MODELS.filemanager, fileManager).create(newFile);
+			}
+		} catch (error) {
+			console.error("Error processing file:", error);
+			// Handle the error appropriately
+		}
+	});
+
+	await Promise.all(promises);
+
+	// console.log("finalRequest:::::::::::::::::::::::::::::", JSON.stringify(finalRequest));
+	// Uncomment and handle the following section if needed
+	let resps = await metaFunctions.sendMetaBulks(productUser.apiKey, finalRequest);
+	if (resps.status == 202) {
+		console.log("resps.body:::::::::::::", resps.body);
+		console.log("resps.body.messageIds:::::::::::::::::::", resps.body.messageIds);
+		let customerData = await secondary.model(constants.MODELS.endcustomers, endCustomers).findOne({ mobileNo: reqData.from }).lean();
+		let messageIds = resps.body.messageIds;
+		finalRequest.timestamp = Date.now();
+		dataTodb.timestamp = Date.now();
+		finalRequest.teamMemberId = config.mongoose.Types.ObjectId(customerData.groupData.teamMemberReply);
+		dataTodb.teamMemberId = config.mongoose.Types.ObjectId(customerData.groupData.teamMemberReply);
+		let i = 0;
+		let allmessages = [];
+		await Promise.all(dataTodb.messages.map(async (message, index) => {
+			message.messageId = messageIds[index];
+			allmessages.push(message);
+		}));
+		dataTodb.messages = allmessages;
+		let lastMessaged = "Bulk Media Files";
+		await customerUpdateWithInboundCreate(secondary, dataTodb, finalRequest.to, lastMessaged);
+	} else {
+		// return response.onSuccess("Error while sending to meta!", 0, res);
+	}
+};
