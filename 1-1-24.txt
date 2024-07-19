@@ -1477,23 +1477,44 @@ common repo for nestJS done
 task on - 15 - July
 setupChange-adminInternal merge in admin-internal
 
+task on - 16 - July
+internal merge in internal-ws / changes-adminInternal merge in admin-internal /master merge in internal / setupChange-adminInternal merge in admin-internal
+dhananjay bhath fitting products sync
+meta productAdd api, image url mimeType error/ facebookSync working solve live
+
+
+task on - 17 - July
+price check query changes according to multi origin
+multiorigins merge in internal
+inboundwebhook troubleshooting - in process
+assignchat screenType added
+
+task on - 18 - July
+internal merge in internal-ws and conflicts remove
+tempEdit merge in internal-ws
+excelConvert-CSV merge in internal
+schema change for users admin
+template edit working check and corrections working / saud_editTemp merge in internal
+
+task on - 19 - July
+sendTemplate admin header working 	
+dashbordWorking-om merge in admin-internal
+
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+multiorigin to merge both in main and statusMessage live
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+remove shopify obj on onbording admin -- done	
 
 BRanches to merge
-tempEdit - kaushal
-excelConvert-CSV - sunil
 assign_optimize - kaushal
-
-partnerUserView = Admin
-walletStatus  =  Admin
  
 
 PARTNER WORKING completed with testing
 template edit working
 
-template delete working merged and live
 
 https://github.com/hantsy/nestjs-rest-sample/blob/master/src/auth/auth.service.ts
-vastra admin and web test
 
 db.getCollection("inbounds").deleteMany({$or:[{to:'919573084874'},{from:'919573084874'}]})
 
@@ -1502,7 +1523,6 @@ template add button shopifyApp remaining -- done
 Account status should get off after expiry -- done, merge remaing
 garbage collection
 pupeeteer new module
-fs module instead for, global function -- in progress
 mongoose update to version 8 in webApp and all
 fluentD learning
 give notification setting to customer for low wallet, customer will set wallet amount on which he wants email notification

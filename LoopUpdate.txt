@@ -1,0 +1,345 @@
+Sure, here is the complete code including the `map` function to update the nested objects in an array:
+
+```javascript
+// Sample data
+const data = [
+  {
+    id: 1,
+    items: [
+      { type: "header", title: "Header 1" },
+      { type: "body", dynamicText: "Body 1" }
+    ]
+  },
+  {
+    id: 2,
+    items: [
+      { type: "header", title: "Header 2" },
+      { type: "body", dynamicText: "Body 2" }
+    ]
+  }
+];
+
+// Function to update the nested objects
+function updateNestedObjects(array) {
+  return array.map(obj => {
+    obj.items = obj.items.map(item => {
+      if (item.type === "header") {
+        // Add new key imageURL
+        item.imageURL = "newImageURL";
+      } else if (item.type === "body") {
+        // Remove the dynamicText key
+        delete item.dynamicText;
+      }
+      return item;
+    });
+    return obj;
+  });
+}
+
+// Update the data array
+const updatedData = updateNestedObjects(data);
+
+// Output the updated data
+console.log(JSON.stringify(updatedData, null, 2));
+```
+
+### Explanation
+
+1. **Sample Data**: 
+   - The `data` array contains objects, each with an `id` and an `items` array of nested objects.
+
+2. **Function `updateNestedObjects`**: 
+   - The function takes an array as input and uses `map` to iterate over the main array.
+   - For each object in the main array, it uses `map` again to iterate over the `items` array.
+   - Within the nested `items` array, it checks the `type` of each object:
+     - If the `type` is `"header"`, it adds a new key `imageURL` with the value `"newImageURL"`.
+     - If the `type` is `"body"`, it deletes the `dynamicText` key.
+   - The modified object is returned and assigned back to the `items` array of the main object.
+   - The main object is then returned and included in the resulting array.
+
+3. **Updating the Data**: 
+   - The `updateNestedObjects` function is called with the sample data, and the result is stored in `updatedData`.
+
+4. **Output**: 
+   - The updated data is logged to the console in a formatted JSON string for easy readability.
+
+### Output
+
+```json
+[
+  {
+    "id": 1,
+    "items": [
+      {
+        "type": "header",
+        "title": "Header 1",
+        "imageURL": "newImageURL"
+      },
+      {
+        "type": "body"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "items": [
+      {
+        "type": "header",
+        "title": "Header 2",
+        "imageURL": "newImageURL"
+      },
+      {
+        "type": "body"
+      }
+    ]
+  }
+]
+```
+
+This output shows that the `header` objects now include the `imageURL` key, and the `body` objects no longer have the `dynamicText` key.
+
+-------=================-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+
+
+Sure, here are several alternative looping methods in JavaScript to update an array of objects with nested arrays of objects based on the given conditions.
+
+### Using `forEach` Loop
+
+```javascript
+const data = [
+  {
+    id: 1,
+    items: [
+      { type: "header", title: "Header 1" },
+      { type: "body", dynamicText: "Body 1" }
+    ]
+  },
+  {
+    id: 2,
+    items: [
+      { type: "header", title: "Header 2" },
+      { type: "body", dynamicText: "Body 2" }
+    ]
+  }
+];
+
+function updateNestedObjects(array) {
+  array.forEach(obj => {
+    obj.items.forEach(item => {
+      if (item.type === "header") {
+        item.imageURL = "newImageURL";
+      } else if (item.type === "body") {
+        delete item.dynamicText;
+      }
+    });
+  });
+}
+
+updateNestedObjects(data);
+
+console.log(JSON.stringify(data, null, 2));
+```
+
+### Using `for...of` Loop
+
+```javascript
+const data = [
+  {
+    id: 1,
+    items: [
+      { type: "header", title: "Header 1" },
+      { type: "body", dynamicText: "Body 1" }
+    ]
+  },
+  {
+    id: 2,
+    items: [
+      { type: "header", title: "Header 2" },
+      { type: "body", dynamicText: "Body 2" }
+    ]
+  }
+];
+
+function updateNestedObjects(array) {
+  for (const obj of array) {
+    for (const item of obj.items) {
+      if (item.type === "header") {
+        item.imageURL = "newImageURL";
+      } else if (item.type === "body") {
+        delete item.dynamicText;
+      }
+    }
+  }
+}
+
+updateNestedObjects(data);
+
+console.log(JSON.stringify(data, null, 2));
+```
+
+### Using `for` Loop
+
+```javascript
+const data = [
+  {
+    id: 1,
+    items: [
+      { type: "header", title: "Header 1" },
+      { type: "body", dynamicText: "Body 1" }
+    ]
+  },
+  {
+    id: 2,
+    items: [
+      { type: "header", title: "Header 2" },
+      { type: "body", dynamicText: "Body 2" }
+    ]
+  }
+];
+
+function updateNestedObjects(array) {
+  for (let i = 0; i < array.length; i++) {
+    let obj = array[i];
+    for (let j = 0; j < obj.items.length; j++) {
+      let item = obj.items[j];
+      if (item.type === "header") {
+        item.imageURL = "newImageURL";
+      } else if (item.type === "body") {
+        delete item.dynamicText;
+      }
+    }
+  }
+}
+
+updateNestedObjects(data);
+
+console.log(JSON.stringify(data, null, 2));
+```
+
+### Using `reduce` Method
+
+```javascript
+const data = [
+  {
+    id: 1,
+    items: [
+      { type: "header", title: "Header 1" },
+      { type: "body", dynamicText: "Body 1" }
+    ]
+  },
+  {
+    id: 2,
+    items: [
+      { type: "header", title: "Header 2" },
+      { type: "body", dynamicText: "Body 2" }
+    ]
+  }
+];
+
+function updateNestedObjects(array) {
+  return array.reduce((acc, obj) => {
+    const updatedItems = obj.items.reduce((itemAcc, item) => {
+      if (item.type === "header") {
+        item.imageURL = "newImageURL";
+      } else if (item.type === "body") {
+        delete item.dynamicText;
+      }
+      itemAcc.push(item);
+      return itemAcc;
+    }, []);
+    acc.push({ ...obj, items: updatedItems });
+    return acc;
+  }, []);
+}
+
+const updatedData = updateNestedObjects(data);
+
+console.log(JSON.stringify(updatedData, null, 2));
+```
+
+### Using `map` and `for...of` Combination
+
+```javascript
+const data = [
+  {
+    id: 1,
+    items: [
+      { type: "header", title: "Header 1" },
+      { type: "body", dynamicText: "Body 1" }
+    ]
+  },
+  {
+    id: 2,
+    items: [
+      { type: "header", title: "Header 2" },
+      { type: "body", dynamicText: "Body 2" }
+    ]
+  }
+];
+
+function updateNestedObjects(array) {
+  return array.map(obj => {
+    for (const item of obj.items) {
+      if (item.type === "header") {
+        item.imageURL = "newImageURL";
+      } else if (item.type === "body") {
+        delete item.dynamicText;
+      }
+    }
+    return obj;
+  });
+}
+
+const updatedData = updateNestedObjects(data);
+
+console.log(JSON.stringify(updatedData, null, 2));
+```
+
+Each of these examples demonstrates a different way to loop through an array of objects and update nested objects based on certain conditions. The approach you choose can depend on your specific requirements and preferences.
+
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+
+$scope.templates.localizations = $scope.templates.localizations.map((localization) => {
+                localization.components = localization.components
+                    .filter((component) => {
+                        if ($scope.templates.category === 'AUTHENTICATION') {
+                            if (['FOOTER', 'HEADER', 'BUTTONS'].includes(component.type)) {
+                                return false;
+                            }
+                        } else {
+                            if (component.type !== 'BODY' && component.type !== 'BUTTONS') {
+                                return false;
+                            }
+                        }
+                        return true;
+                    })
+                    .map((component) => {
+                        if ($scope.templates.category === 'AUTHENTICATION') {
+                            if (component.type === 'BODY') {
+                                return { type: "BODY", addSecurityRecommendation: true };
+                            }
+                        } else {
+                            if (component.type === 'BODY') {
+                                return { type: "BODY", text: "" };
+                            } else if (component.type === 'BUTTONS') {
+                                return { type: "BUTTONS", buttons: [{ type: "QUICK_REPLY", text: "" }] };
+                            }
+                        }
+                        return component;
+                    });
+                if ($scope.templates.category !== 'AUTHENTICATION' && !localization.components.some(component => component.type === 'BUTTONS')) {
+                    localization.components.push({ type: "BUTTONS", buttons: [{ type: "QUICK_REPLY", text: "" }] });
+                }
+                if ($scope.templates.category === 'AUTHENTICATION') {
+                    localization.selectedThings = { selectedHeader: "", selectedInteractiveButton: "" };
+                } else {
+                    localization.selectedThings = { selectedHeader: "", selectedInteractiveButton: "ALL_BUTTONS" };
+                }
+                localization.isButtonType = true;
+                return localization;
+            });

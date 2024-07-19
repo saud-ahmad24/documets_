@@ -487,3 +487,80 @@ var aggregate = secondary.model(constants.MODELS.balanceuses, balanceusesModel).
 
 
 --------------------------------------------------------------------------------
+
+
+
+db.getCollection("endcustomers").aggregate([
+    {
+        $match: {
+            mobileNo: { $in: ["918866186841","919023523406"] },
+            $or: [
+                { isDelete: { $eq: false } },
+                { isDelete: { $eq: null } },
+                { isDelete: { $exists: false } }
+            ],
+            conversation: { $exists: true }
+        }
+    },
+    {
+        $addFields: {
+            filteredConversations: {
+                $filter: {
+                    input: "$conversation",
+                    as: "conv",
+                    cond: { $eq: ["$$conv.origin", "utility"] }
+                }
+            }
+        }
+    },
+    {
+        $addFields: {
+            expiresAtTime: {
+                $map: {
+                    input: "$filteredConversations",
+                    as: "conv",
+                    in: { $toDate: "$$conv.expiresAt" }
+                }
+            }
+        }
+    },
+    {
+        $addFields: {
+            validConversations: {
+                $filter: {
+                    input: "$filteredConversations",
+                    as: "conv",
+                    cond: { $gte: [{ $toDate: "$$conv.expiresAt" }, new Date()] }
+                }
+            }
+        }
+    },
+    {
+        $match: {
+            "validConversations.0": { $exists: true }
+        }
+    }
+])
+
+------------------------------------------------------------------
+update specific element in array of objs
+
+await secondary.model(constants.MODELS.endcustomers, endCustomers).updateOne(
+                            { _id: req.body.customerId, "addresses.id": req.body.addressIndexId },
+                            {
+                                $set: {
+                                    "addresses.$.value": { ...req.body.address }
+                                }
+                            }
+                        );
+
+
+secondary.model(constants.MODELS.endcustomers, endCustomers).updateOne
+                                    ({
+                                        _id: req.body.customerId
+                                    }, {
+                                        $pull: {addresses: {id: req.body.addressIndexId}
+                                        }
+                                    });
+                            });
+---------------------------------------------------------------------------------
