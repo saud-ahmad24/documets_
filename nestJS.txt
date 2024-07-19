@@ -21,7 +21,7 @@ To create a controller using the CLI, simply execute the $ nest g controller [na
 
 It's that simple. Nest provides decorators for all of the standard HTTP methods: @Get(), @Post(), @Put(), @Delete(), @Patch(), @Options(), and @Head(). In addition, @All() defines an endpoint that handles all of them.
 
-@Post()
+@Post() 
 @HttpCode(204)
 create() {
   return 'This action adds a new cat';
