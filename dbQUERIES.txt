@@ -564,3 +564,147 @@ secondary.model(constants.MODELS.endcustomers, endCustomers).updateOne
                                     });
                             });
 ---------------------------------------------------------------------------------
+
+
+const pipeline = [
+                {
+                    $match: {
+                        mobileNo: { $in: mobileNumbers },
+                        $or: [
+                            { isDelete: { $eq: false } },
+                            { isDelete: { $eq: null } },
+                            { isDelete: { $exists: false } }
+                        ],
+                        conversation: { $exists: true }
+                    }
+                },
+                {
+                    $addFields: {
+                        conversation: {
+                            $cond: {
+                                if: { $isArray: "$conversation" },
+                                then: "$conversation",
+                                else: [{ conversationId: "$conversation.conversationId", origin: "$conversation.origin", expiresAt: "$conversation.expiresAt" }]
+                            }
+                        }
+                    }
+                },
+                {
+                    $addFields: {
+                        filteredConversations: {
+                            $filter: {
+                                input: "$conversation",
+                                as: "conv",
+                                cond: { $eq: ["$$conv.origin", catogary] }
+                            }
+                        }
+                    }
+                },
+                {
+                    $addFields: {
+                        expiresAtTime: {
+                            $map: {
+                                input: "$filteredConversations",
+                                as: "conv",
+                                in: { $toDate: "$$conv.expiresAt" }
+                            }
+                        }
+                    }
+                },
+                {
+                    $addFields: {
+                        validConversations: {
+                            $filter: {
+                                input: "$filteredConversations",
+                                as: "conv",
+                                cond: { $gte: [{ $toDate: "$$conv.expiresAt" }, new Date()] }
+                            }
+                        }
+                    }
+                },
+                {
+                    $match: {
+                        "validConversations.0": { $exists: true }
+                    }
+                }
+            ];
+
+
+-----------------------------------------------------------------------------------
+
+
+var aggregate = secondary.model(constants.MODELS.balanceuses, balanceusesModel).aggregate()
+				aggregate.match({
+					timestamp: { $gte: startDate, $lte: endDate }
+				})
+					.group({
+						_id: {
+							origin: "$whatsapp.conversation.origin",
+							createdAt: {
+								$dateToString: {
+									format: "%Y-%m-%d",
+									date: "$timestamp"
+								}
+							}
+						},
+						messageCount: {
+							$sum: 1
+						},
+						messageCost: {
+							$sum: "$messageCost"
+						}
+					})
+					.sort({
+						"_id.createdAt": 1,
+						messageCount: -1
+					})
+					.group({
+						_id: "$_id.createdAt",
+						totalMessageCount: {
+							$sum: "$messageCount"
+						},
+						totalMessageCost: {
+							$sum: "$messageCost"
+						},
+						origins: {
+							$push: {
+								origin: "$_id.origin",
+								messageCount: "$messageCount",
+								messageCost: "$messageCost"
+							}
+						}
+					})
+					.sort({
+						_id: -1
+					})
+				var options = {
+					page: page,
+					limit: parseInt(limit),
+					sort: { _id: -1 },
+					lean: true
+				}
+				secondary.model(constants.MODELS.balanceuses, balanceusesModel).aggregatePaginate(aggregate, options).then(function (results) {
+					// console.log("results:::::",results);
+					return ResponseManager.onSuccess("balance and usage", results, res);
+				}).catch(function (err) {
+					console.log(err);
+				})
+
+--------------------------------------------------------------------------------------
+
+
+const clientData = await primary.model(constants.MODELS.masteruser, masteruser)
+                    .findOne({ _id: req.token._id }, { password: 0, securityKey : 0 })
+                    .populate({
+                        path: 'selectedUsers',
+                        model: primary.model(constants.MODELS.users, userModal),
+                        select: 'companyName mobileNo business_Address',
+                        match: req.body.searchQuery ? {
+                            $or: [
+                                { companyName: { $regex: req.body.searchQuery, $options: 'i' } },
+                                { mobileNo: { $regex: req.body.searchQuery, $options: 'i' } },
+                                { business_Address: { $regex: req.body.searchQuery, $options: 'i' } }
+                            ]
+                        } : {}
+                    })
+                    .lean();

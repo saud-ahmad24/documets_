@@ -1497,28 +1497,73 @@ schema change for users admin
 template edit working check and corrections working / saud_editTemp merge in internal
 
 task on - 19 - July
-sendTemplate admin header working 	
+create template-header part working admin 	
 dashbordWorking-om merge in admin-internal
+wallet calculate query update for multiple windows
+embeddedsignups 2 manual entries created for zebralearn
+sendAdmin_Temp merge in admin-internal and live
+internal merge in main / statusmessage merge 
 
 
+working as on 19 - July
+assignChat screenType added for mobileApp -- not to test
+assign members list load, export optimization
+customer report export optimize
+editTemplate working
+default language selected to english for templates
+customerteammembers removed from restrictedCollections -- not to test
+await removed from inboundwebhookFun in inbound file -- not to test
+multiple origins/ window working
+broadcast price calculater query change for multiple window
+
+
+task on - 20 - July
+url,headerComponents,example working admin for template and live
+sendAdmin_Temp merge in admin-internal
+
+task on - 22 - July
+db_tathastufab_india db_dimodaa_india inbound and endcustomers delete
+internal merge in ws / internal merge master and live
+satyam fashion administrator permissions update from db
+
+
+task on - 23 - July
+db_cmansukhlaljewellers_india customers merge
+sendMetaBulk working error solve
+
+task on - 24 - July
+script to add balanceUses upon checking notExisting conversationId and run
+dynamic_body merge in internal / internal merge in internal-ws
+zebraLearn products add with script run
+
+task on - 25 - July
+tally sendTemplate corrections
+master merge in internal / internal merge in internal-ws
+multiple notification app troubleShooting / multiple socket call from same channelIds problem solve
+
+
+exports.getAllCustomerList = async (req, res) => {
+
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-multiorigin to merge both in main and statusMessage live
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-remove shopify obj on onbording admin -- done	
+
 
 BRanches to merge
-assign_optimize - kaushal
+broadcast wallet check before sending
+wallet new working statusMessage - country-sagar - price plan
+
  
 
 PARTNER WORKING completed with testing
-template edit working
+template edit working -- done
 
 
 https://github.com/hantsy/nestjs-rest-sample/blob/master/src/auth/auth.service.ts
 
 db.getCollection("inbounds").deleteMany({$or:[{to:'919573084874'},{from:'919573084874'}]})
 
-
+remove shopify obj on onbording admin -- done	
+multiorigin to merge both in main and statusMessage live -- done
 template add button shopifyApp remaining -- done	
 Account status should get off after expiry -- done, merge remaing
 garbage collection
