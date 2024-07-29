@@ -1,0 +1,1 @@
+tail -n 500 /home/ubuntu/.pm2/logs/11za-App-error.log

@@ -708,3 +708,147 @@ const clientData = await primary.model(constants.MODELS.masteruser, masteruser)
                         } : {}
                     })
                     .lean();
+
+---------------------------------------------------------------------------------
+
+
+const broadcastCount = await secondary.model(constants.MODELS.inbounds, inBounds).aggregate([
+                {
+                    $match: {
+                        "broadcastData.broadcastId": { $in: broadcastIds },
+                    }
+                },
+                {
+                    $lookup: {
+                        from: constants.MODELS.msgstatus,
+                        localField: "messageId",
+                        foreignField: "messageId",
+                        as: "messageStatus"
+                    }
+                },
+                {
+                    $unwind: { "path": "$messageStatus" }
+                },
+                {
+                    $group: {
+                        _id: "$broadcastData.broadcastId", // Group by broadcastId
+                        totalsent: {
+                            $sum: {
+                                $cond: {
+                                    if: { $ne: ["$messageStatus.status", "failed"] },
+                                    then: 1,
+                                    else: 0
+                                }
+                            }
+                        },
+                        totaldeliver: {
+                            $sum: {
+                                $cond: {
+                                    if: { $in: ["$messageStatus.status", ["seen", "delivered"]] },
+                                    then: 1,
+                                    else: 0
+                                }
+                            }
+                        },
+                        totalseen: {
+                            $sum: {
+                                $cond: {
+                                    if: { $eq: ["$messageStatus.status", "seen"] },
+                                    then: 1,
+                                    else: 0
+                                }
+                            }
+                        },
+                        totalfailed: {
+                            $sum: {
+                                $cond: {
+                                    if: { $eq: ["$messageStatus.status", "failed"] },
+                                    then: 1,
+                                    else: 0
+                                }
+                            }
+                        },
+                        // totalresponded: {
+                        //     $sum: {
+                        //         $cond: {
+                        //             if: { $in: ["$messageStatus.status", ["seen", "delivered"]] },
+                        //             then: 1,
+                        //             else: 0
+                        //         }
+                        //     }
+                        // }
+                    }
+                },
+            ]);
+
+
+-----------------------------------------------------------------------------------
+
+
+ const pipeline = [
+                {
+                    $match: {
+                        mobileNo: { $in: mobileNumbers },
+                        $or: [
+                            { isDelete: { $eq: false } },
+                            { isDelete: { $eq: null } },
+                            { isDelete: { $exists: false } }
+                        ],
+                        conversation: { $exists: true }
+                    }
+                },
+                {
+                    $project: {
+                        conversation: 1
+                    }
+                },
+                {
+                    $addFields: {
+                        conversation: {
+                            $cond: {
+                                if: { $isArray: "$conversation" },
+                                then: "$conversation",
+                                else: [{ conversationId: "$conversation.conversationId", origin: "$conversation.origin", expiresAt: "$conversation.expiresAt" }]
+                            }
+                        }
+                    }
+                },
+                {
+                    $addFields: {
+                        filteredConversations: {
+                            $filter: {
+                                input: "$conversation",
+                                as: "conv",
+                                cond: { $eq: ["$$conv.origin", catogary] }
+                            }
+                        }
+                    }
+                },
+                {
+                    $addFields: {
+                        expiresAtTime: {
+                            $map: {
+                                input: "$filteredConversations",
+                                as: "conv",
+                                in: { $toDate: "$$conv.expiresAt" }
+                            }
+                        }
+                    }
+                },
+                {
+                    $addFields: {
+                        validConversations: {
+                            $filter: {
+                                input: "$filteredConversations",
+                                as: "conv",
+                                cond: { $gte: [{ $toDate: "$$conv.expiresAt" }, new Date()] }
+                            }
+                        }
+                    }
+                },
+                {
+                    $match: {
+                        "validConversations.0": { $exists: true }
+                    }
+                }
+            ];

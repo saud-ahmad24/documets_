@@ -1542,6 +1542,19 @@ master merge in internal / internal merge in internal-ws
 multiple notification app troubleShooting / multiple socket call from same channelIds problem solve
 
 
+task on - 26 - July
+main merge in admin-internal and conflicts remove
+admin swal error solve
+arham new onboarding account details update in users db
+new plan working statusMessage app
+
+task on - 27 - July
+permission-view-change merge in internal/ internal merge in App-demo
+new plan working statusMessage app
+aac mimeType troubleShooting for app
+shopifyABC error find and solve
+
+
 exports.getAllCustomerList = async (req, res) => {
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
