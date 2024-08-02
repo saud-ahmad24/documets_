@@ -1554,10 +1554,36 @@ new plan working statusMessage app
 aac mimeType troubleShooting for app
 shopifyABC error find and solve
 
+task on - 29 - July
+all bd tagged customers deleted from endCustomers database 11za
+extention lowercase validation for media
+new broadcast charges/cost working with countryCode
 
-exports.getAllCustomerList = async (req, res) => {
+
+task on - 30 - July
+new broadcast charges/cost working with countryCode
+broadcast amount calculate before send triggering
+temp_preview merge in internal/ pricingcheckbeforebroadcast-saud merge in internal/ internal merge in internal-ws/ addkeyadnloader-om merge in main
+
+task on - 31 - July
+create broadcast/ failed number working
+chetan bhai broadcast error check
+
+task on - 1 - August
+openApi_logs merge in internal
+create broadcast/ failed number working
+special character . remove admin lead create
+logs view error solve admin
+
+task on - 2 - August
+branch code checking and merging
+create broadcast/ failed number working
+
+
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+create broadcast with faildNumbers
+broadcast batch working
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
