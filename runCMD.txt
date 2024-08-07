@@ -1,0 +1,7 @@
+dxdiag
+regedit
+mstsc
+appwiz.cpl
+services.msc
+diskmgmt.msc
+temp %temp%

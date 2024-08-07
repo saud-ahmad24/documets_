@@ -1576,24 +1576,65 @@ special character . remove admin lead create
 logs view error solve admin
 
 task on - 2 - August
-branch code checking and merging
 create broadcast/ failed number working
+bulkurl_openAPI merge in internal
+internal merge in master and live
+
+
+Working as on 2-Aug
+openApis logs working error/success
+graphy working
+shopify payment
+edit template changes
+permission working changes
+customer save with anniversaryDate, dateOfBirth
+getcustomerbyId api
+vastra invoiceFunction working
+shopifyCC razorpay working
+broadcast charges accurate calculate according to country code/ before create nd before send
+bulktemplate multiple url working and file hearder url working
+
+task on - 3 - August
+master merge in internal
+numberMasking working checking
+woocommerce pluginkey error solve	
+multiple url working in bulkTemplate- testing/correction
+admin cron error checking
+
+task on - 5 - August
+inquiry-gridview/ wallet_balance_manage-main/ waba_name/wallet_export_hide/ addLoader-om merge in admin/ admin gridView controller load error solve
+number-masking-working / failedrebroadcast-saud merge in internal
+create reBroadcast from failed message/numbers	
+sendQuickTemplate header default send working
+Belgaum Golf Association signup manual create
+replayx exchange co. create lead admin error solve
+
+
+task on - 7 - August 
+db_sangeettuneoftrends_india tagsWise/lastmessage customer deleted
+all_sendTemp /mail-shoot-lead-create /clear_fcm merge in main admin
+change_export/ accountStatus-app merge in internal
+Otro Diamonds LLP meta onborading entries in db
+upon changing accountStatus on app, make logout in app
+dynamic url view solve in template view
 
 
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-create broadcast with faildNumbers
+cron seperate app
+shopify-ref working --- done merge yet to remain
+create broadcast with faildNumbers -- done
 broadcast batch working
+quicktemplate header default working -- done
+negative wallet template/mail not sent Admin -- done
+customers wrong load on message send
+kubernetes statusMessage pod create and check
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
 BRanches to merge
-broadcast wallet check before sending
+broadcast wallet check before sending -- done
 wallet new working statusMessage - country-sagar - price plan
-
- 
-
-PARTNER WORKING completed with testing
 template edit working -- done
 
 

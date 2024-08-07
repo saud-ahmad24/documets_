@@ -852,3 +852,50 @@ const broadcastCount = await secondary.model(constants.MODELS.inbounds, inBounds
                     }
                 }
             ];
+
+
+-------------------------------------------------------------------
+
+
+
+const aggregateQuery = primary.model(constants.MODELS.users, users).aggregate([
+                {
+                    $match: {
+                        $and: [
+                            { companyName: regex },
+                            {
+                                $or: [
+                                    { isDelete: false },
+                                    { isDelete: { $exists: false } }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "greentickcustomers",
+                        let: { userId: '$_id' },
+                        pipeline: [
+                            { $match: { $expr: { $eq: ['$cid', '$$userId'] } } },
+                            { $sort: { _id: -1 } },
+                            { $limit: 1 }
+                        ],
+                        as: 'greentickStatus'
+                    }
+                },
+                {
+                    $unwind: {
+                        path: '$greentickStatus',
+                        preserveNullAndEmptyArrays: true
+                    }
+                },
+                {
+                    $addFields: {
+                        greentickStatus: '$greentickStatus.greentickStatus'
+                    }
+                },
+                {
+                    $match: statusG && statusG !== 'all' ? { greentickStatus: statusG } : {}
+                }
+            ]);

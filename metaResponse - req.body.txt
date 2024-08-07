@@ -1,0 +1,38 @@
+| metaResponse - req.body---- {
+2|Admin-11za  |   event: 'SolutionOnboarding::PhoneNumber::Success',
+2|Admin-11za  |   apiAccountName: 'engeeseccpaas589',
+2|Admin-11za  |   apiAccountId: '081ab573-2579-40fc-96e1-33ee62273b99',
+2|Admin-11za  |   whatsAppAccountId: '28b3635c-cdd3-4db7-a508-669bb6797073',
+2|Admin-11za  |   phoneNumber: '919731550222',
+2|Admin-11za  |   metaWabaId: '404123406111379',
+2|Admin-11za  |   solutionId: '851651536751222'
+2|Admin-11za  | }
+2|Admin-11za  | metaResponse - req.body----JSON {"event":"SolutionOnboarding::Ph                                                                                                                                                             oneNumber::Success","apiAccountName":"engeeseccpaas589","apiAccountId":"081ab573                                                                                                                                                             -2579-40fc-96e1-33ee62273b99","whatsAppAccountId":"28b3635c-cdd3-4db7-a508-669bb                                                                                                                                                             6797073","phoneNumber":"919731550222","metaWabaId":"404123406111379","solutionId                                                                                                                                                             ":"851651536751222"}
+2|Admin-11za  | TypeError: Cannot read properties of null (reading 'metaResponse                                                                                                                                                             WABA')
+2|Admin-11za  |     at /home/engees/11za/admin/routes/fb/metaOnboarding.js:93:49
+2|Admin-11za  |     at process.processTicksAndRejections (node:internal/process/                                                                                                                                                             task_queues:95:5)
+2|Admin-11za  | POST /metaResponse 500 3.834 ms - 113
+2|Admin-11za  | POST /wallet/payme
+
+
+{
+  "event": "SolutionOnboarding::PhoneNumber::Success",
+  "apiAccountName": "engeeseccpaas589",
+  "apiAccountId": "081ab573-2579-40fc-96e1-33ee62273b99",
+  "whatsAppAccountId": "28b3635c-cdd3-4db7-a508-669bb6797073",
+  "phoneNumber": "919731550222",
+  "metaWabaId": "404123406111379",
+  "solutionId": "851651536751222"
+}
+
+
+{
+    "event": "SolutionOnboarding::WABA::Success",
+    "apiAccountName": "engeeseccpaas589",
+    "apiAccountId": "081ab573-2579-40fc-96e1-33ee62273b99",
+    "whatsAppAccountId": "28b3635c-cdd3-4db7-a508-669bb6797073",
+    "phoneNumber": "919731550222",
+    "metaWabaId": "404123406111379",
+    "solutionId": "851651536751222",
+    "apiKey" : "vJpfWnpGtLckLpxRMQep4K6XqGe2d1vI"
+}
