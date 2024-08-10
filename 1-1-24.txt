@@ -1612,12 +1612,70 @@ replayx exchange co. create lead admin error solve
 
 task on - 7 - August 
 db_sangeettuneoftrends_india tagsWise/lastmessage customer deleted
-all_sendTemp /mail-shoot-lead-create /clear_fcm merge in main admin
-change_export/ accountStatus-app merge in internal
+
+all_sendTemp /mail-shoot-lead-create /permission_export /clear_fcm /customerPermissions-om /subdomain-missing-alert-popup merge in main admin and /change_export/ accountStatus-app merge in internal
 Otro Diamonds LLP meta onborading entries in db
 upon changing accountStatus on app, make logout in app
 dynamic url view solve in template view
 
+engeeseccpaas595	+91 99740 55514
+Dermacon Ahmedabad 2027
+
+Client - BandhaniVilla 
+WhatsApp catalogue need to sync with 11za
+
+
+task on - 9 - August 
+Sakhiya Skin Clinic Limited - Swanand Pathology Laboratory
+isDelete query added for lead create from signup request	
+BandhaniVilla meta products sync done in db 
+Swanand Pathology Laboratory Swanand Pathology Laboratory
+
+
+working as on 9 Aug
+failed broadcast recreate working
+number masking working
+getCustomerByMasterStatus, master Status working
+broadcast by masterStatus
+carousel send from app
+account logout working for app on accountStatus change
+shopifyCC productImage url validations
+customerName validations in shopifyABC cron
+sendQuickTemplate header url default working
+watch tutorial working
+templatename - with category
+	
+task on - 10 - August 
+customerViewSet,
+bugSolve-om,
+customerBillingChang-om,
+isOnlyApiUser-om,
+iconChange-om,
+greenTickCustomer-om
+customerPermissions-om 
+addkeyadnloader-om
+notification-toCustomer
+allModuleWorking-om
+changes-adminInternal-om
+allTemplate
+shopifyABCcron customer name working
+master merge in internal
+
+task on - 10 - August 
+cron email working admin, companyName added live
+all admin branches merged again in 10aug2024 branch
+
+=-=-=-=-=-=-=-=-=-
+isOnlyApiUser-om  = Admin -- not to merge
+Notification-master-om  = Admin --- not to merge
+country-om  = Admin
+
+
+checksession 401
+if not permission of queue then no notifications
+unread count on messge list 
+toggle pe create and delete deployment
+statusMessage ws merged in main - revert 
 
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

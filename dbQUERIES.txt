@@ -899,3 +899,23 @@ const aggregateQuery = primary.model(constants.MODELS.users, users).aggregate([
                     $match: statusG && statusG !== 'all' ? { greentickStatus: statusG } : {}
                 }
             ]);
+
+--------------------------------------------------------------------
+
+
+await secondary.model(constants.MODELS.permissions, permissionModel)
+                    .updateOne(
+                      {
+                        _id: permissionToUpdate._id,
+                        'permission.collectionName': ele.collectionName
+                      },
+                      {
+                        $set: {
+                          'permission.$.insertUpdate': true,
+                          'permission.$.delete': true,
+                          'permission.$.view': true,
+                          'permission.$.export': true
+                        }
+                      }
+                    );
+                }
