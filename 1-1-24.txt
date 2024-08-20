@@ -1664,14 +1664,58 @@ master merge in internal
 task on - 10 - August 
 cron email working admin, companyName added live
 all admin branches merged again in 10aug2024 branch
+checksession response change
+Blockskillo, GREENI,AJVA Fintech Private Limited  signuprequest form added in db
+mail send for reset password to client from admin live
+openApi bodyFiled space error solve
 
-=-=-=-=-=-=-=-=-=-
-isOnlyApiUser-om  = Admin -- not to merge
-Notification-master-om  = Admin --- not to merge
-country-om  = Admin
+task on - 12 - August 
+permission_hide-show/ allTemplate/ ref_inPartnerUser merge in 10aug2024, internal merge in internal-ws
+referral_conversion, billable condition added and live /websokcet changes
+db_otrodiamondsllp_india charges added for missing messageStatus
+Vittakosh all meta details changes and new added in users
+
+task on - 13 - August 
+havededicatedpod-om, filter_export_data, filterInAllModule-om merge in 10aug2024(Admin)
+master, open-api-send-carousel, set-carousel-autoreply, api-calls-sagar merge in internal,internal-ws merge in master-ws(Web) /internal merge in main(statusMsg App)
+chatRouters commented / chats.controller.js changes Sagar bhai
+script to count inbound statistics created
+Greeni products sync through script
+kubernetes App changes for isDedicatedPod working
+
+task on - 14 - August 
+export_createApi,addLoderAllApis-om, 10aug2024 merge in main(Admin) and live
+havededicatedpod-working merge in main(Kubernetes App)
+lead create from signup form changes
+kubernetes App changes for isDedicatedPod working
+Kubernetes whole live
+
+task on - 15 - August 
+create-pod merge in main(Admin)
+create deployment, service and ingress working from admin 
+bulkandsingle merge in interal-broadcast
+vandan script run on live to add payload in carousel templates
+webapp login from admin problem solve
+
+task on - 16 - August 
+removeSpaceandspecialcharacters-om, admin_customer_report merge in main
+webapp login from admin problem solve again and deployment code changes
+mobileApp broadcast not send problem solve
+/findBroadcastListByTag api change for objectObject error 
+
+task on - 17 - August 
+broadcast low wallet error solve on broadcast by tags
+authentication template send from openAPis, without getting proper details
+master-ws merge in internal-ws
+
+task on - 18 - August 
+optimize-chat-page-api merge in internal-ws
 
 
-checksession 401
+template page create and list load
+subdomain delete from cloudFlair
+set dedicated key to true and false on admin
+checksession 401 -- done
 if not permission of queue then no notifications
 unread count on messge list 
 toggle pe create and delete deployment
@@ -1679,7 +1723,7 @@ statusMessage ws merged in main - revert
 
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-cron seperate app
+cron seperate app -- done
 shopify-ref working --- done merge yet to remain
 create broadcast with faildNumbers -- done
 broadcast batch working

@@ -1,0 +1,25 @@
+let count = 0
+db.getCollection("msgstatuses").find({"event" : "MessageStatus::seen",whatsapp : { $exists: false}}).sort({_id:-1}).forEach((el)=>{
+     let inbound = db.getCollection("inbounds").findOne({messageId : el.messageId}, {to :1 })
+    let aa = {
+        "whatsapp" : {
+            "conversation" : {
+                "conversationId" : "2be0f9682110b01ea2f094ce7a3633bf" + count,
+                "origin" : "marketing",
+                "expiresAt" : "2024-08-09T01:31:00Z"
+            },
+            "conversationId" : "2be0f9682110b01ea2f094ce7a3633bf" + count,
+            "pricingModel" : "CBP",
+            "billable" : true
+        },
+         "from" : inbound.to,
+         "isPaidTemplate" : true,
+         "details" : {
+                "from" :inbound.to,
+            },
+    }
+    count++
+    console.log(aa)
+    db.getCollection("msgstatuses").updateOne({ _id : el._id}, { $set : aa})
+})
+
