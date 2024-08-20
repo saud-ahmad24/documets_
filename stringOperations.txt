@@ -1,0 +1,75 @@
+JavaScript provides a wide array of string operations. Here’s a comprehensive list of string operations and methods you can use in JavaScript:
+
+### 1. **Creating Strings**
+   - **String Literal:** `let str = "Hello, World!";`
+   - **String Object:** `let strObj = new String("Hello, World!");`
+
+### 2. **Basic String Operations**
+   - **Length:** `str.length`
+   - **Accessing Characters:** `str.charAt(index)` or `str[index]`
+   - **Concatenation:** `str1.concat(str2)` or `str1 + str2`
+   - **Template Literals:** \`Hello, ${name}!\`
+   - **String Interpolation:** \`Sum is ${a + b}\`
+
+### 3. **String Manipulation Methods**
+   - **toUpperCase:** `str.toUpperCase()`
+   - **toLowerCase:** `str.toLowerCase()`
+   - **trim:** `str.trim()`
+   - **trimStart / trimEnd:** `str.trimStart()` / `str.trimEnd()`
+   - **padStart:** `str.padStart(targetLength, padString)`
+   - **padEnd:** `str.padEnd(targetLength, padString)`
+   - **repeat:** `str.repeat(count)`
+
+### 4. **Searching and Extracting Substrings**
+   - **indexOf:** `str.indexOf(searchValue, startIndex)`
+   - **lastIndexOf:** `str.lastIndexOf(searchValue, startIndex)`
+   - **includes:** `str.includes(searchValue, startIndex)`
+   - **startsWith:** `str.startsWith(searchValue, startIndex)`
+   - **endsWith:** `str.endsWith(searchValue, length)`
+   - **slice:** `str.slice(startIndex, endIndex)`
+   - **substring:** `str.substring(startIndex, endIndex)`
+   - **substr:** `str.substr(startIndex, length)` (Deprecated)
+   - **split:** `str.split(separator, limit)`
+   - **match:** `str.match(regex)`
+   - **matchAll:** `str.matchAll(regex)`
+   - **search:** `str.search(regex)`
+
+### 5. **Replacing Content**
+   - **replace:** `str.replace(searchValue, newValue)`
+   - **replaceAll:** `str.replaceAll(searchValue, newValue)`
+
+### 6. **String Comparison**
+   - **localeCompare:** `str1.localeCompare(str2)`
+
+### 7. **Regular Expressions**
+   - **test:** `regex.test(str)`
+   - **exec:** `regex.exec(str)`
+
+### 8. **String Conversion**
+   - **String to Number:** `Number(str)` or `parseInt(str)` or `parseFloat(str)`
+   - **Number to String:** `num.toString()` or `String(num)`
+
+### 9. **Escape Sequences**
+   - **New Line:** `\n`
+   - **Tab:** `\t`
+   - **Backslash:** `\\`
+   - **Single Quote:** `\'`
+   - **Double Quote:** `\"`
+   - **Unicode:** `\uXXXX`
+
+### 10. **Template Literals (ES6)**
+   - **Multiline Strings:** \`Hello,\nWorld!\`
+   - **Expression Interpolation:** \`2 + 2 is ${2 + 2}\`
+
+### 11. **Converting Case**
+   - **toLocaleUpperCase:** `str.toLocaleUpperCase(locale)`
+   - **toLocaleLowerCase:** `str.toLocaleLowerCase(locale)`
+
+### 12. **Advanced String Methods**
+   - **normalize:** `str.normalize(form)`
+   - **codePointAt:** `str.codePointAt(index)`
+   - **fromCodePoint:** `String.fromCodePoint(codePoint)`
+   - **charCodeAt:** `str.charCodeAt(index)`
+   - **fromCharCode:** `String.fromCharCode(num1, num2, ...)`
+
+These operations cover a wide range of use cases for working with strings in JavaScript.

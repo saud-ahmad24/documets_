@@ -1,0 +1,207 @@
+When interviewing for a JavaScript position, candidates can expect a variety of questions ranging from basic syntax to more advanced concepts and problem-solving tasks. Below is a list of technical and practical questions that are commonly asked during JavaScript interviews, along with brief explanations or hints where applicable.
+
+### **1. Basic JavaScript Questions**
+
+#### **Syntax and Basics**
+- **What are the different data types in JavaScript?**
+  - JavaScript has primitive data types (`String`, `Number`, `Boolean`, `Null`, `Undefined`, `Symbol`, `BigInt`) and reference types (Objects, Arrays, Functions).
+
+- **Explain the difference between `var`, `let`, and `const`.**
+  - `var` is function-scoped and can be hoisted. `let` and `const` are block-scoped, but `const` also cannot be reassigned after its initial assignment.
+
+- **What is hoisting in JavaScript?**
+  - Hoisting is JavaScript's behavior of moving declarations to the top of their scope before code execution. Only the declarations are hoisted, not the initializations.
+
+- **What is the difference between `==` and `===`?**
+  - `==` compares values after type coercion (loose equality), while `===` compares both value and type without coercion (strict equality).
+
+- **What is a closure?**
+  - A closure is a function that remembers its lexical scope even when the function is executed outside that scope.
+
+  ```javascript
+  function outer() {
+      let count = 0;
+      return function inner() {
+          count++;
+          console.log(count);
+      };
+  }
+  const counter = outer();
+  counter(); // Output: 1
+  counter(); // Output: 2
+  ```
+
+#### **Control Structures and Loops**
+- **Explain how the `for`, `while`, and `do-while` loops work.**
+  - `for` is a loop with an initialization, condition, and increment expression. `while` loops execute as long as a condition is true, and `do-while` loops execute at least once before checking the condition.
+
+- **What is the difference between `break` and `continue`?**
+  - `break` exits the loop entirely, while `continue` skips the current iteration and continues with the next one.
+
+### **2. Intermediate JavaScript Questions**
+
+#### **Functions and Scope**
+- **What is the difference between a function declaration and a function expression?**
+  - Function declarations are hoisted, meaning they can be called before they are defined. Function expressions are not hoisted, so they must be defined before they are called.
+
+  ```javascript
+  // Function Declaration
+  function greet() {
+      console.log('Hello');
+  }
+
+  // Function Expression
+  const greet = function() {
+      console.log('Hello');
+  };
+  ```
+
+- **How do you create and use an Immediately Invoked Function Expression (IIFE)?**
+  - An IIFE is a function that is executed right after it is defined. It’s used to create a new scope and avoid polluting the global scope.
+
+  ```javascript
+  (function() {
+      console.log('This is an IIFE');
+  })();
+  ```
+
+#### **Asynchronous JavaScript**
+- **Explain how `async` and `await` work.**
+  - `async` functions always return a promise. `await` is used to wait for a promise to resolve before moving on to the next line of code.
+
+  ```javascript
+  async function fetchData() {
+      const data = await fetch('https://api.example.com/data');
+      return data.json();
+  }
+  ```
+
+- **What is a Promise? How do you create one?**
+  - A Promise is an object representing the eventual completion or failure of an asynchronous operation. It has three states: `pending`, `fulfilled`, and `rejected`.
+
+  ```javascript
+  const myPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+          resolve('Success!');
+      }, 1000);
+  });
+  ```
+
+- **Explain the `then()`, `catch()`, and `finally()` methods in Promises.**
+  - `then()` is used to handle a resolved promise. `catch()` handles errors (rejected promises). `finally()` is executed after the promise is settled, regardless of its outcome.
+
+- **What are `setTimeout` and `setInterval`?**
+  - `setTimeout` schedules a function to execute after a specified delay. `setInterval` schedules a function to repeat execution at specified intervals.
+
+  ```javascript
+  setTimeout(() => console.log('Hello after 1 second'), 1000);
+
+  const intervalId = setInterval(() => console.log('Hello every 2 seconds'), 2000);
+  ```
+
+#### **Objects and Prototypes**
+- **Explain prototypal inheritance in JavaScript.**
+  - JavaScript objects can inherit properties and methods from other objects. This inheritance is achieved through the object's prototype chain.
+
+  ```javascript
+  function Animal(name) {
+      this.name = name;
+  }
+  Animal.prototype.speak = function() {
+      console.log(`${this.name} makes a noise.`);
+  };
+  ```
+
+- **How do you create and use classes in ES6?**
+  - Classes in ES6 provide a clearer syntax for creating objects and managing inheritance.
+
+  ```javascript
+  class Animal {
+      constructor(name) {
+          this.name = name;
+      }
+      speak() {
+          console.log(`${this.name} makes a noise.`);
+      }
+  }
+  ```
+
+- **What is the `this` keyword in JavaScript?**
+  - `this` refers to the context in which a function is invoked. Its value can change depending on how a function is called (e.g., method, event handler, constructor).
+
+#### **Arrays and Iteration**
+- **How do you manipulate arrays using methods like `map()`, `filter()`, `reduce()`, `forEach()`, etc.?**
+  - These methods allow for iteration and transformation of array elements:
+    - `map()`: Transforms each element in an array and returns a new array.
+    - `filter()`: Filters elements based on a condition and returns a new array.
+    - `reduce()`: Reduces the array to a single value based on a reducer function.
+    - `forEach()`: Executes a provided function once for each array element.
+
+  ```javascript
+  const numbers = [1, 2, 3, 4];
+  const doubled = numbers.map(n => n * 2); // [2, 4, 6, 8]
+  const evens = numbers.filter(n => n % 2 === 0); // [2, 4]
+  const sum = numbers.reduce((acc, n) => acc + n, 0); // 10
+  numbers.forEach(n => console.log(n)); // 1, 2, 3, 4
+  ```
+
+### **3. Advanced JavaScript Questions**
+
+#### **Event Handling and DOM Manipulation**
+- **Explain the event loop and how it works in JavaScript.**
+  - The event loop is a mechanism that allows JavaScript to perform non-blocking I/O operations by offloading operations to the system kernel whenever possible.
+
+- **How do you attach event handlers in JavaScript?**
+  - Event handlers can be attached using `addEventListener`, inline in HTML, or by setting the `onclick` property.
+
+  ```javascript
+  document.getElementById('myButton').addEventListener('click', function() {
+      console.log('Button clicked');
+  });
+  ```
+
+- **What is event delegation, and how does it work?**
+  - Event delegation involves using a single event listener to manage all events for child elements of a parent element. It leverages event bubbling to handle events at a higher level in the DOM.
+
+  ```javascript
+  document.getElementById('parent').addEventListener('click', function(event) {
+      if (event.target && event.target.matches('li.item')) {
+          console.log('Item clicked:', event.target.textContent);
+      }
+  });
+  ```
+
+#### **Memory Management and Performance**
+- **Explain garbage collection in JavaScript.**
+  - Garbage collection in JavaScript is the process by which the engine automatically frees up memory by removing objects that are no longer reachable or in use.
+
+- **What is a memory leak, and how can you prevent it in JavaScript?**
+  - A memory leak occurs when memory that is no longer needed is not released. Preventing memory leaks involves careful management of references, especially in closures, event listeners, and global variables.
+
+#### **Security**
+- **How do you protect against XSS (Cross-Site Scripting) in JavaScript?**
+  - XSS can be prevented by sanitizing user input, using secure libraries, and following best practices like using Content Security Policy (CSP) and avoiding `eval()`.
+
+- **What is CORS, and how does it work in JavaScript?**
+  - CORS (Cross-Origin Resource Sharing) is a security feature implemented by browsers that restricts web applications from making requests to a domain different from the one that served the web page. It requires the server to include specific headers to allow cross-origin requests.
+
+#### **Design Patterns**
+- **Explain the module pattern in JavaScript.**
+  - The module pattern allows you to encapsulate and structure code, keeping variables and functions private while exposing only what is necessary.
+
+  ```javascript
+  const myModule = (function() {
+      let privateVar = 'I am private';
+      
+      function privateMethod() {
+          console.log(privateVar);
+      }
+
+      return {
+          publicMethod: function() {
+              privateMethod();
+          }
+      };
+  })();
+
+  myModule.publicMethod(); // Output: I am

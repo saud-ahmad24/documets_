@@ -1,0 +1,59 @@
+The issue where both `obj1` and `obj2` refer to the same object, so changes to `obj2` affect `obj1`, occurs with **reference data types** in JavaScript. Here's a breakdown of this problem and the data types it affects:
+
+### **Reference Data Types**
+In JavaScript, reference data types include:
+- **Objects**
+- **Arrays**
+- **Functions**
+- **Dates**
+- **Maps**
+- **Sets**
+- **WeakMaps**
+- **WeakSets**
+- **Any custom objects**
+
+When you assign a reference data type to another variable using the `=` operator, you're copying the reference to the original data, not the actual value. Therefore, both variables point to the same location in memory, which means modifying one variable will affect the other.
+
+#### **Example with Objects**
+```javascript
+let obj1 = { name: "John" };
+let obj2 = obj1;
+
+obj2.name = "Doe";
+
+console.log(obj1.name); // Output: "Doe"
+```
+- **Explanation:** Both `obj1` and `obj2` refer to the same object in memory. Changing `obj2.name` also changes `obj1.name` because they are the same object.
+
+#### **Example with Arrays**
+```javascript
+let arr1 = [1, 2, 3];
+let arr2 = arr1;
+
+arr2.push(4);
+
+console.log(arr1); // Output: [1, 2, 3, 4]
+```
+- **Explanation:** Both `arr1` and `arr2` point to the same array in memory. Modifying `arr2` also modifies `arr1`.
+
+### **Primitive Data Types**
+In contrast, **primitive data types** (such as `String`, `Number`, `Boolean`, `null`, `undefined`, `Symbol`, and `BigInt`) behave differently:
+- **Primitive Data Types:** When you assign a primitive value to another variable, a copy of the value is made. Each variable holds its own independent value.
+
+#### **Example with Primitives**
+```javascript
+let a = 5;
+let b = a;
+
+b = 10;
+
+console.log(a); // Output: 5
+console.log(b); // Output: 10
+```
+- **Explanation:** `a` and `b` are independent variables. Changing `b` does not affect `a` because they each store their own copy of the value `5`.
+
+### **Summary**
+- **Reference Data Types** (e.g., objects, arrays): Variables store references to the same object or array in memory. Changes to one variable affect the others that reference the same object.
+- **Primitive Data Types** (e.g., numbers, strings): Variables store the actual value. Changes to one variable do not affect others. 
+
+Understanding the difference between reference and primitive data types is crucial in avoiding unintended side effects when working with complex data structures in JavaScript.
