@@ -1,0 +1,203 @@
+Here are some of the most commonly used algorithms, along with examples in both Python and JavaScript:
+
+### 1. **Sorting: Quick Sort**
+Quick Sort is an efficient, in-place sorting algorithm. It uses the divide-and-conquer strategy.
+
+#### Python:
+```python
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quick_sort(left) + middle + quick_sort(right)
+
+arr = [3, 6, 8, 10, 1, 2, 1]
+print(quick_sort(arr))
+```
+
+#### JavaScript:
+```javascript
+function quickSort(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    }
+    const pivot = arr[Math.floor(arr.length / 2)];
+    const left = arr.filter(x => x < pivot);
+    const middle = arr.filter(x => x === pivot);
+    const right = arr.filter(x => x > pivot);
+    return [...quickSort(left), ...middle, ...quickSort(right)];
+}
+
+const arr = [3, 6, 8, 10, 1, 2, 1];
+console.log(quickSort(arr));
+```
+
+### 2. **Searching: Binary Search**
+Binary Search is an efficient algorithm for finding an item from a sorted list of items.
+
+#### Python:
+```python
+def binary_search(arr, target):
+    low = 0
+    high = len(arr) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+
+arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+print(binary_search(arr, 4))
+```
+
+#### JavaScript:
+```javascript
+function binarySearch(arr, target) {
+    let low = 0;
+    let high = arr.length - 1;
+
+    while (low <= high) {
+        const mid = Math.floor((low + high) / 2);
+        if (arr[mid] === target) {
+            return mid;
+        } else if (arr[mid] < target) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return -1;
+}
+
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log(binarySearch(arr, 4));
+```
+
+### 3. **Graph Traversal: Depth-First Search (DFS)**
+DFS is an algorithm for traversing or searching tree or graph data structures.
+
+#### Python:
+```python
+def dfs(graph, start, visited=None):
+    if visited is None:
+        visited = set()
+    visited.add(start)
+    print(start)
+
+    for next in graph[start] - visited:
+        dfs(graph, next, visited)
+    return visited
+
+graph = {
+    'A': {'B', 'C'},
+    'B': {'A', 'D', 'E'},
+    'C': {'A', 'F'},
+    'D': {'B'},
+    'E': {'B', 'F'},
+    'F': {'C', 'E'}
+}
+
+dfs(graph, 'A')
+```
+
+#### JavaScript:
+```javascript
+function dfs(graph, start, visited = new Set()) {
+    visited.add(start);
+    console.log(start);
+
+    for (const neighbor of graph[start]) {
+        if (!visited.has(neighbor)) {
+            dfs(graph, neighbor, visited);
+        }
+    }
+}
+
+const graph = {
+    A: ['B', 'C'],
+    B: ['A', 'D', 'E'],
+    C: ['A', 'F'],
+    D: ['B'],
+    E: ['B', 'F'],
+    F: ['C', 'E'],
+};
+
+dfs(graph, 'A');
+```
+
+### 4. **Dynamic Programming: Fibonacci Sequence**
+Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones.
+
+#### Python:
+```python
+def fibonacci(n, memo={}):
+    if n in memo:
+        return memo[n]
+    if n <= 1:
+        return n
+    memo[n] = fibonacci(n-1, memo) + fibonacci(n-2, memo)
+    return memo[n]
+
+print(fibonacci(10))
+```
+
+#### JavaScript:
+```javascript
+function fibonacci(n, memo = {}) {
+    if (n in memo) {
+        return memo[n];
+    }
+    if (n <= 1) {
+        return n;
+    }
+    memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo);
+    return memo[n];
+}
+
+console.log(fibonacci(10));
+```
+
+### 5. **Greedy Algorithm: Coin Change**
+Given an amount and a set of coins, determine the minimum number of coins needed to make that amount.
+
+#### Python:
+```python
+def coin_change(coins, amount):
+    coins.sort(reverse=True)
+    count = 0
+    for coin in coins:
+        count += amount // coin
+        amount %= coin
+    return count if amount == 0 else -1
+
+coins = [1, 2, 5]
+amount = 11
+print(coin_change(coins, amount))
+```
+
+#### JavaScript:
+```javascript
+function coinChange(coins, amount) {
+    coins.sort((a, b) => b - a);
+    let count = 0;
+    for (const coin of coins) {
+        count += Math.floor(amount / coin);
+        amount %= coin;
+    }
+    return amount === 0 ? count : -1;
+}
+
+const coins = [1, 2, 5];
+const amount = 11;
+console.log(coinChange(coins, amount));
+```
+
+These examples cover some of the most commonly used algorithms in both Python and JavaScript. If you need more examples or specific algorithms, feel free to ask!

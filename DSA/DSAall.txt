@@ -1,0 +1,539 @@
+Here's an overview of the most commonly used data structures, along with examples in both Python and JavaScript:
+
+### 1. **Arrays (Lists in Python)**
+An array is a collection of items stored at contiguous memory locations. The idea is to store multiple items of the same type together.
+
+#### Python:
+```python
+# Creating an array
+arr = [1, 2, 3, 4, 5]
+
+# Accessing elements
+print(arr[0])  # Output: 1
+
+# Modifying elements
+arr[2] = 10
+print(arr)  # Output: [1, 2, 10, 4, 5]
+
+# Iterating through the array
+for element in arr:
+    print(element)
+```
+
+#### JavaScript:
+```javascript
+// Creating an array
+let arr = [1, 2, 3, 4, 5];
+
+// Accessing elements
+console.log(arr[0]);  // Output: 1
+
+// Modifying elements
+arr[2] = 10;
+console.log(arr);  // Output: [1, 2, 10, 4, 5]
+
+// Iterating through the array
+arr.forEach(element => console.log(element));
+```
+
+### 2. **Linked Lists**
+A linked list is a linear data structure where each element is a separate object, known as a node, which contains data and a reference to the next node in the sequence.
+
+#### Python:
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+            return
+        last_node = self.head
+        while last_node.next:
+            last_node = last_node.next
+        last_node.next = new_node
+
+    def print_list(self):
+        curr_node = self.head
+        while curr_node:
+            print(curr_node.data)
+            curr_node = curr_node.next
+
+# Usage
+llist = LinkedList()
+llist.append(1)
+llist.append(2)
+llist.append(3)
+llist.print_list()
+```
+
+#### JavaScript:
+```javascript
+class Node {
+    constructor(data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    constructor() {
+        this.head = null;
+    }
+
+    append(data) {
+        let newNode = new Node(data);
+        if (!this.head) {
+            this.head = newNode;
+            return;
+        }
+        let current = this.head;
+        while (current.next) {
+            current = current.next;
+        }
+        current.next = newNode;
+    }
+
+    printList() {
+        let current = this.head;
+        while (current) {
+            console.log(current.data);
+            current = current.next;
+        }
+    }
+}
+
+// Usage
+let llist = new LinkedList();
+llist.append(1);
+llist.append(2);
+llist.append(3);
+llist.printList();
+```
+
+### 3. **Stacks**
+A stack is a linear data structure that follows the Last In, First Out (LIFO) principle.
+
+#### Python:
+```python
+stack = []
+
+# Push elements onto the stack
+stack.append(1)
+stack.append(2)
+stack.append(3)
+
+# Pop elements from the stack
+print(stack.pop())  # Output: 3
+print(stack.pop())  # Output: 2
+
+# Peek the top element
+print(stack[-1])  # Output: 1
+```
+
+#### JavaScript:
+```javascript
+let stack = [];
+
+// Push elements onto the stack
+stack.push(1);
+stack.push(2);
+stack.push(3);
+
+// Pop elements from the stack
+console.log(stack.pop());  // Output: 3
+console.log(stack.pop());  // Output: 2
+
+// Peek the top element
+console.log(stack[stack.length - 1]);  // Output: 1
+```
+
+### 4. **Queues**
+A queue is a linear data structure that follows the First In, First Out (FIFO) principle.
+
+#### Python:
+```python
+from collections import deque
+
+queue = deque()
+
+# Enqueue elements
+queue.append(1)
+queue.append(2)
+queue.append(3)
+
+# Dequeue elements
+print(queue.popleft())  # Output: 1
+print(queue.popleft())  # Output: 2
+
+# Peek the front element
+print(queue[0])  # Output: 3
+```
+
+#### JavaScript:
+```javascript
+let queue = [];
+
+// Enqueue elements
+queue.push(1);
+queue.push(2);
+queue.push(3);
+
+// Dequeue elements
+console.log(queue.shift());  // Output: 1
+console.log(queue.shift());  // Output: 2
+
+// Peek the front element
+console.log(queue[0]);  // Output: 3
+```
+
+### 5. **Hash Maps (Dictionaries in Python)**
+A hash map is a data structure that implements an associative array, a structure that can map keys to values.
+
+#### Python:
+```python
+# Creating a dictionary
+hash_map = {'a': 1, 'b': 2, 'c': 3}
+
+# Accessing values by key
+print(hash_map['a'])  # Output: 1
+
+# Modifying values
+hash_map['a'] = 10
+print(hash_map)  # Output: {'a': 10, 'b': 2, 'c': 3}
+
+# Iterating through the dictionary
+for key, value in hash_map.items():
+    print(key, value)
+```
+
+#### JavaScript:
+```javascript
+// Creating a hash map
+let hashMap = {'a': 1, 'b': 2, 'c': 3};
+
+// Accessing values by key
+console.log(hashMap['a']);  // Output: 1
+
+// Modifying values
+hashMap['a'] = 10;
+console.log(hashMap);  // Output: {'a': 10, 'b': 2, 'c': 3}
+
+// Iterating through the hash map
+for (let key in hashMap) {
+    console.log(key, hashMap[key]);
+}
+```
+
+### 6. **Trees**
+A tree is a hierarchical data structure that consists of nodes connected by edges. A binary tree is the most common type of tree.
+
+#### Python:
+```python
+class TreeNode:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+def inorder_traversal(root):
+    if root:
+        inorder_traversal(root.left)
+        print(root.data)
+        inorder_traversal(root.right)
+
+# Creating a binary tree
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
+root.left.left = TreeNode(4)
+root.left.right = TreeNode(5)
+
+inorder_traversal(root)  # Output: 4 2 5 1 3
+```
+
+#### JavaScript:
+```javascript
+class TreeNode {
+    constructor(data) {
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+function inorderTraversal(root) {
+    if (root) {
+        inorderTraversal(root.left);
+        console.log(root.data);
+        inorderTraversal(root.right);
+    }
+}
+
+// Creating a binary tree
+let root = new TreeNode(1);
+root.left = new TreeNode(2);
+root.right = new TreeNode(3);
+root.left.left = new TreeNode(4);
+root.left.right = new TreeNode(5);
+
+inorderTraversal(root);  // Output: 4 2 5 1 3
+```
+
+### 7. **Graphs**
+A graph is a data structure that consists of a set of nodes (vertices) connected by edges.
+
+#### Python:
+```python
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, u, v):
+        if u not in self.graph:
+            self.graph[u] = []
+        self.graph[u].append(v)
+
+    def print_graph(self):
+        for node in self.graph:
+            print(node, "->", " -> ".join(map(str, self.graph[node])))
+
+# Creating a graph
+g = Graph()
+g.add_edge(0, 1)
+g.add_edge(0, 2)
+g.add_edge(1, 2)
+g.add_edge(2, 0)
+g.add_edge(2, 3)
+g.add_edge(3, 3)
+
+g.print_graph()
+```
+
+#### JavaScript:
+```javascript
+class Graph {
+    constructor() {
+        this.graph = {};
+    }
+
+    addEdge(u, v) {
+        if (!this.graph[u]) {
+            this.graph[u] = [];
+        }
+        this.graph[u].push(v);
+    }
+
+    printGraph() {
+        for (let node in this.graph) {
+            console.log(`${node} -> ${this.graph[node].join(' -> ')}`);
+        }
+    }
+}
+
+// Creating a graph
+let g = new Graph();
+g.addEdge(0, 1);
+g.addEdge(0, 2);
+g.addEdge(1, 2);
+g.addEdge(2, 0);
+g.addEdge(2, 3);
+g.addEdge(3, 3);
+
+g.printGraph();
+```
+
+### 8. **Heaps**
+A heap is a special tree-based data structure that satisfies the heap property. It is commonly used to implement priority queues.
+
+#### Python:
+```python
+import heapq
+
+# Creating a min-heap
+heap = []
+
+# Pushing elements
+heapq.heappush(heap, 3)
+heapq.he
+
+appush(heap, 1)
+heapq.heappush(heap, 2)
+
+# Popping elements
+print(heapq.heappop(heap))  # Output: 1
+print(heapq.heappop(heap))  # Output: 2
+
+# Peeking the smallest element
+print(heap[0])  # Output: 3
+```
+
+#### JavaScript:
+```javascript
+class MinHeap {
+    constructor() {
+        this.heap = [];
+    }
+
+    insert(val) {
+        this.heap.push(val);
+        this.bubbleUp();
+    }
+
+    bubbleUp() {
+        let index = this.heap.length - 1;
+        while (index > 0) {
+            let element = this.heap[index];
+            let parentIndex = Math.floor((index - 1) / 2);
+            let parent = this.heap[parentIndex];
+            if (parent <= element) break;
+            this.heap[index] = parent;
+            this.heap[parentIndex] = element;
+            index = parentIndex;
+        }
+    }
+
+    extractMin() {
+        let min = this.heap[0];
+        let end = this.heap.pop();
+        if (this.heap.length > 0) {
+            this.heap[0] = end;
+            this.sinkDown(0);
+        }
+        return min;
+    }
+
+    sinkDown(index) {
+        let length = this.heap.length;
+        let element = this.heap[index];
+        while (true) {
+            let leftChildIdx = 2 * index + 1;
+            let rightChildIdx = 2 * index + 2;
+            let leftChild, rightChild;
+            let swap = null;
+
+            if (leftChildIdx < length) {
+                leftChild = this.heap[leftChildIdx];
+                if (leftChild < element) swap = leftChildIdx;
+            }
+            if (rightChildIdx < length) {
+                rightChild = this.heap[rightChildIdx];
+                if (
+                    (swap === null && rightChild < element) ||
+                    (swap !== null && rightChild < leftChild)
+                ) {
+                    swap = rightChildIdx;
+                }
+            }
+            if (swap === null) break;
+            this.heap[index] = this.heap[swap];
+            this.heap[swap] = element;
+            index = swap;
+        }
+    }
+
+    peek() {
+        return this.heap[0];
+    }
+}
+
+// Usage
+let heap = new MinHeap();
+heap.insert(3);
+heap.insert(1);
+heap.insert(2);
+
+console.log(heap.extractMin());  // Output: 1
+console.log(heap.extractMin());  // Output: 2
+console.log(heap.peek());  // Output: 3
+```
+
+### 9. **Tries**
+A Trie (prefix tree) is a special type of tree used to store associative data structures.
+
+#### Python:
+```python
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end_of_word = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.is_end_of_word = True
+
+    def search(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return node.is_end_of_word
+
+# Usage
+trie = Trie()
+trie.insert("hello")
+print(trie.search("hello"))  # Output: True
+print(trie.search("hel"))  # Output: False
+```
+
+#### JavaScript:
+```javascript
+class TrieNode {
+    constructor() {
+        this.children = {};
+        this.isEndOfWord = false;
+    }
+}
+
+class Trie {
+    constructor() {
+        this.root = new TrieNode();
+    }
+
+    insert(word) {
+        let node = this.root;
+        for (let char of word) {
+            if (!node.children[char]) {
+                node.children[char] = new TrieNode();
+            }
+            node = node.children[char];
+        }
+        node.isEndOfWord = true;
+    }
+
+    search(word) {
+        let node = this.root;
+        for (let char of word) {
+            if (!node.children[char]) {
+                return false;
+            }
+            node = node.children[char];
+        }
+        return node.isEndOfWord;
+    }
+}
+
+// Usage
+let trie = new Trie();
+trie.insert("hello");
+console.log(trie.search("hello"));  // Output: True
+console.log(trie.search("hel"));  // Output: False
+```
+
+These examples cover the most commonly used data structures in both Python and JavaScript. If you need more information or specific examples, feel free to ask!

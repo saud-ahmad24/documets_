@@ -1708,9 +1708,75 @@ broadcast low wallet error solve on broadcast by tags
 authentication template send from openAPis, without getting proper details
 master-ws merge in internal-ws
 
-task on - 18 - August 
-optimize-chat-page-api merge in internal-ws
+task on - 20 - August 
+optimize-chat-page-api merge in internal-ws/ customFlow_vastra-partner merge in admin main
+kubernetes app code change for service name character limit / websoceket url condition added
+JITO Incubation broadcast status update
 
+task on - 21 - August 
+send_interactive,roleWorking-om,featureModuleWorking-om merge in main(Admin) and conflicts solve/ saudChat_load merge in master-ws merge in internal-ws 
+chat excess time load reduce working
+admin regex change for companyName to create lead
+11za-cronJob-app working
+
+
+task on - 22 - August 
+customerBilling-om, isSmartship-om,apiKeyWorking-om merge in main(admin)
+product-varient-working, change-autoreply-working
+vplus authTemplate problem check / development broadcast app setup
+broadcast batch working with template status check
+
+changes as on 23-aug-2024
+smartship working, also webhook
+broadcast csv import validations
+edit, create, sync, all Template payload working
+woocommerce OrderPlacedCODConfirmation working
+mediaset working, createset, updatemediaset, deletemediaset for app
+global search for inbound app
+wallet apis for app
+woocomCodOrderCron.js cron working
+getProductImageUsingVarient change in helper
+
+task on - 23 - August 
+broadcast, webapp, cronJob app merge all and live
+internal-ws, add-template-button-payload merge in master-ws/ template-button-payload-autoreply merge in internal-broadcast(brdt)/ inquiry-grid-orderBy merge in main(admin)
+11za - crmFlow live troubleshooting / pipeline
+broadcast batch working with template status check
+
+task on - 24 - August
+pedalInvest broadcast status fetch and add
+broadcast batch working with template status check
+evoke endcustomers delete
+clothIQ products sync troubleshooting/ problem
+statusmessage all deployment rollout restart
+
+task on - 27 - August
+clothIQ 7200 products sync using script
+error handling metabulk messages | chat page error checking | evoke abc products count
+broadcast batch working with template status check
+
+task on - 28 - August
+swagger-implements merge in master (openAPIs App) | app-api merge in main-ws and live on dev. | subDomainWorking-om merge in main(Admin)
+script to get all referral_convo charges for all clients
+shopify abc cron error check for evoke client | neverlook ingress change for subdomain
+11za cron app changes and working
+
+task on - 29 - August
+master-ws merge in internal-ws | subDomainWorking-om merge in main(admin)
+11za cron app changes and working
+script to update "havededicatedpod" : true in users
+chat filter error solve on others | badhiya brand signup manual create
+broadcast openApis time schedule problem fix
+customers model tags autocomplete problem solve
+
+restrictions in subdomain name
+admin branch : msg_send_settings
+template-button-payload-autoreply  - broadcast  == internal-broadcast
+broadCST_sync  -- Kausal app
+send_interactive---- done
+kubernetesWorking-om
+branch : queue_chat (webApp)
+ 
 
 template page create and list load
 subdomain delete from cloudFlair
@@ -1730,7 +1796,7 @@ broadcast batch working
 quicktemplate header default working -- done
 negative wallet template/mail not sent Admin -- done
 customers wrong load on message send
-kubernetes statusMessage pod create and check
+kubernetes statusMessage pod create and check done
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
