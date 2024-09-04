@@ -1771,36 +1771,68 @@ customers model tags autocomplete problem solve
 
 task on - 30 - August
 amoha impex signup create manually
+app-api merge in main-ws(admin) | send-template-dynamic-value merge in internal-ws(webApp) | specificCall merge in main(11za-Cron)
+shopifyABC cron error, due to which pod restarts, solve
+11za-Cron live | 11za-App live
+
+task on - 31 - August
+app-apis  merge in main-ws(admin)
+error handle message on template create
+crm flow error solve
+
+task on - 2 - September
+app-apis  merge in main-ws(admin) | saud-internal merge in internal-ws(Web)
+on openwindow, close windows shows on lma - working
+puppeteer troubleshooting
+db_otrodiamondsllp_india all customers delete
+
+task on - 03 - September
+kubernetesWorking-om merge in main(Admin) | tempStatusCheck-bb merge in internal-ws(Web)
+puppeteer troubleshooting -- puppeteer-test
+check template status before broadcast - Kaushal | optimization
+Varkala silk saree products sync through script | Qtox Wellness Pvt. Ltd. lead create 
+addressHtml error solve for shopifyCodOrderCron
+
+task on - 04 - September
+kubernetesPartnerUserWorking-om merge in main(Admin)| timezone_correction,view-changes-04Sept2024, master-ws, autoreplay_conv_ist merge in internal-ws
+db_bluenodeinfotechprivatelimited_india two broadcast status updated
+timezone working | openApis broadcast create-send | mobileApp broadcast - both changed
+
+chat assignment problem on queueMember status on | discussion
 
 
-restrictions in subdomain name
+
+template dynamic body loop address trim
+upone template create give default template button url
+restrictions in subdomain name -- done
 admin branch : msg_send_settings
-template-button-payload-autoreply  - broadcast  == internal-broadcast
-broadCST_sync  -- Kausal app
+broadCST_sync  -- Kaushal app -- done
 send_interactive---- done
-kubernetesWorking-om
-branch : queue_chat (webApp)
+kubernetesWorking-om -- done
+branch : queue_chat (webApp) -- testing remaining
+web_branch : load_template
+ web_branch : media_def_openapi
+
  
 
-template page create and list load
+template page create default url for template url button, and send that only alwys, remove working of dync and static
 subdomain delete from cloudFlair
 set dedicated key to true and false on admin
 checksession 401 -- done
-if not permission of queue then no notifications
+if not permission of queue then no notifications -- working done - test remaining
 unread count on messge list 
-toggle pe create and delete deployment
-statusMessage ws merged in main - revert 
+toggle pe create and delete deployment -- done
 
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 cron seperate app -- done
 shopify-ref working --- done merge yet to remain
 create broadcast with faildNumbers -- done
-broadcast batch working
+broadcast batch working  -- in progress
 quicktemplate header default working -- done
 negative wallet template/mail not sent Admin -- done
 customers wrong load on message send
-kubernetes statusMessage pod create and check done
+kubernetes statusMessage pod create and check ---- done
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
