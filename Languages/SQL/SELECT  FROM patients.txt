@@ -1,0 +1,97 @@
+/*SELECT * FROM patients
+
+
+  Start by selecting a question by pressing 'Start' or 'View All Questions'.
+  Use the resources and information about the database from the left panel to help.
+  Press the run button to execute the query.
+  Question is automatically validated every time you execute the query.
+  Make your output match the expected output.
+ 
+ 
+  Keybinds:
+    [ctrl + enter]: Execute the SQL
+    [ctrl + q]: Auto-format the SQL
+
+
+select first_name from patients
+
+select first_name, last_name, gender from patients where gender = "M"
+
+select first_name, last_name from patients where allergies is null
+
+select first_name from patients where first_name LIKE  "C%"
+
+select first_name, last_name from patients where weight between 100 and 120
+
+update patients set allergies = "NKA" where allergies is null
+
+
+select CONCAT(first_name, ' ', last_name) from patients
+
+select p.first_name,p.last_name,prov.province_name from patients p join province_names prov ON p.province_id = prov.province_name
+
+SELECT
+  first_name,
+  last_name,
+  province_name
+FROM patients
+  JOIN province_names ON province_names.province_id = patients.province_id;
+
+ select count(*) as total_patients from patients where year(birth_date) = 2010
+ 
+
+SELECT
+  first_name,
+  last_name, height
+  from patients order by height desc 
+  LIMIT 1
+  
+  SELECT
+  first_name,
+  last_name,
+  MAX(height) AS height
+FROM patients;
+
+SELECT
+  first_name,
+  last_name,
+  height
+FROM patients
+WHERE height = (
+    SELECT max(height)
+    FROM patients
+  )
+
+  
+ SELECT * from patients where patient_id in (1,45,534,879,1000)
+ 
+
+   
+SELECT count(*) as total_admissions from admissions
+
+   
+
+SELECT * from admissions where admission_date = discharge_date
+
+
+
+SELECT patient_id, count(*)  from admissions where patient_id = "579"
+
+
+SELECT distinct(city) from patients where province_id = "NS"
+
+SELECT city
+FROM patients
+GROUP BY city
+HAVING province_id = 'NS';
+
+
+
+select first_name, last_name, birth_date from patients where height > 160 and weight > 70
+*/
+
+select first_name, last_name, allergies from patients where allergies IS not null and city = "Hamilton"
+
+ 
+  
+  

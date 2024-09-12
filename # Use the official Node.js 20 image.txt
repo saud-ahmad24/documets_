@@ -1,0 +1,73 @@
+# Use the official Node.js 20 image as the base image
+FROM node:lts-bullseye as Web
+
+# Set environment variable to skip Puppeteer Chromium download
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+
+# Install dependencies required for Puppeteer and Google Chrome
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg \
+    wget \
+    fonts-liberation \
+    libappindicator3-1 \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libcups2 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxrandr2 \
+    libxss1 \
+    libxtst6 \
+    libnss3 \
+    libgdk-pixbuf2.0-0 \
+    libgtk-3-0 \
+    && curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json ./
+
+# Install application dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+
+# Command to run the application
+CMD ["npm", "start"]
+
+
+
+
+
+
+
+const browser = await puppeteer.launch({
+					headless: true,
+					defaultViewport: null,
+					executablePath: '/usr/bin/google-chrome',
+					args: ['--no-sandbox'],
+				});
+
+
+
+
+
+
+
+
+
+
+const req = {
+                                token: { teamMemberId: req.teammember_id, database: req.db_name, loginToken: req.login_token, apiKey: productUser.apiKey, parentId: req.parent_id, parentNumber: productUser.mobileNo, roleId: req.role_id },
+                                body: { template: templateData }
+                            }
+                            await syncIndividualTemplate(req)

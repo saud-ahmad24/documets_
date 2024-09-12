@@ -1800,9 +1800,69 @@ timezone working | openApis broadcast create-send | mobileApp broadcast - both c
 
 chat assignment problem on queueMember status on | discussion
 
+task on - 05 - September
+openApis sendTemplate default media choose working
+3 bison metaresponse add, lead create
+permission_all, media_def_openapi_saud merge in internal-ws(Web)
+broadcastname search remove from broadcast | test broadcast deleted
+firebase notification working for app
+
+task on - 06 - September
+firebase_saud, queue_assign, favourite-chat-message, puppeteer-test merge in internal-ws(Web)
+new firebase notification v1 working for mobile app
+DockerFile configurations | for TimeZone | Chromium - puppeteer
+
+working completed as on 06 - September
+export autorelpy report indian time format added
+upon let me answer | on openwindow, close windows correction
+permission working change | all 
+timezone added | So schedule broadcast working reverted for - Mobile app | openApi broadcast send 
+broadcastname search remove in broadcast list
+createdAt | customerLastMessagedAt filter in customers list
+masterstatus label delete working
+openApis sendTemplate default media choose working
+smartship outfordelivery order working
+new v1 firebase notification working
+template status check before broadcast send
+favourite message working
+Queue Teammember wrong chat assign correction
+DockerFile configurations | for TimeZone | Chromium - puppeteer
 
 
-template dynamic body loop address trim
+task on - 07 - September
+buttondata.tags error solve autoreply | live
+11za Cron App files update
+11za OpenApis file update
+
+task on - 09 - September
+bugs-fixing-sept2024, autoreply-selectpicker-search merge in internal-ws
+smartship error solve
+11za OpenApis app files update
+the filling station products sync
+broadcast batch working with template status check
+
+task on - 10 - September
+saud-openApis merge in master(OpenApis App) | autoreply-selectpicker-search,chat-customername-strip merge in internal-ws(Web) | pabbly_testingApp | changes and merge in master-ws
+broadcast batch working with template status check
+Travel Root | signUp formData added
+
+task on - 11 - September
+master-ws, pabbly_testingApp merge in internal-ws
+broadcast batch working with template status check | testing and live on Dev
+OpenApis "success" log error solved and live
+11za-openApi Project live on Dev
+video | image | doc default send from chats for template
+
+
+task on - 12 - September
+broadcast 30k broadcast error solve
+Jignesh bhai changes direct live on 11za
+Admin notification error solve
+
+
+
+remove broadcast_ search and delete test broadcast -- done	
+template dynamic body loop address trim -- done
 upone template create give default template button url
 restrictions in subdomain name -- done
 admin branch : msg_send_settings
@@ -1811,10 +1871,11 @@ send_interactive---- done
 kubernetesWorking-om -- done
 branch : queue_chat (webApp) -- testing remaining
 web_branch : load_template
- web_branch : media_def_openapi
+ web_branch : media_def_openapi -- done
 
  
-
+Auto reply for Flow Buttons Not Available. - Need to Plan the same for both Template and Interactive Messages 
+Search  for Interactive Message in Auto Reply - Sort By Name
 template page create default url for template url button, and send that only alwys, remove working of dync and static
 subdomain delete from cloudFlair
 set dedicated key to true and false on admin
