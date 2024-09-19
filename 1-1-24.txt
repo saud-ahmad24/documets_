@@ -1852,13 +1852,66 @@ broadcast batch working with template status check | testing and live on Dev
 OpenApis "success" log error solved and live
 11za-openApi Project live on Dev
 video | image | doc default send from chats for template
+mobileNo. length error solve for app
 
 
 task on - 12 - September
 broadcast 30k broadcast error solve
+AllModule-om merge in main(Admin) and live
 Jignesh bhai changes direct live on 11za
 Admin notification error solve
+urlComponenet default in template working
 
+task on - 13 - September
+urlComponenet default in template working
+Aravi chat problem troubleShoot | solve
+webhook_add merge in internal-ws(OpenApis App) | master-ws,new-favourite-and-reply-chat pabbly_change_api  merge in internal-ws(Web)
+whitelabel project add in dev kubernetes
+
+
+working completed as on 13 - September
+failedRebroadcast changes
+video | image | doc default send from chats for template
+sliceTextWithEllipse name shortning for customer name on chat
+woocommerce smartship changes for getting accessToken
+autoreply create|edit interactiveMessage search in dropdown
+dynamic url option removed from template send on chat
+product description validation
+templateCopy allowCategoryChange added
+reply message working
+
+task on - 14 - September
+urlComponenet default in template working
+master-ws merge in internal-ws
+Balutedaar Pvt Ltd | signup create 
+
+task on - 18 - September
+urlComponenet default in template working
+assign_teamMember merge in internal-ws(OpenApis App) | main-ws, walletAndCustomerWorking-om
+  merge in main(Admin)
+Soni’s Phonics, jhakaas holiday | signUp formData added
+customers csv import working changes
+internal-ws merge and live
+
+
+working completed as on 18 - September
+getProductList query change
+wallet permission added
+reply working chat for app
+addToFavouriteMessage working for app
+ithink query changes
+forbidden page view change
+
+task on - 19 - September
+latest permissions added on admin for clients
+script to add permission in all existing clients(Administrator) for latest types
+new_campaign, custimport_18sep_saud merge in internal-ws
+customers csv import working changes - labels working seperated 
+
+for administrator on all permissions
+make script to add wallet permission in adminst
+csv testing remaing -- custimport_18sep_saud
+template-dynamic-url-manage -- for template dyn workng
 
 
 remove broadcast_ search and delete test broadcast -- done	
