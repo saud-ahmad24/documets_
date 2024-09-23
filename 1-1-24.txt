@@ -1903,10 +1903,27 @@ ithink query changes
 forbidden page view change
 
 task on - 19 - September
-latest permissions added on admin for clients
-script to add permission in all existing clients(Administrator) for latest types
+script to add permission in all existing clients(Administrator) for latest permission types | latest permissions added on admin for clients
 new_campaign, custimport_18sep_saud merge in internal-ws
-customers csv import working changes - labels working seperated 
+customers csv import working changes - labels working also seperated 
+Balutedaar | users details changes in db as again onboarded
+
+task on - 20 - September
+new-reply-message-working,schedule_delChat, calendly-working merge in internal-ws(web) | exportWorking-om merge in main(Admin)
+the nakhra store all products "facebookSync" : true
+11za Broadcast App with batch working live
+11za CronJob app changes and live
+
+
+
+working completed as on 20 - September
+calendy working
+delete scheduled template
+catalogue template and multiple product message template | autoreply
+csv campaign test
+reply working 
+import csv working change 
+exportWorking-om marge in main
 
 for administrator on all permissions
 make script to add wallet permission in adminst
