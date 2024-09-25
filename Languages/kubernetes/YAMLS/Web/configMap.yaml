@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: 11za-app-configmap
+  namespace: engees11za
+data:
+  CUSTOMER_LAYOUT: "./layouts/customer_layout"
+  ADMIN_LAYOUT: "./layouts/admin_layout"
+  COOKIE_EXP_IN_DAYS: "7"
+  LOGIN_EXP_IN_DAYS: "30"
+  META_BASE_URL: "https://api.tyntec.com/conversations/v3/"
+  META_API_VERSION: "2.12"
+  AWS_REGION: "ap-south-1"
+  AWS_BUCKET: "engees11zamedia.11za.in"
+  AWS_BUCKET_URI: "https://engees11zamedia.11za.in/"
+  FACEBOOK_GRAPH_VERSION: "v19.0"
+  WEBSOCKETSERVER: "wss://websockets.11za.in"
+  FACEBOOK_APP_CLIENT_ID: "604480511323120"
+  FACEBOOK_APP_CLIENT_SECRET: "650092007bcbb1c32e7f1b8d6dd6a814"
+  BROADCAST_BACKGROUND_UPLOAD_LIMIT: "5000"
+  AZURE_STORAGE_ACCOUNT_NAME: "engees11zamediastorage"
+  MINPOOLSIZE: "1000"
+  MAXPOOLSIZE: "2500"
+  NODE_ENV: "production"
+  BROADCASTAPP_URL: "engees11za-broadcast-svc.engees11za.svc.cluster.local:3100/"
+  RESET_LINK_VALIDITY: "100"
+  SHOPIFY_APPKEY: "d29281b741fc8f583cee9d98ffd54ac0"
+  SHOPIFY_APPSCR: "683fe2766996d7843bb2402a6a24b78b"
+  SHOPIFY_ACCECCSCOPES: "write_assigned_fulfillment_orders,read_assigned_fulfillment_orders,write_customers,read_customers,write_discounts,read_discounts,write_draft_orders,read_draft_orders,write_fulfillments,read_fulfillments,write_merchant_managed_fulfillment_orders,read_merchant_managed_fulfillment_orders,write_order_edits,read_order_edits,write_orders,read_orders,write_product_feeds,read_product_feeds,write_product_listings,read_product_listings,write_products,read_products,write_returns,read_returns,write_shipping,read_shipping,write_third_party_fulfillment_orders,read_third_party_fulfillment_orders,read_all_cart_transforms,write_all_checkout_completion_target_customizations,read_all_checkout_completion_target_customizations,write_cart_transforms,read_cart_transforms,write_discounts_allocator_functions,read_discounts_allocator_functions,write_fulfillment_constraint_rules,read_fulfillment_constraint_rules,write_order_submission_rules,read_order_submission_rules,read_all_orders"
+  SHOPIFY_API_VERSION: "2024-04"
+  DAILY_TEMPLATE_MESSAGING_LIMIT: "5000"
+  FREE_TEMPLATE_MESSAGING_MONTHLY_LIMIT: "1000"
+  BROADCAST_PARTITION_LIMIT: "1000"
+  VASTRA_DOMAIN_URI: "https://vastraapp.com/api/v2/"
+  VASTRA_APIKEY: "va$Tra@pP"

@@ -1,0 +1,11 @@
+kubectl exec -it elasticsearch-7f64c97d6-wzlxh -n saud -- bin/elasticsearch-create-enrollment-token -s node
+kubectl exec -it kibana-67485fd7c7-xfj44 -n saud -- bin/kibana-verification-code
+kubectl exec -it kibana-67485fd7c7-xfj44 -n saud -- bin/kibana-verification-code
+kubectl exec -it elasticsearch-7f64c97d6-wzlxh -n saud -- bin\elasticsearch-reset-password.bat --username kibana_system -s node
+
+kubectl exec -it elasticsearch-7f64c97d6-wzlxh -n saud -- bin/elasticsearch-reset-password -u kibana_system
+
+
+
+curl -X POST "https://localhost:9200/_security/role/kibana_read_only" -H "Content-Type:application/json" -'{ "cluster":["all"],"indices": [{"names": [ "*" ],"privileges": [ "read", "view_index_metadata" ]}]}'
+

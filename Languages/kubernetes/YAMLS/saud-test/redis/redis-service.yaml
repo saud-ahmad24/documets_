@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: engees11za-redis-svc
+  namespace: engees11za
+  labels:
+    app: redis
+    env: prod
+    svc: 11za-redis
+spec:
+  selector:
+    app: redis
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      name: redis
+      port: 6379
+      targetPort: 6379

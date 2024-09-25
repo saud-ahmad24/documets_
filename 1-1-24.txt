@@ -1925,9 +1925,32 @@ reply working
 import csv working change 
 exportWorking-om marge in main
 
+
+task on - 23 - September
+the nakhra store | all products sync
+EFK learning | implementing
+Oxi9 statusMessage problem solve
+
+task on - 24 - September
+EFK learning | implementing
+IVY message read | from db
+Soni Patel | new onboarding fb details add in db
+Sharon Service number check |  update in form11zas
+internal-ws merge in master-ws 
+
+task on - 25 - September
+Remove chat history of +917046161235 | Vinay fashion
+Anshu Bhai | signup request created
+Redis server setup in kubernetes for | Calendly code change
+
+
+template duplicate headercomponents add
+temp dynamic url working only for chat
+
+
 for administrator on all permissions
-make script to add wallet permission in adminst
-csv testing remaing -- custimport_18sep_saud
+make script to add wallet permission in adminst --done
+csv testing remaing -- custimport_18sep_saud -- done
 template-dynamic-url-manage -- for template dyn workng
 
 

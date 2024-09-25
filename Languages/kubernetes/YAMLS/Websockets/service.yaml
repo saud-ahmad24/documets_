@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: engees11za-web-socket-svc
+  namespace: engees11za
+  labels:
+    env: prod
+    svc: 11za-web-socket
+spec:
+  selector:
+    app: 11za-web-socket
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      name: websocket
+      port: 8080
+      targetPort: 8080

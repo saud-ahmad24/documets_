@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kibana-ingress
+  annotations:
+    kubernetes.azure.com/tls-cert-keyvault-uri: https://engees11zavault.vault.azure.net/certificates/wildcard-11za
+    # kubernetes.azure.com/tls-cert-keyvault-uri: https://engees11zadevvault.vault.azure.net/certificates/wildcard-11za-test
+    nginx.ingress.kubernetes.io/client-max-body-size: 100m
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+  namespace: kube-logging
+  # namespace: saud
+  labels:
+    app: kibana
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  rules:
+    - host: logging-internal.11za.in
+      http:
+        paths:
+          - backend:
+              service:
+                name: kibana
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - logging-internal.11za.in
+      secretName: keyvault-kibana-ingress

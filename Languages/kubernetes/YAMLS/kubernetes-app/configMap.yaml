@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: 11za-kubernetes-app-configmap
+  namespace: engees11za
+data:
+  MINPOOLSIZE: "5"
+  MAXPOOLSIZE: "10"
+  NODE_ENV: "development"

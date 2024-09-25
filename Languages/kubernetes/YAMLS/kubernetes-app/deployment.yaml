@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 11za-kubernetes-app
+  namespace: engees11za
+  labels:
+    app: 11za-kubernetes-app
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: 11za-kubernetes-app
+  template:
+    metadata:
+      labels:
+        app: 11za-kubernetes-app
+    spec:
+      containers:
+        - name: 11za-kubernetes-app
+          image: engees11zacontainer.azurecr.io/kubernetes-app:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          ports:
+            - containerPort: 3100
+          envFrom:
+            - configMapRef:
+                name: 11za-kubernetes-app-configmap
+          env:
+            - name: MONGODB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection-string
+                  key: dburl
+            - name: PORT
+              value: "3100"
+            - name: APPURI
+              value: "https://kubernetesapp.11za.in"
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: engees11zacontainer-secret
+      nodeSelector:
+        engees: app

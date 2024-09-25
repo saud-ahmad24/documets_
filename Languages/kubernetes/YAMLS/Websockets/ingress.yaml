@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.azure.com/tls-cert-keyvault-uri: https://engees11zavault.vault.azure.net/certificates/wildcard-11za
+  name: engees11za-websocket-ingress
+  namespace: engees11za
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  rules:
+    - host: websockets.11za.in
+      http:
+        paths:
+          - backend:
+              service:
+                name: engees11za-web-socket-svc
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - websockets.11za.in
+      secretName: keyvault-engees11za-websocket-ingress

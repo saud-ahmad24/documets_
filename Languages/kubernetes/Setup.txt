@@ -165,6 +165,25 @@ If you prefer to manually manage the kubeconfig file, you can open it and remove
 
 Open your kubeconfig file, typically located at ~/.kube/config:
 
+
+
+service/engees11za-redis-svc unchanged
+PS D:\Projects\11za - Kubernetes App\yamlconfig\saud-test> kubectl config current-context
+engees11zadev-aks
+PS D:\Projects\11za - Kubernetes App\yamlconfig\saud-test> kubectl config get-contexts
+CURRENT   NAME                CLUSTER             AUTHINFO                                                      NAMESPACE
+          engees11za-aks      engees11za-aks      clusterUser_engees11za-centralindia-rg_engees11za-aks
+*         engees11zadev-aks   engees11zadev-aks   clusterUser_engees11zadev-centralindia-rg_engees11zadev-aks   
+PS D:\Projects\11za - Kubernetes App\yamlconfig\saud-test> kubectl config use-context engees11za-aks
+Switched to context "engees11za-aks".
+PS D:\Projects\11za - Kubernetes App\yamlconfig\saud-test> kubectl config get-contexts
+CURRENT   NAME                CLUSTER             AUTHINFO                                                      NAMESPACE
+*         engees11za-aks      engees11za-aks      clusterUser_engees11za-centralindia-rg_engees11za-aks
+          engees11zadev-aks   engees11zadev-aks   clusterUser_engees11zadev-centralindia-rg_engees11zadev-aks   
+PS D:\Projects\11za - Kubernetes App\yamlconfig\saud-test>
+
+
+
 bash
 Copy code
 nano ~/.kube/config

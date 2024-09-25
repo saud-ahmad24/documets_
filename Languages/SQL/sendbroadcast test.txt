@@ -1,0 +1,8 @@
+sendbroadcast test
+sendautoreply cron
+savecopied template
+createTemplatetoSend
+shopify sendotp
+openapis sendtemplate
+autoreplyrules
+global temp 

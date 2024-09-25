@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: 11za-web-socket
+  namespace: engees11za
+  labels:
+    app: 11za-web-socket
+spec:
+  selector:
+    matchLabels:
+      app: 11za-web-socket
+  template:
+    metadata:
+      labels:
+        app: 11za-web-socket
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: 11za-web-socket
+          image: engees11zacontainer.azurecr.io/websocket:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 500m
+              memory: 2000Mi
+            requests:
+              cpu: 500m
+              memory: 2000Mi
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PORT
+              value: "3100"
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: engees11zacontainer-secret
+      nodeSelector:
+        engees: app

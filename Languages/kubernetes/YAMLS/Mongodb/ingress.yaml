@@ -1,0 +1,76 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.azure.com/tls-cert-keyvault-uri: https://engees11zadevvault.vault.azure.net/certificates/wildcard-11za-test
+  name: engees11za-mongodb-0-ingress
+  namespace: mongodb
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  rules:
+  - host: db1-dev.11za.in
+    http:
+      paths:
+      - backend:
+          service:
+            name: external-mongo-service-0
+            port:
+              number: 31181
+        path: /
+        pathType: Prefix
+  tls:
+    - hosts:
+        - db1-dev.11za.in
+      secretName: keyvault-engees11za-mongodb-0-ingress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.azure.com/tls-cert-keyvault-uri: https://engees11zadevvault.vault.azure.net/certificates/wildcard-11za-test
+  name: engees11za-mongodb-1-ingress
+  namespace: mongodb
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  rules:
+  - host: db2-dev.11za.in
+    http:
+      paths:
+      - backend:
+          service:
+            name: external-mongo-service-1
+            port:
+              number: 31182
+        path: /
+        pathType: Prefix
+  tls:
+    - hosts:
+        - db2-dev.11za.in
+      secretName: keyvault-engees11za-mongodb-1-ingress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.azure.com/tls-cert-keyvault-uri: https://engees11zadevvault.vault.azure.net/certificates/wildcard-11za-test
+  name: engees11za-mongodb-2-ingress
+  namespace: mongodb
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  rules:
+  - host: db3-dev.11za.in
+    http:
+      paths:
+      - backend:
+          service:
+            name: external-mongo-service-2
+            port:
+              number: 31183
+        path: /
+        pathType: Prefix
+  tls:
+    - hosts:
+        - db3-dev.11za.in
+      secretName: keyvault-engees11za-mongodb-2-ingress

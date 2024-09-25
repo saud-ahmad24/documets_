@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: engees11za-web-svc
+  namespace: engees11za
+  labels:
+    env: prod
+    svc: 11za-web
+spec:
+  selector:
+    app: 11za-web
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      name: webapp
+      port: 3100
+      targetPort: 3100
+    - protocol: TCP
+      name: ws
+      port: 8080
+      targetPort: 8080
