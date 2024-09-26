@@ -29,7 +29,6 @@ let metaleadtemps = require("../../../models/customers/metaleadtemp.model");
 
 const { BlobServiceClient } = require("@azure/storage-blob");
 const { shopifyABCFunction } = require("../../../routes/openapis/shopifyABCSaud");
-const connStr = "DefaultEndpointsProtocol=https;AccountName=engees11zamediastorage;AccountKey=OFzK+IXzK9JLaSQfysRNeWMF+3kzb/zk7luENRDFQAHx7DP/A6KyeZxMfMa+3kFwUWURuq7lh/X0+AStWE0EfA==;EndpointSuffix=core.windows.net";
 const blobServiceClient = BlobServiceClient.fromConnectionString(connStr);
 
 const duplicateCustomers = async () => {
