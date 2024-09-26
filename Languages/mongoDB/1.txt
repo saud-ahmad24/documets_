@@ -1,0 +1,276 @@
+MongoDB offers a wide variety of special operators that are prefixed with a `$`. These operators cover a range of functionality for querying, updating, and aggregating data. Below is a breakdown of some key `$` operators and examples for each.
+
+### 1. **Comparison Operators**
+
+#### 1.1. **$eq** (Equal)
+Matches documents where the value of a field equals a specified value.
+```js
+db.users.find({ age: { $eq: 30 } }) // Finds users whose age is 30
+```
+
+#### 1.2. **$ne** (Not Equal)
+Matches documents where the value of a field does **not** equal the specified value.
+```js
+db.users.find({ status: { $ne: "active" } }) // Finds users who are not active
+```
+
+#### 1.3. **$gt** / **$lt** / **$gte** / **$lte** (Greater Than, Less Than, etc.)
+These operators match documents based on numerical comparisons.
+```js
+db.orders.find({ price: { $gt: 100 } }) // Finds orders with price greater than 100
+db.users.find({ age: { $gte: 18, $lte: 65 } }) // Finds users aged between 18 and 65 (inclusive)
+```
+
+### 2. **Logical Operators**
+
+#### 2.1. **$and**
+Performs a logical `AND` operation, requiring all conditions to be true.
+```js
+db.users.find({
+  $and: [
+    { age: { $gt: 30 } },
+    { status: "active" }
+  ]
+})
+```
+
+#### 2.2. **$or**
+Performs a logical `OR` operation, requiring at least one condition to be true.
+```js
+db.users.find({
+  $or: [
+    { age: { $lt: 18 } },
+    { age: { $gt: 65 } }
+  ]
+})
+```
+
+#### 2.3. **$not**
+Inverts the effect of a query expression.
+```js
+db.users.find({ age: { $not: { $gt: 18 } } }) // Finds users aged 18 or less
+```
+
+#### 2.4. **$nor**
+Performs a logical `NOR` operation, returning documents that do **not** match any of the conditions.
+```js
+db.users.find({
+  $nor: [
+    { status: "active" },
+    { age: { $gt: 30 } }
+  ]
+})
+```
+
+### 3. **Element Operators**
+
+#### 3.1. **$exists**
+Matches documents that either contain or do not contain a specific field.
+```js
+db.users.find({ nickname: { $exists: true } }) // Finds users with a `nickname` field
+```
+
+#### 3.2. **$type**
+Matches documents if a field is of the specified BSON type. This is useful when fields might have mixed types (e.g., `string` vs. `ObjectId`).
+```js
+db.users.find({ age: { $type: "int" } }) // Finds users where the `age` field is an integer
+```
+Common `$type` values:
+- `int` (32-bit integer)
+- `string`
+- `objectId`
+- `array`
+- `bool`
+
+### 4. **Array Operators**
+
+#### 4.1. **$in** / **$nin** (In / Not In)
+Finds documents where a field's value is present (or not present) in a specified array.
+```js
+db.users.find({ age: { $in: [25, 30, 35] } }) // Finds users aged 25, 30, or 35
+db.users.find({ age: { $nin: [18, 21] } }) // Finds users not aged 18 or 21
+```
+
+#### 4.2. **$all**
+Matches documents where an array field contains **all** of the specified elements.
+```js
+db.products.find({ tags: { $all: ["electronics", "gaming"] } }) // Finds products tagged with both "electronics" and "gaming"
+```
+
+#### 4.3. **$size**
+Matches documents where an array field is of a specified size.
+```js
+db.products.find({ tags: { $size: 3 } }) // Finds products with exactly 3 tags
+```
+
+#### 4.4. **$elemMatch**
+Matches documents where at least one element in an array satisfies all specified conditions.
+```js
+db.orders.find({
+  items: { $elemMatch: { price: { $gt: 100 }, quantity: { $gte: 2 } } }
+})
+// Finds orders with at least one item priced > 100 and with quantity >= 2
+```
+
+### 5. **Evaluation Operators**
+
+#### 5.1. **$regex** (Regular Expression)
+Matches documents where the value of a field matches a regular expression.
+```js
+db.users.find({ email: { $regex: /@gmail\.com$/ } }) // Finds users with a Gmail email address
+```
+
+#### 5.2. **$expr**
+Allows the use of aggregation expressions within the `$match` query. For example, you can compare two fields within the same document.
+```js
+db.orders.find({
+  $expr: { $gt: ["$totalAmount", "$amountPaid"] }
+})
+// Finds orders where `totalAmount` is greater than `amountPaid`
+```
+
+### 6. **Aggregation-Specific Operators**
+
+#### 6.1. **$match**
+Filters documents at the start of an aggregation pipeline, similar to a query.
+```js
+db.orders.aggregate([
+  { $match: { status: "shipped" } }
+])
+```
+
+#### 6.2. **$group**
+Groups documents by a specified key and performs aggregate functions like `$sum`, `$avg`, `$min`, `$max`, etc.
+```js
+db.orders.aggregate([
+  { $group: { _id: "$status", totalSales: { $sum: "$totalAmount" } } }
+])
+```
+
+#### 6.3. **$project**
+Selects specific fields to return in the result set, often used in aggregation to reshape documents.
+```js
+db.orders.aggregate([
+  { $project: { customerId: 1, totalAmount: 1, _id: 0 } } // Return only `customerId` and `totalAmount`
+])
+```
+
+#### 6.4. **$sort**
+Sorts the results of the aggregation pipeline.
+```js
+db.orders.aggregate([
+  { $sort: { totalAmount: -1 } } // Sort by `totalAmount` in descending order
+])
+```
+
+#### 6.5. **$lookup** (Join)
+Performs a left outer join between two collections.
+```js
+db.orders.aggregate([
+  {
+    $lookup: {
+      from: "users", // The other collection to join with
+      localField: "customerId",
+      foreignField: "_id",
+      as: "customerDetails"
+    }
+  }
+])
+```
+
+#### 6.6. **$unwind**
+Deconstructs an array field from the input documents to output a document for each element.
+```js
+db.orders.aggregate([
+  { $unwind: "$items" } // Unwinds the array `items` into multiple documents
+])
+```
+
+### 7. **Update Operators**
+
+#### 7.1. **$set**
+Sets the value of a field in a document.
+```js
+db.users.updateOne(
+  { _id: userId },
+  { $set: { status: "inactive" } }
+)
+```
+
+#### 7.2. **$unset**
+Removes a field from a document.
+```js
+db.users.updateOne(
+  { _id: userId },
+  { $unset: { nickname: "" } } // Removes the `nickname` field
+)
+```
+
+#### 7.3. **$push**
+Adds an element to an array.
+```js
+db.users.updateOne(
+  { _id: userId },
+  { $push: { tags: "mongodb" } }
+)
+```
+
+#### 7.4. **$pull**
+Removes all instances of a value from an array.
+```js
+db.users.updateOne(
+  { _id: userId },
+  { $pull: { tags: "deprecated" } }
+)
+```
+
+#### 7.5. **$inc**
+Increments the value of a field.
+```js
+db.users.updateOne(
+  { _id: userId },
+  { $inc: { loginAttempts: 1 } }
+)
+```
+
+### 8. **Geospatial Operators**
+
+#### 8.1. **$geoWithin**
+Finds documents with geospatial data within a specified shape (e.g., a polygon).
+```js
+db.places.find({
+  location: {
+    $geoWithin: {
+      $geometry: {
+        type: "Polygon",
+        coordinates: [[[longitude1, latitude1], [longitude2, latitude2], ...]]
+      }
+    }
+  }
+})
+```
+
+#### 8.2. **$near**
+Finds documents near a specified point.
+```js
+db.places.find({
+  location: {
+    $near: {
+      $geometry: { type: "Point", coordinates: [longitude, latitude] },
+      $maxDistance: 1000 // Finds places within 1 km
+    }
+  }
+})
+```
+
+### 9. **Other Useful Operators**
+
+#### 9.1. **$mod** (Modulo)
+Matches documents where a field’s value divided by a divisor has a specified remainder.
+```js
+db.users.find
+
+({ age: { $mod: [2, 0] } }) // Finds users with even ages
+```
+
+These operators, when used effectively, can help you craft powerful and precise queries to retrieve and manipulate data in MongoDB.

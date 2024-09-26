@@ -1,0 +1,284 @@
+Here are some additional advanced MongoDB operators and use cases that can further enhance querying, updating, and aggregation in MongoDB.
+
+### 10. **Aggregation Operators**
+
+#### 10.1. **$addFields**
+Adds new fields to documents in an aggregation pipeline, or modifies existing fields.
+```js
+db.orders.aggregate([
+  {
+    $addFields: {
+      totalPriceWithTax: { $multiply: ["$totalAmount", 1.15] } // Adds a new field that calculates the total price with 15% tax
+    }
+  }
+])
+```
+
+#### 10.2. **$merge**
+Takes the results of the aggregation pipeline and merges them into another collection, either by inserting new documents or updating existing ones.
+```js
+db.orders.aggregate([
+  { $group: { _id: "$customerId", totalSpent: { $sum: "$totalAmount" } } },
+  {
+    $merge: {
+      into: "customerSpending",
+      whenMatched: "merge",
+      whenNotMatched: "insert"
+    }
+  }
+])
+```
+
+#### 10.3. **$count**
+Counts the number of documents in the pipeline.
+```js
+db.orders.aggregate([
+  { $match: { status: "shipped" } },
+  { $count: "totalShippedOrders" } // Output will include a field `totalShippedOrders` with the count
+])
+```
+
+#### 10.4. **$sample**
+Randomly selects a specified number of documents from a collection.
+```js
+db.users.aggregate([
+  { $sample: { size: 5 } } // Returns 5 random users
+])
+```
+
+#### 10.5. **$redact**
+Restricts the content of the documents based on information within the documents themselves. Useful for complex permission checks.
+```js
+db.employees.aggregate([
+  {
+    $redact: {
+      $cond: {
+        if: { $eq: ["$accessLevel", "confidential"] },
+        then: "$$PRUNE", // Removes documents where accessLevel is confidential
+        else: "$$KEEP"   // Keeps the document if accessLevel is not confidential
+      }
+    }
+  }
+])
+```
+
+#### 10.6. **$out**
+Writes the results of an aggregation to a new collection. This operator **replaces** the target collection if it exists.
+```js
+db.orders.aggregate([
+  { $group: { _id: "$customerId", totalSpent: { $sum: "$totalAmount" } } },
+  { $out: "customerTotals" } // Stores the result in a new collection `customerTotals`
+])
+```
+
+### 11. **Text Search Operators**
+
+#### 11.1. **$text**
+Performs a text search on indexed text fields.
+```js
+db.articles.createIndex({ content: "text" }); // Create a text index
+
+db.articles.find({ $text: { $search: "mongodb performance" } }) // Finds articles containing the words "mongodb" and "performance"
+```
+
+#### 11.2. **$meta**
+Controls the display of metadata in the results of text search.
+```js
+db.articles.find(
+  { $text: { $search: "mongodb performance" } },
+  { score: { $meta: "textScore" } } // Returns results sorted by relevance score
+).sort({ score: { $meta: "textScore" } });
+```
+
+### 12. **Update Operators (Advanced)**
+
+#### 12.1. **$addToSet**
+Adds an element to an array only if it doesn't already exist.
+```js
+db.users.updateOne(
+  { _id: userId },
+  { $addToSet: { favoriteColors: "blue" } } // Adds "blue" only if it's not already in `favoriteColors`
+)
+```
+
+#### 12.2. **$pop**
+Removes the first or last element from an array.
+```js
+db.users.updateOne(
+  { _id: userId },
+  { $pop: { favoriteColors: 1 } } // Removes the last element from the array
+)
+// Use -1 to remove the first element
+```
+
+#### 12.3. **$pullAll**
+Removes multiple specified values from an array.
+```js
+db.users.updateOne(
+  { _id: userId },
+  { $pullAll: { favoriteColors: ["blue", "red"] } } // Removes "blue" and "red" from the array
+)
+```
+
+#### 12.4. **$currentDate**
+Sets the value of a field to the current date or timestamp.
+```js
+db.orders.updateOne(
+  { _id: orderId },
+  { $currentDate: { lastModified: true } } // Sets `lastModified` to the current date and time
+)
+```
+
+#### 12.5. **$bit**
+Performs bitwise operations (AND, OR, XOR) on a numeric field.
+```js
+db.items.updateOne(
+  { _id: itemId },
+  { $bit: { flags: { and: 5 } } } // Bitwise AND operation with 5 on `flags` field
+)
+```
+
+### 13. **Geospatial Operators (Advanced)**
+
+#### 13.1. **$geoIntersects**
+Selects documents where the `geometry` field intersects with a specified `geometry`.
+```js
+db.places.find({
+  location: {
+    $geoIntersects: {
+      $geometry: {
+        type: "Polygon",
+        coordinates: [[[longitude1, latitude1], [longitude2, latitude2], ...]]
+      }
+    }
+  }
+})
+```
+
+#### 13.2. **$geoNear** (Used in Aggregation)
+Finds documents close to a specified point and returns them in order of proximity.
+```js
+db.places.aggregate([
+  {
+    $geoNear: {
+      near: { type: "Point", coordinates: [longitude, latitude] },
+      distanceField: "distance",
+      spherical: true
+    }
+  }
+])
+```
+
+### 14. **Array Operators (Advanced)**
+
+#### 14.1. **$slice**
+Limits the number of elements in an array returned in query results.
+```js
+db.posts.find(
+  { category: "tech" },
+  { comments: { $slice: 5 } } // Returns the first 5 comments from each post
+)
+```
+
+#### 14.2. **$filter**
+Filters the contents of an array to return only elements that match the condition.
+```js
+db.orders.aggregate([
+  {
+    $project: {
+      filteredItems: {
+        $filter: {
+          input: "$items",
+          as: "item",
+          cond: { $gte: ["$$item.quantity", 2] } // Filters items with quantity >= 2
+        }
+      }
+    }
+  }
+])
+```
+
+### 15. **Conditional Operators**
+
+#### 15.1. **$cond** (Conditional)
+Acts like an "if-then-else" statement.
+```js
+db.orders.aggregate([
+  {
+    $project: {
+      discountApplied: {
+        $cond: {
+          if: { $gte: ["$totalAmount", 100] },
+          then: true,
+          else: false
+        }
+      }
+    }
+  }
+])
+```
+
+#### 15.2. **$ifNull**
+Returns a value if the specified expression resolves to `null` or `missing`, otherwise returns the original value.
+```js
+db.orders.aggregate([
+  {
+    $project: {
+      customerName: { $ifNull: ["$customerName", "Guest"] } // If `customerName` is null, return "Guest"
+    }
+  }
+])
+```
+
+#### 15.3. **$switch**
+Evaluates multiple conditions and returns a value based on the first true condition.
+```js
+db.students.aggregate([
+  {
+    $project: {
+      grade: {
+        $switch: {
+          branches: [
+            { case: { $gte: ["$score", 90] }, then: "A" },
+            { case: { $gte: ["$score", 80] }, then: "B" },
+            { case: { $gte: ["$score", 70] }, then: "C" }
+          ],
+          default: "F"
+        }
+      }
+    }
+  }
+])
+```
+
+### 16. **Array Update Operators**
+
+#### 16.1. **$push with $each and $sort**
+Used to push multiple items into an array and sort them.
+```js
+db.users.updateOne(
+  { _id: userId },
+  {
+    $push: {
+      comments: {
+        $each: [{ text: "Nice post" }, { text: "Great!" }],
+        $sort: { text: 1 } // Sorts comments alphabetically
+      }
+    }
+  }
+)
+```
+
+#### 16.2. **$arrayElemAt**
+Returns the element at a specified index from an array.
+```js
+db.orders.aggregate([
+  {
+    $project: {
+      firstItem: { $arrayElemAt: ["$items", 0] } // Returns the first item in the `items` array
+    }
+  }
+])
+```
+
+These advanced MongoDB operators can help you fine-tune your database queries and operations, whether you're working on aggregation pipelines, complex updates, or detailed filtering.

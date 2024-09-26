@@ -1944,6 +1944,12 @@ Anshu Bhai, Rama Packaging | signup request created
 Redis server setup in kubernetes for | Calendly code change
 master-ws merge in internal-ws | redis-test merge in master-ws | live
 
+task on - 26 - September
+09 Mobile Gallery, Sangeeta Electronics | signup request created
+Chat scroll checking and optimizing
+Redis conditions added for localhost
+
+
 
 template duplicate headercomponents add
 temp dynamic url working only for chat

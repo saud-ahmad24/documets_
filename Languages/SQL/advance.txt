@@ -1,0 +1,268 @@
+Sure! Here’s a comprehensive list of advanced MySQL queries and techniques that leverage complex SQL features, including window functions, common table expressions (CTEs), and various joins.
+
+### 1. **Common Table Expressions (CTEs)**
+
+CTEs allow you to create temporary result sets that can be referenced within a `SELECT`, `INSERT`, `UPDATE`, or `DELETE` statement. They are particularly useful for improving readability and organization of complex queries.
+
+#### Example: Using CTEs
+```sql
+WITH SalesCTE AS (
+    SELECT 
+        salesperson_id,
+        SUM(sale_amount) AS total_sales
+    FROM 
+        sales
+    GROUP BY 
+        salesperson_id
+)
+SELECT 
+    s.name,
+    sc.total_sales
+FROM 
+    salespersons s
+JOIN 
+    SalesCTE sc ON s.id = sc.salesperson_id
+WHERE 
+    sc.total_sales > 10000;
+```
+
+### 2. **Window Functions**
+
+Window functions perform calculations across a set of table rows related to the current row, allowing for advanced analytics.
+
+#### Example: Using Window Functions
+```sql
+SELECT 
+    salesperson_id,
+    sale_amount,
+    SUM(sale_amount) OVER (PARTITION BY salesperson_id ORDER BY sale_date) AS running_total
+FROM 
+    sales;
+```
+
+### 3. **Subqueries**
+
+Subqueries can be used in various contexts, such as in the `SELECT`, `FROM`, or `WHERE` clauses.
+
+#### Example: Subquery in SELECT
+```sql
+SELECT 
+    id,
+    name,
+    (SELECT COUNT(*) FROM orders WHERE customer_id = customers.id) AS order_count
+FROM 
+    customers;
+```
+
+### 4. **JOINs with Conditions**
+
+You can combine tables with specific join conditions to filter results efficiently.
+
+#### Example: Conditional JOIN
+```sql
+SELECT 
+    o.id,
+    c.name
+FROM 
+    orders o
+LEFT JOIN 
+    customers c ON o.customer_id = c.id AND o.status = 'shipped';
+```
+
+### 5. **GROUP BY with ROLLUP**
+
+Using `ROLLUP` in `GROUP BY` produces subtotals and grand totals.
+
+#### Example: GROUP BY with ROLLUP
+```sql
+SELECT 
+    year(order_date) AS order_year,
+    MONTH(order_date) AS order_month,
+    SUM(order_total) AS total_sales
+FROM 
+    orders
+GROUP BY 
+    order_year, order_month WITH ROLLUP;
+```
+
+### 6. **FULL OUTER JOIN**
+
+MySQL does not have a built-in `FULL OUTER JOIN`, but you can simulate it with a `UNION` of `LEFT JOIN` and `RIGHT JOIN`.
+
+#### Example: Simulated FULL OUTER JOIN
+```sql
+SELECT 
+    a.id, 
+    b.id
+FROM 
+    table_a a
+LEFT JOIN 
+    table_b b ON a.id = b.id
+
+UNION
+
+SELECT 
+    a.id, 
+    b.id
+FROM 
+    table_a a
+RIGHT JOIN 
+    table_b b ON a.id = b.id;
+```
+
+### 7. **CASE Statements**
+
+The `CASE` statement is used for conditional logic directly in SQL queries.
+
+#### Example: Using CASE
+```sql
+SELECT 
+    id,
+    name,
+    CASE 
+        WHEN sales > 10000 THEN 'High'
+        WHEN sales BETWEEN 5000 AND 10000 THEN 'Medium'
+        ELSE 'Low'
+    END AS sales_category
+FROM 
+    salesperson;
+```
+
+### 8. **JSON Functions**
+
+MySQL supports JSON data types and includes functions to manipulate JSON data.
+
+#### Example: JSON Query
+```sql
+SELECT 
+    id,
+    JSON_EXTRACT(data, '$.name') AS name
+FROM 
+    json_table;
+```
+
+### 9. **Triggers**
+
+Triggers are procedures that are automatically executed in response to certain events on a particular table.
+
+#### Example: Creating a Trigger
+```sql
+CREATE TRIGGER before_insert_customer
+BEFORE INSERT ON customers
+FOR EACH ROW
+BEGIN
+    SET NEW.created_at = NOW();
+END;
+```
+
+### 10. **Stored Procedures**
+
+Stored procedures allow you to encapsulate complex logic into reusable SQL scripts.
+
+#### Example: Creating a Stored Procedure
+```sql
+DELIMITER //
+CREATE PROCEDURE GetCustomerOrders(IN cust_id INT)
+BEGIN
+    SELECT 
+        o.id, 
+        o.order_date, 
+        o.total_amount
+    FROM 
+        orders o
+    WHERE 
+        o.customer_id = cust_id;
+END //
+DELIMITER ;
+```
+
+### 11. **CROSS JOIN**
+
+The `CROSS JOIN` produces a Cartesian product of the two tables.
+
+#### Example: Using CROSS JOIN
+```sql
+SELECT 
+    a.id AS a_id, 
+    b.id AS b_id
+FROM 
+    table_a a
+CROSS JOIN 
+    table_b b;
+```
+
+### 12. **GROUP_CONCAT**
+
+`GROUP_CONCAT` allows you to concatenate values from multiple rows into a single string.
+
+#### Example: Using GROUP_CONCAT
+```sql
+SELECT 
+    customer_id,
+    GROUP_CONCAT(order_id) AS order_ids
+FROM 
+    orders
+GROUP BY 
+    customer_id;
+```
+
+### 13. **WITH RECURSIVE CTEs**
+
+Recursive CTEs are useful for querying hierarchical data, like organizational charts.
+
+#### Example: Recursive CTE
+```sql
+WITH RECURSIVE EmployeeCTE AS (
+    SELECT 
+        id, 
+        name, 
+        manager_id
+    FROM 
+        employees
+    WHERE 
+        manager_id IS NULL
+
+    UNION ALL
+
+    SELECT 
+        e.id, 
+        e.name, 
+        e.manager_id
+    FROM 
+        employees e
+    INNER JOIN 
+        EmployeeCTE ec ON e.manager_id = ec.id
+)
+SELECT * FROM EmployeeCTE;
+```
+
+### 14. **EXPLAIN for Query Optimization**
+
+Using `EXPLAIN` can help you understand how MySQL executes your queries and can identify performance bottlenecks.
+
+#### Example: Using EXPLAIN
+```sql
+EXPLAIN SELECT * FROM orders WHERE customer_id = 123;
+```
+
+### 15. **Partitioning**
+
+Partitioning allows you to split a large table into smaller, more manageable pieces while still being treated as a single table.
+
+#### Example: Creating a Partitioned Table
+```sql
+CREATE TABLE orders (
+    id INT NOT NULL,
+    order_date DATE,
+    customer_id INT,
+    total_amount DECIMAL(10, 2)
+) PARTITION BY RANGE (YEAR(order_date)) (
+    PARTITION p0 VALUES LESS THAN (2020),
+    PARTITION p1 VALUES LESS THAN (2021),
+    PARTITION p2 VALUES LESS THAN (2022)
+);
+```
+
+---
+
+These advanced MySQL queries and techniques allow you to perform sophisticated data manipulations, improve performance, and enhance your database management capabilities. Leveraging these features will help you work more efficiently with complex datasets and business logic.
