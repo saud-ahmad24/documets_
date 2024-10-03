@@ -1,0 +1,480 @@
+let constants = require('./constants');
+let inBounds = require('../models/customers/inbound');
+let templates = require('../models/customers/templates/template.model');
+let endCustomers = require('../models/customers/end_customers.model');
+let countriesModel = require('../models/customers/countries.model');
+let config = require("../config");
+let mongoConnection = require('./connections');
+
+exports.inBound_join_msgStatus = async (req) => {
+    try {
+        let secondary = mongoConnection.useDb(req.dbName);
+        let customers = await secondary.model(constants.MODELS.inbounds, inBounds).aggregate([
+            {
+                $match: req.matchQuery
+            },
+            {
+                $lookup: {
+                    from: constants.MODELS.msgstatus,
+                    localField: "messageId",
+                    foreignField: "messageId",
+                    as: "messageStatus"
+                }
+            }
+        ]);
+        return customers;
+    } catch (error) {
+        console.error('Error in inBound_join_msgStatus function', error);
+    }
+};
+
+exports.countMsgStatus = async (req) => {
+    try {
+        let secondary = mongoConnection.useDb(req.dbName);
+        let counts = await secondary.model(constants.MODELS.inbounds, inBounds).aggregate([
+            {
+                $match: req.matchQuery
+            },
+            {
+                $lookup: {
+                    from: constants.MODELS.msgstatus,
+                    localField: "messageId",
+                    foreignField: "messageId",
+                    as: "messageStatus"
+                }
+            },
+            {
+                $unwind: { "path": "$messageStatus" } // Flatten the array of messageStatus documents
+            },
+            {
+                $match: {
+                    "messageStatus.status": req.status
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    count: { $sum: 1 } // Count the documents
+                }
+            }
+        ]);
+        // Extract the count from the result
+        if (counts.length > 0) {
+            return counts[0].count;
+        } else {
+            return 0
+        }
+    } catch (error) {
+        console.error('Error in countMsgStatus function', error);
+    }
+};
+
+exports.documentMatchInboundVSMsgStatus = async (req) => {
+    try {
+        let secondary = mongoConnection.useDb(req.dbName);
+        let customers = await secondary.model(constants.MODELS.inbounds, inBounds).aggregate([
+            {
+                $match: req.matchQuery
+            },
+            {
+                $lookup: {
+                    from: constants.MODELS.msgstatus,
+                    localField: "messageId",
+                    foreignField: "messageId",
+                    as: "messageStatus"
+                }
+            },
+            {
+                $unwind: "$messageStatus" // Flatten the array of messageStatus documents
+            },
+            {
+                $match: {
+                    "messageStatus.status": req.status
+                }
+            }
+        ]);
+        return customers;
+    } catch (error) {
+        console.error('Error in documentMatchInboundVSMsgStatus function', error);
+    }
+};
+
+exports.pricesBeforeBroadcast = async (list, secondary, templateId, setupby) => {
+    try {
+        console.log('Inside pricesBeforeBroadcast_New function');
+        let primary = mongoConnection.useDb(constants.DEFAULT_DB);
+        let countryWiseCharges = await primary.model(constants.MODELS.countries, countriesModel).aggregate([
+            {
+                $lookup: {
+                    from: "countries",
+                    localField: "parent",
+                    foreignField: "_id",
+                    as: "charges"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$charges",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $project: {
+                    countrycallingcode: 1,
+                    mir_eur: { $ifNull: ["$charges.mir_eur", "$mir_eur"] },
+                    mir_inr: { $ifNull: ["$charges.mir_inr", "$mir_inr"] },
+                    sir_eur: { $ifNull: ["$charges.sir_eur", "$sir_eur"] },
+                    sir_inr: { $ifNull: ["$charges.sir_inr", "$sir_inr"] },
+                    air_eur: { $ifNull: ["$charges.air_eur", "$air_eur"] },
+                    air_inr: { $ifNull: ["$charges.air_inr", "$air_inr"] },
+                    uir_eur: { $ifNull: ["$charges.uir_eur", "$uir_eur"] },
+                    uir_inr: { $ifNull: ["$charges.uir_inr", "$uir_inr"] }
+                }
+            }
+        ]);
+
+        const chargesDictionary = {};
+        countryWiseCharges.forEach(country => {
+            chargesDictionary[country.countrycallingcode] = {
+                mir_eur: country.mir_eur,
+                mir_inr: country.mir_inr,
+                sir_eur: country.sir_eur,
+                sir_inr: country.sir_inr,
+                uir_eur: country.uir_eur,
+                uir_inr: country.uir_inr,
+                air_eur: country.air_eur,
+                air_inr: country.air_inr
+            };
+        });
+        
+        const calculateCharges = (customerNumbers, category) => {
+            let partialCost = 0;
+            customerNumbers.map(number => {
+                let countryCode = "";
+                for (let i = 1; i <= number.length; i++) {
+                    const prefix = number.substring(0, i);
+                    if (chargesDictionary[prefix]) {
+                        countryCode = prefix;
+                        break;
+                    }
+                }
+
+                const charges = chargesDictionary[countryCode];
+                if (charges) {
+                    partialCost += charges[category];
+                } else {
+                    partialCost += 1;
+                }
+            });
+            return partialCost;
+        };
+
+
+        // =-=-=-=-=-=-=-=-=-main calculation working starts here=-=-=-=-=-=-=-=-=-
+        const allTemplateCategories = {
+            marketing: 'mir_inr',
+            utility: 'uir_inr',
+            authentication: 'air_inr',
+        }
+        let mobileNumbers = [];
+
+        if (setupby === 'contactList' || setupby === 'file') {
+            mobileNumbers = Array.from(new Set(list.map(item => item.mobileNo || item.Mobile_Number)));
+        }
+        let templateCategory = await secondary.model(constants.MODELS.templates, templates).findById(config.mongoose.Types.ObjectId(templateId)).select("category");
+        if (templateCategory) {
+            templateCategory = templateCategory.category.toLowerCase();
+        } else {
+            throw new Error('Template not found');
+        }
+
+        const pipeline = [
+            {
+                $match: {
+                    mobileNo: { $in: mobileNumbers },
+                    $or: [
+                        { isDelete: false },
+                        { isDelete: null },
+                        { isDelete: { $exists: false } }
+                    ],
+                    conversation: { $exists: true }
+                }
+            },
+            {
+                $project: {
+                    conversation: {
+                        $cond: {
+                            if: { $isArray: "$conversation" },
+                            then: "$conversation",
+                            else: [{ conversationId: "$conversation.conversationId", origin: "$conversation.origin", expiresAt: "$conversation.expiresAt" }]
+                        }
+                    },
+                    mobileNo: 1
+                }
+            },
+            {
+                $addFields: {
+                    validConversations: {
+                        $filter: {
+                            input: {
+                                $filter: {
+                                    input: "$conversation",
+                                    as: "conv",
+                                    cond: { $eq: ["$$conv.origin", templateCategory] }
+                                }
+                            },
+                            as: "conv",
+                            cond: { $gte: [{ $toDate: "$$conv.expiresAt" }, new Date()] }
+                        }
+                    }
+                }
+            },
+            {
+                $match: {
+                    "validConversations.0": { $exists: true }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    mobileNumbers: { $addToSet: "$mobileNo" }
+                }
+            }
+        ];
+        const thisTemplateCategory = allTemplateCategories[templateCategory];
+        console.log("thisTemplateCategory=-=-=-=-", thisTemplateCategory);
+        const customersWithOpenConversations = await secondary.model(constants.MODELS.endcustomers, endCustomers).aggregate(pipeline);
+        console.log("customersWithOpenConversations", customersWithOpenConversations);
+        const chargesOfAllCustomers = calculateCharges(mobileNumbers, thisTemplateCategory);
+        const chargesOfOpenConversations = (customersWithOpenConversations && customersWithOpenConversations[0] && customersWithOpenConversations[0].mobileNumbers) ? calculateCharges(customersWithOpenConversations[0].mobileNumbers, thisTemplateCategory) : 0;
+        console.log("chargesOfAllCustomers=", chargesOfAllCustomers, " chargesOfOpenConversations=", chargesOfOpenConversations);
+        const totalMessageCharges = chargesOfAllCustomers - chargesOfOpenConversations;
+        console.log("totalMessageCharges", totalMessageCharges);
+        return totalMessageCharges;
+    } catch (error) {
+        console.error('Error in pricesBeforeBroadcast function', error);
+        throw error;
+    }
+};
+
+exports.pricesBeforeBroadcast_30july = async (list, secondary, templateId, setupby) => {
+    try {
+        let templateCharge = 0;
+        let catogary = '';
+        let mobileNumbers = [];
+        if (setupby === 'contactList') {
+            mobileNumbers = Array.from(new Set(list.map(item => item.mobileNo)));
+        } else if (setupby === 'file') {
+            mobileNumbers = Array.from(new Set(list.map(item => item.Mobile_Number)));
+        }
+        let templateCategory = await secondary.model(constants.MODELS.templates, templates).findById(config.mongoose.Types.ObjectId(templateId)).select("category");
+        if (templateCategory) {
+            if (templateCategory.category == 'MARKETING') {
+                catogary = 'marketing';
+                templateCharge = 0.75;
+            } else if (templateCategory.category == 'UTILITY' || templateCategory.category == 'TRANSACTIONAL') {
+                catogary = 'utility';
+                templateCharge = 0.32;
+            } else if (templateCategory.category == 'AUTHENTICATION') {
+                catogary = 'authentication';
+                templateCharge = 0.32;
+            }
+            const pipeline = [
+                {
+                    $match: {
+                        mobileNo: { $in: mobileNumbers },
+                        $or: [
+                            { isDelete: { $eq: false } },
+                            { isDelete: { $eq: null } },
+                            { isDelete: { $exists: false } }
+                        ],
+                        conversation: { $exists: true }
+                    }
+                },
+                {
+                    $project: {
+                        conversation: 1
+                    }
+                },
+                {
+                    $addFields: {
+                        conversation: {
+                            $cond: {
+                                if: { $isArray: "$conversation" },
+                                then: "$conversation",
+                                else: [{ conversationId: "$conversation.conversationId", origin: "$conversation.origin", expiresAt: "$conversation.expiresAt" }]
+                            }
+                        }
+                    }
+                },
+                {
+                    $addFields: {
+                        filteredConversations: {
+                            $filter: {
+                                input: "$conversation",
+                                as: "conv",
+                                cond: { $eq: ["$$conv.origin", catogary] }
+                            }
+                        }
+                    }
+                },
+                {
+                    $addFields: {
+                        expiresAtTime: {
+                            $map: {
+                                input: "$filteredConversations",
+                                as: "conv",
+                                in: { $toDate: "$$conv.expiresAt" }
+                            }
+                        }
+                    }
+                },
+                {
+                    $addFields: {
+                        validConversations: {
+                            $filter: {
+                                input: "$filteredConversations",
+                                as: "conv",
+                                cond: { $gte: [{ $toDate: "$$conv.expiresAt" }, new Date()] }
+                            }
+                        }
+                    }
+                },
+                {
+                    $match: {
+                        "validConversations.0": { $exists: true }
+                    }
+                }
+            ];
+            const endCustomersData = await secondary.model(constants.MODELS.endcustomers, endCustomers).aggregate(pipeline);
+            return (mobileNumbers.length - endCustomersData.length) * templateCharge;
+        }
+    } catch (error) {
+        console.error('Error in pricesBeforeBroadcast function', error);
+    }
+};
+
+exports.pricesBeforeBroadcast11Old = async (list, secondary, templateId, setupby) => {
+    try {
+        let totalPaidCustomer = 0;
+        let templateCharge = 0;
+        let catogary = '';
+        let mobileNumbers = [];
+        if (setupby === 'contactList') {
+            mobileNumbers = Array.from(new Set(list.map(item => item.mobileNo)));
+        } else if (setupby === 'file') {
+            mobileNumbers = Array.from(new Set(list.map(item => item.Mobile_Number)));
+        }
+        let templateCategory = await secondary.model(constants.MODELS.templates, templates).findById(config.mongoose.Types.ObjectId(templateId)).select("category");
+        if (templateCategory) {
+            if (templateCategory.category == 'MARKETING') {
+                catogary = 'marketing';
+                templateCharge = 0.75;
+            } else if (templateCategory.category == 'UTILITY' || templateCategory.category == 'TRANSACTIONAL') {
+                catogary = 'utility';
+                templateCharge = 0.32;
+            } else if (templateCategory.category == 'AUTHENTICATION') {
+                catogary = 'authentication';
+                templateCharge = 0.32;
+            }
+            const pipeline = [
+                {
+                    $match: {
+                        mobileNo: { $in: mobileNumbers },
+                    },
+                },
+                {
+                    $lookup: {
+                        from: constants.MODELS.msgstatus,
+                        localField: "conversationId",
+                        foreignField: "whatsapp.conversationId",
+                        as: "join1",
+                    },
+                },
+                {
+                    $unwind: "$join1",
+                },
+                {
+                    $match: {
+                        "join1.whatsapp.conversation.origin": catogary,
+                    },
+                },
+                {
+                    $sort: { "join1.timestamp": 1 },
+                },
+                {
+                    $group: {
+                        _id: "$mobileNo",
+                        customerData: { $first: "$$ROOT" },
+                    },
+                },
+                {
+                    $replaceRoot: {
+                        newRoot: "$customerData",
+                    },
+                },
+            ];
+            const endCustomersData = await secondary.model(constants.MODELS.endcustomers, endCustomers).aggregate(pipeline);
+            if (endCustomersData.length) {
+                for (const customer of endCustomersData) {
+                    var windowTime = new Date(customer.join1.whatsapp.conversation.expiresAt);
+                    var currentTime = new Date();
+                    if (windowTime > currentTime) {
+                        totalPaidCustomer++;
+                    }
+                }
+            }
+            return (mobileNumbers.length - totalPaidCustomer) * templateCharge;
+        }
+    } catch (error) {
+        console.error('Error in pricesBeforeBroadcast function', error);
+    }
+};
+
+
+// dont delete this - SAUD
+// const calculateCharges = (customerNumbers, category) => {
+//     return customerNumbers.map(number => {
+//         let countryCode = "";
+//         for (let i = 1; i <= number.length; i++) {
+//             const prefix = number.substring(0, i);
+//             if (chargesDictionary[prefix]) {
+//                 countryCode = prefix;
+//                 break;
+//             }
+//         }
+
+//         const charges = chargesDictionary[countryCode];
+//         if (charges) {
+//             totalCostforAllCustomers += charges[category];
+//             return {
+//                 number,
+//                 charge: charges[category]
+//             };
+//         } else {
+//             totalCostforAllCustomers += 0;
+//             return {
+//                 number,
+//                 charge: null
+//             };
+//         }
+//     });
+// };
+// let list = [
+//     { Customer_Name: 'Saud', Mobile_Number: '918866186841' },
+//     { Customer_Name: 'Sagar', Mobile_Number: '918866065173' },
+//     { Customer_Name: 'Test', Mobile_Number: '902222221111' },
+//     { Customer_Name: 'Okk', Mobile_Number: '78888888888' },
+//     { Customer_Name: 'america', Mobile_Number: '14445454578' }
+// ]
+// for (let i = 0; i < 300000; ++i) {
+//     list.push({
+//         Customer_Name: 'Saud' + i,
+//         Mobile_Number: i + '918866186841'
+//     });
+// }
+// console.log(list.length);
+// let templateId = "66a0c6b6bc89d37cbf34c708"
+// let setupby = "file";
+// let secondary = mongoConnection.useDb("db_engeesecompvtltd_india");
+// this.pricesBeforeBroadcast_New(list, secondary, templateId, setupby);

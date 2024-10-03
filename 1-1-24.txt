@@ -1946,19 +1946,87 @@ master-ws merge in internal-ws | redis-test merge in master-ws | live
 
 task on - 26 - September
 09 Mobile Gallery, Sangeeta Electronics | signup request created
-Chat scroll checking and optimizing
+Chat scroll checking and optimizing | parentUnseenChatCounter
 Redis conditions added for localhost
+autoreply_API merge in internal-ws
+
+task on - 27 - September
+Shilpkala Fashions products sync with script | Balutedaar pods,rules check for kube
+heart-beat-product-flow, req_API merge in internal-ws(Web)
+mpm-sagar merge in internal-ws, internal-ws merge in internal-broadcast(Broadcast)
+walletAndCustomerWorking-om merge in main(Admin)
+
+Working completed as on 27-Sep-24
+autoreply API request working
+metting_start_date Calendly working
+CATALOG and MPM(Multiproduct working) template in test broadcast | broadcast send (BroadcastApp)
+HeartBeat working
+/currentWalletBalance ,getbusinessAdrress, updateAddress, timeline  api for app
 
 
+task on - 28 - September
+balutedar products add from script
+Mansukhlal 91 add in morbioldmerge tagged custmers through script
+buttonComponents default in template working
+addVelidactionInquiries-om merge in main(Admin) | Vandan cronApp changes and live
+..
+
+task on - 30 - September
+new-emoji-reaction-working merge in internal-ws(Web)
+internal-ws merge in master-ws and live
+buttonComponents default in template working
+permission removed for checking products catogery section list
+
+
+task on - 1 - October
+limit changed to 30 from 50 for mychats ,adminCust, teamCust live
+utilities folder update | 11za OpenApis App
+Sagar bhai changes CronApp live start | Om cron check and live(Admin)
+FFKRISTAL signup list now showing error solve
+testBroadcast campaign error solve
+
+task on - 2 - October
+Stockbox Technologies Private Limited | business manager details update
+OpenApis changes app live on production
+explaining kubernetes to everyOne
+saud_internal-ws_1oct merge in internal-ws/ merge in master-ws(OpenApisApp) | saud-openAPis merge in master(KubeApp)
+Sunil bhai coupanCode problem check
+autoreply troubleshooting for celebre
+
+
+
+-========================================================
+temp dynamic url working only for chat
+
+template-dynamic-url-manage -- for template dyn workng
+
+
+ $scope.addMoreCards   let isthereUrlButton = false;
+$scope.addButton
+$scope.switchButtons
+$scope.changeButtonType
+$scope.carouselAddButton
+	
+urlcomp_14sep
+compcarousel_14sep11
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+tds in wallet payment
+hold amount of brodcast
+Broadcast me failed and stop wala jo hai wo list me show mt krna
+read_all_orders
+Broadcast pull and live -- done
+Calendly cron changes -- done
 
 template duplicate headercomponents add
-temp dynamic url working only for chat
+
+
 
 
 for administrator on all permissions
 make script to add wallet permission in adminst --done
 csv testing remaing -- custimport_18sep_saud -- done
-template-dynamic-url-manage -- for template dyn workng
+
 
 
 remove broadcast_ search and delete test broadcast -- done	
