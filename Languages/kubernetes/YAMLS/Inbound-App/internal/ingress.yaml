@@ -1,0 +1,31 @@
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: engees11za-inbound-ingress
+#   annotations:
+#     kubernetes.azure.com/tls-cert-keyvault-uri: https://engees11zadevvault.vault.azure.net/certificates/wildcard-11za-test
+#     nginx.ingress.kubernetes.io/client-max-body-size: 100m
+#     nginx.ingress.kubernetes.io/proxy-body-size: 100m
+#     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+#     nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+#     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+#   namespace: engees11za
+#   labels:
+#     app: 11za-inbound
+# spec:
+#   ingressClassName: webapprouting.kubernetes.azure.com
+#   rules:
+#   - host: inbound-internal.11za.in
+#     http:
+#       paths:
+#       - backend:
+#           service:
+#             name: engees11za-inbound-svc
+#             port:
+#               number: 3100
+#         path: /
+#         pathType: Prefix
+#   tls:
+#     - hosts:
+#         - inbound-internal.11za.in
+#       secretName: keyvault-engees11za-inbound-ingress

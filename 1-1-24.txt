@@ -1991,14 +1991,87 @@ OpenApis changes app live on production
 explaining kubernetes to everyOne
 saud_internal-ws_1oct merge in internal-ws/ merge in master-ws(OpenApisApp) | saud-openAPis merge in master(KubeApp)
 Sunil bhai coupanCode problem check
-autoreply troubleshooting for celebre
+autoreply troubleshooting for celebre -- done
+
+task on - 03 - October
+failedTag_Broadcast, tds_Amount merge, autoReply_Text, master-ws in internal-ws | saud_newChanges_3oct merge in master(Inbound App)
+11za Inbound app, all files upto date and removed unwanted modules, mongoose-aggregate-paginate-v2, mongoose-paginate-v2 remove from all 117 modules
+The Art Effects all products sync with script run
+Deployment/Service for 11za Inbound App on Development
+
+db.getCollection("endcustomers").find({
+  $expr: { $eq: [{ $strLenCP: "$mobileNo" }, 10] }
+}).forEach((obj)=>{
+    let mobileNo1 = obj.mobileNo
+    if(mobileNo1.length == 10){
+        let mobileNoNew = '91' +  mobileNo1
+        console.log(mobileNo1);
+        console.log(mobileNoNew);
+        db.getCollection("endcustomers").updateOne({mobileNo:mobileNo1}, { $set: { mobileNo:mobileNoNew}})
+    }else{
+        console.log("None");
+    }
+})
+
+task on - 04 - October
+B>More 13k customers update and added 91 before
+Inbound app changes and live on Dev
+Sakhiya endcustomers duplicate delete issue checking
+11za cronJob App all new working added and Live
+internal-ws merge in master-ws and live
+
+
+Working completed as on 4-Oct
+exclude failed number and stop tag in broadcast and autoreply
+Shopify orderplaced after 1 and 2 hour
+tds amount input on wallet payment
+COD after time duration working shopify
+dynamic values added for shopify first_name, product_with_variant_name
+Calendly cron changes
+ShopiyABC cron changes
+shopifyCodOrderAfterCron.js cron added
+autoreply changes
+
+task on - 05 - October
+Script to check and get users who have optSetting nd who dont | also add object of optSetting in db
+Delete duplicate customers working | delete dup customer cron App change
+internal-ws merge in master-ws(Web) | permissionWorkin-om merge in main(Admin)
+
+task on - 07 - October
+autoReply_Bug merge in internal-ws|master-ws and live
+Inbound outbound count script working
+template list query change for deleted status live
+Happy home new signup configuration added
+clear invalid_numbers collection from failedNumber db 
+
+task on - 08 - October
+11za Inbound App all files update | and deploying on live test
+Products export error solve | model change
+Client: Make my Mandir | meta catalog resync
 
 
 
+delete all failedcustomer and remove working
+Broadcast from failed numbers give schedule working -- kaushal
+dynamic count subtract 60 char from temp body, also onblur issue fix
+copy_code_add    this branch merged in brodcast internal
+coupan_code_temp  this branch merge in web internal 
+branch : autoReply_Text
+web_branch : failedTag_Broadcast -- done
+web_branch : tds_wallet -- done
 -========================================================
 temp dynamic url working only for chat
 
 template-dynamic-url-manage -- for template dyn workng
+
+
+          - backend:
+              service:
+                name: engees11za-inbound-app-svc
+                port:
+                  number: 3100
+            path: /inbound
+            pathType: Prefix
 
 
  $scope.addMoreCards   let isthereUrlButton = false;

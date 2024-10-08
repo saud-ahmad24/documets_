@@ -1,0 +1,105 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 11za-inbound
+  namespace: engees11za
+  labels:
+    app: 11za-inbound
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: 11za-inbound
+  template:
+    metadata:
+      labels:
+        app: 11za-inbound
+    spec:
+      containers:
+        - name: 11za-inbound
+          image: engees11zacontainer.azurecr.io/openapi:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 2Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          ports:
+            - containerPort: 3100
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: 11za-app-configmap
+          env:
+            - name: MONGODB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: db-connection-string
+                  key: dburl
+            - name: AUTH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: auth-key
+                  key: key
+            - name: LOGIN_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: auth-key
+                  key: key
+            - name: JWT_ENCRYPTION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: auth-key
+                  key: key
+            - name: PASSWORD_ENCRYPTION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: password-encryption-secret
+                  key: password
+            - name: BEARER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-bearer-token
+                  key: bearer-token
+            - name: ZONE_IDENTIFIER
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-zone-identifier
+                  key: zone-identifier
+            - name: META_CATALOG_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: meta-catalog-auth-token
+                  key: auth-token
+            - name: SOFTWARE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: software-secret-key
+                  key: softwarepwd
+            - name: RAZORPAY_TEST_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: razorpay-key-id
+                  key: razorpay-key-id
+            - name: RAZORPAY_TEST_KEY_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: razorpay-key-secret
+                  key: razorpay-key-secret
+            - name: AZURE_STORAGE_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  key: azure-storage-connection-string
+                  name: azure-storage-connection-string
+            - name: PORT
+              value: "3100"
+            - name: APPURI
+              value: "https://app.11za.in"
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: engees11zacontainer-secret
+      nodeSelector:
+        engees: app
