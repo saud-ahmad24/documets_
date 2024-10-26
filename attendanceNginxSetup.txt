@@ -1,0 +1,14 @@
+ mv Attendance%20-%20Web/ attendance
+pm2 start bin/www --name Attendance
+cd /etc/nginx/sites-available/
+ grep -r "127.0.0.1" .
+cp broadcast attendance
+sudo cp broadcast attendance
+sudo vi attendance
+sudo ln -s /etc/nginx/sites-available/attendance /etc/nginx/sites-enabled/
+ pm2 status
+pm2 start bin/www --name Attendance
+pm2 save
+vi /etc/nginx/sites-available/attendance
+sudo vi /etc/nginx/sites-available/attendance
+sudo systemctl restart nginx

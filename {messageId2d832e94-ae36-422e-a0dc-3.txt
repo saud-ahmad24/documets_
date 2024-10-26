@@ -1,0 +1,13 @@
+{"messageId":"2d832e94-ae36-422e-a0dc-3e281031c1fd","channel":"whatsapp","event":"MessageStatus::accepted","deliveryChannel":"whatsapp","status":"accepted","timestamp":"2024-10-21T11:16:06.080Z","to":"917016875366"}
+
+
+{"messageId":"2d832e94-ae36-422e-a0dc-3e281031c1fd","channel":"whatsapp","event":"MessageStatus::delivered","deliveryChannel":"whatsapp","status":"delivered","timestamp":"2024-10-21T11:16:09Z","to":"917016875366","whatsapp":{"conversation":{"conversationId":"135f0bbf605017772932995345f36ce2","origin":"marketing","expiresAt":"2024-10-22T06:56:00Z"},"conversationId":"135f0bbf605017772932995345f36ce2","pricingModel":"CBP","billable":true},"details":{"from":"918866186841"},"from":"918866186841"}
+
+
+{"messageId":"2d832e94-ae36-422e-a0dc-3e281031c1fd","channel":"whatsapp","event":"MessageStatus::seen","deliveryChannel":"whatsapp","status":"seen","timestamp":"2024-10-21T11:16:35Z","to":"917016875366","details":{"from":"918866186841"},"from":"918866186841"}
+
+
+{"messageId":"06218518-f947-4ada-a21c-de468e22ae9e","channel":"whatsapp","event":"MessageStatus::failed","deliveryChannel":"whatsapp","status":"failed","timestamp":"2024-10-21T11:19:34.293Z","to":"917016875366","details":{"code":"tyntec::error:noFurtherChannelAvailable","message":"No further channel after Channel[whatsapp] available"}}
+
+
+{"messageId":"d8841012-1d44-48ff-8116-4231004791ce","channel":"whatsapp","event":"MessageStatus::channelFailed","deliveryChannel":"whatsapp","status":"channelFailed","timestamp":"2024-10-21T11:21:03.069Z","to":"917016875366","details":{"code":"whatsapp::external::131008","message":"(#131008) Required parameter is missing. buttons: Button at index 0 of type copy_code requires a non-empty parameter coupon_code"}}

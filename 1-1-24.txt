@@ -2046,9 +2046,152 @@ clear invalid_numbers collection from failedNumber db
 
 task on - 08 - October
 11za Inbound App all files update | and deploying on live test
-Products export error solve | model change
+Products export error solve 
 Client: Make my Mandir | meta catalog resync
 
+task on - 09 - October
+siriusjewels new signup configuration added in db
+redis session storage connection error solve for live 
+redissetup_saud_9oct merge in master-ws | templateStatus_app_saud merge in internal-ws
+templates/allList | templates/templateStatusList | template deleted status working in app api
+Kloira Inc all products added with script
+add-meta-sagar merge in address_change | 10 files conflicts remove
+
+task on - 10 - October
+master-ws merge in internal-ws
+efk testing and setup on internal
+productSync-om merge in main | changes | testing and live (Admin)
+Oxi9 error troubleshooting
+
+task on - 11 - October
+Oxi9 error troubleshooting
+Airways Travel lead error solve admin
+orders_exports, template-clone-delete-issue-fixed, only-cancel-order-tag, change-size-shopify-order merge in internal-ws
+internal-ws merge in master-ws
+
+vandan's draft template status changes
+
+task on - 12 - October
+failed_broadcast,master-ws working merge in internal-ws
+internal-ws merge in master-ws
+cron app changes shopifyCodOrderAfterCron and live | yaml for internal nd live 
+
+
+Working completed as on 11-Oct
+order export working
+Draft status template working
+shopifyCodReminderCheck working
+mobile api template list and status list working change
+shopifyCC changes - 11ZA - Change Size tag
+
+
+task on - 14 - October
+Rooplaxmi Sarees | lead create from signup admin | Airways Travel details changes in db
+master-ws, preview_temp_view_saud merge in internal-ws
+/check tally api live on live
+login problem check admin@bandhanivilla.com 
+default dynamic url working for template default_dynamic_temp-saud merge in internal-ws (default_temp_dynamic_14oct_internal)
+
+
+task on - 15 - October
+partner dashboard | white label branch merge in internal-ws originated branch(white_lbl_test) and 19 file conflicts remove
+single localization working
+update tags in customers also on updating tags | name
+
+task on - 16 - October
+script to add trial from secondary to primary db
+customer import working change to make compatible with 1L customers | batch working
+Fly Social Media onboard data added
+cleverTap integration workng
+
+task on - 17 - October
+cleverTap integration working
+vastra kube yaml config for live
+
+task on - 18 - October
+meta lead error solve and live
+kishpann products permission problem check | and products sync
+broadcast schedule and sent view fix for failedRebroadcast
+cleverTap metting attend
+
+task on - 19 - October
+db_jhakaasholidayspvtltd_india endcustomer where tags on in "mill association","apt founder list","office"
+Carousel working complete for cleverTap | meeting attended
+cleverTap_saud merge in internal-ws merge in master-ws
+
+working completed as on 18-Oct
+tags delete then also delete from endcustomers
+import customers batch working
+during update|edit template also update headerComponents 
+vastra flow changes
+Offer working
+
+task on - 21 - October
+Carousel working inbound statusMessage working for cleverTap | meeting attended
+birthday_function merge in internal-ws | cronApp live
+
+task on - 22 - October
+Carousel working inbound statusMessage failed status working | application view for cleverTap
+clevertap_view merge in cleverTap_saud2,clevertap_saud2 merge in internal-ws (Web) | isCleverTap merge in main(Admin)|cleverTap_saud merge in main (StatusMsgApp)
+startupfest2.0 tags added to start_up_fest_thankyou_msg_ template customers
+
+task on - 23 - October
+openapi_compressing merge internal-ws, merge in master-ws | live
+product save error check
+
+task on - 24 - October
+copy_code working merge in internal-ws | 8 files conflicts remove, SoftwareName merge in main(Admin)
+meta product save error solved
+defaultcountry defaultCountryCode added in all Vastra clients using customScript
+sharp module configuration in docker file
+
+
+task on - 25 - October
+teammember created in Engees Ecommerce Private Limited | 919879586546 - login problem solve
+Om attendance app live css prolblem solve
+master-ws merge in internal-ws | interal-24oct merge in internal-ws  |pabbly_customer changes added in internal-ws
+pabbly_customer
+copy_code_Add merge in internal-broadcast(broadcastApp)  
+
+
+Working completed as on 24 - October
+copy code working for template, broadcast, autoreply
+pabbly add/create customer api
+sharp|image compress working for sakhiya | openApi template | dockerFile change
+
+task on - 26 - October
+internal-broadcast merge in main(broadcast)
+all packages update for internal broadcast
+
+
+clevertap working = clevertap_saud
+singlelocalization - single loc working for templates
+header dynamic working in reciepinet working
+webhook status check and set before brodcast
+
+
+- name: MONGODB_URL
+              valueFrom:
+                secretKeyRef:
+                  key: dburl
+                  name: db-local-string
+
+db.getCollection("inbounds").find({"sentTemplate._id": '67139b313ea19cf8d8b002ac'}).forEach(cust => {
+    console.log(cust.to);
+
+    db.getCollection("endcustomers").updateOne(
+        { mobileNo: cust.to }, 
+        { $addToSet: { tags: "startupfest2.0" } }
+    );
+});
+
+
+
+remove multiple localization working
+sentby and createdby teammember - kaushal
+app api delete status template list = templateStatus_app_saud  -- done
+redis error - redissetup_saud_9oct
+failed_broadcast -- schedule working to merge
 
 
 delete all failedcustomer and remove working
@@ -2062,7 +2205,7 @@ web_branch : tds_wallet -- done
 -========================================================
 temp dynamic url working only for chat
 
-template-dynamic-url-manage -- for template dyn workng
+template-dynamic-url-manage -- for template dyn workng ------  default_temp_dynamic_14oct_internal
 
 
           - backend:

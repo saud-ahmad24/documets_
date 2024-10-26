@@ -1,0 +1,25 @@
+compcarousel_14sep11
+urlcompcarousel_14sep
+urlcomp_14sep
+
+
+
+"isCleverTap":true,
+    "cleverTapSetting":{
+        "inboundMessageUrl":"https://cb.wzrkt.com/wa/generic/response?a=844-445-ZZ6Z",
+        "messageStatusUrl":"https://cb.wzrkt.com/wa/generic/status?a=844-445-ZZ6Z",
+    }
+
+
+{"messageId":"wamid.HBgMOTE4ODY2MTg2ODQxFQIAEhggNEMwOENCRDI5Q0QxRTMwMEYzMUNENDdGOUIzMjczMTYA","channel":"whatsapp","from":"918866186841","to":"917016875366","receivedAt":"2024-10-21T08:21:37Z","content":{"contentType":"media","media":{"type":"image","mediaId":"206cf4a1-2054-4467-8544-e80d579b6af9","url":"https://api.tyntec.com/chat-api/v2/media/206cf4a1-2054-4467-8544-e80d579b6af9"}},"event":"MoMessage","whatsapp":{"senderName":"Saud Ahmad"},"timestamp":"2024-10-21T08:21:37Z"}
+
+
+{"messageId":"wamid.HBgMOTE4ODY2MTg2ODQxFQIAEhggMzMzQ0VERjZFOEZCNEY2QTQwNjlBRUIyNTI4MzBGMzgA","channel":"whatsapp","from":"918866186841","to":"917016875366","receivedAt":"2024-10-21T08:23:03Z","content":{"contentType":"media","media":{"type":"image","mediaId":"7bb7ca89-e70d-4a53-a0d2-8b1bad36001b","caption":"Okkk","url":"https://api.tyntec.com/chat-api/v2/media/7bb7ca89-e70d-4a53-a0d2-8b1bad36001b"}},"event":"MoMessage","whatsapp":{"senderName":"Saud Ahmad"},"timestamp":"2024-10-21T08:23:03Z"}
+
+{"messageId":"wamid.HBgMOTE4ODY2MTg2ODQxFQIAEhggNEJBOTIzODkyODkzNzk2RTZGOTI1NjQzMUFEQzg0RDEA","channel":"whatsapp","from":"918866186841","to":"917016875366","receivedAt":"2024-10-21T08:45:37Z","content":{"contentType":"location","location":{"longitude":72.797311615777,"latitude":21.147697729445,"name":"bhagwan mahavir college of business administration","address":"Gujarāt","url":"http://www.bmefcolleges.com"}},"event":"MoMessage","whatsapp":{"senderName":"Saud Ahmad"},"timestamp":"2024-10-21T08:45:37Z"}
+
+
+{"messageId":"wamid.HBgMOTE4ODY2MTg2ODQxFQIAEhggQjYzNTFCMThDMUQyMTBEQkI2RkU2NzU0RUU2RUVFQkUA","channel":"whatsapp","from":"918866186841","to":"917016875366","receivedAt":"2024-10-21T08:21:26Z","content":{"contentType":"text","text":"Hi"},"event":"MoMessage","whatsapp":{"senderName":"Saud Ahmad"},"timestamp":"2024-10-21T08:21:26Z"}
+
+
+{"messageId":"wamid.HBgMOTE4ODY2MTg2ODQxFQIAEhggNDhCMENENTE3Q0JFQkY2QkRBM0ExRjNENEI0QjQzREUA","channel":"whatsapp","from":"918866186841","to":"917016875366","receivedAt":"2024-10-21T08:50:13Z","content":{"contentType":"media","media":{"type":"document","mediaId":"ff7a5a85-04ea-4bfe-ac8a-a9d0b1f2f9c7","filename":"Ayanokouji Kiyotaka icon.jpeg","url":"https://api.tyntec.com/chat-api/v2/media/ff7a5a85-04ea-4bfe-ac8a-a9d0b1f2f9c7"}},"event":"MoMessage","whatsapp":{"senderName":"Saud Ahmad"},"timestamp":"2024-10-21T08:50:13Z"}
