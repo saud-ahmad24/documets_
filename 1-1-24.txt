@@ -2160,8 +2160,13 @@ pabbly add/create customer api
 sharp|image compress working for sakhiya | openApi template | dockerFile change
 
 task on - 26 - October
-internal-broadcast merge in main(broadcast)
-all packages update for internal broadcast
+internal-broadcast merge in main(broadcast) | tally_errorHandle merge in internal-ws | master merge in internal-ws| master-ws to master branch code update
+all packages update for internal broadcast app
+tally sendTemplate error check
+
+task on - 28 - October
+logs_autoReply merge in internal-ws | internal merge in main (11za CronApp)
+explaining everyting to everyone
 
 
 clevertap working = clevertap_saud
