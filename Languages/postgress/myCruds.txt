@@ -1,0 +1,412 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { User, Post } = require('../models');
+const { sequelize } = require('../../src/models');
+const { Op } = require('sequelize');
+
+const registerUser = async (userData) => {
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+    console.log(userData);
+    const user = await User.create({ ...userData, password: hashedPassword });
+    return user;
+};
+
+const authenticateUser = async (loginData) => {
+    const user = await User.findOne({ where: { email: loginData.email } });
+    if (!user || !bcrypt.compareSync(loginData.password, user.password)) {
+        throw new Error('Invalid credentials');
+    }
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    return token;
+};
+
+const testing = async () => {
+    console.log("Testing function");
+    // const user = await User.findOne({ where: { email: 'saud@demo.com' } });
+
+    // const jane = await User.create({ name: 'Jane' });
+    // console.log(jane.name); // "Jane"
+    // jane.name = 'Ada';
+    // // the name is still "Jane" in the database
+    // await jane.save();
+
+    // const jane = await User.create({ name: 'Jane' });
+    // jane.set({
+    //     name: 'Ada',
+    //     favoriteColor: 'blue',
+    // });
+    // // As above, the database still has "Jane" and "green"
+    // await jane.save();
+
+    // const jane = await User.create({ name: 'Jane' });
+    // jane.favoriteColor = 'blue';
+    // await jane.update({ name: 'Ada' });
+    // // The database now has "Ada" for name, but still has the default "green" for favorite color
+    // await jane.save();
+    // Now the database has "Ada" for name and "blue" for favorite color
+
+    // const jane = await User.create({ name: 'Jane' });
+    // jane.favoriteColor = 'blue';
+    // await jane.update({ name: 'Ada' });
+    // // The database now has "Ada" for name, but still has the default "green" for favorite color
+    // await jane.save();
+    // Now the database has "Ada" for name and "blue" for favorite color
+
+    // const jane = await User.create({ name: 'Jane' });
+    // // console.log(jane); // Don't do this
+    // console.log(jane.toJSON()); // This is good!
+    // console.log(JSON.stringify(jane, null, 4)); // This is also good!
+
+
+    // const jane = User.build({ name: 'Jane' });
+    // console.log(jane.favoriteColor); // "green"
+
+    // const jane = await User.create({ name: 'Jane' });
+    // console.log(jane.name); // "Jane"
+    // await jane.destroy();
+    // Now this entry was removed from the database
+
+    // const jane = await User.create({ name: 'Jane' });
+    // console.log(jane.name); // "Jane"
+    // jane.name = 'Ada';
+    // // the name is still "Jane" in the database
+    // await jane.reload();
+    // console.log(jane.name); // "Jane"
+
+    // const jane = await User.create({ name: 'Jane' });
+    // console.log(jane.name); // "Jane"
+    // console.log(jane.favoriteColor); // "green"
+    // jane.name = 'Jane II';
+    // jane.favoriteColor = 'blue';
+    // await jane.save({ fields: ['name'] });
+    // console.log(jane.name); // "Jane II"
+    // console.log(jane.favoriteColor); // "blue"
+    // // The above printed blue because the local object has it set to blue, but
+    // // in the database it is still "green":
+    // await jane.reload();
+    // console.log(jane.name); // "Jane II"
+    // console.log(jane.favoriteColor); // "green"
+
+
+    // const jane = await User.create({ name: 'Jane', age: 100 });
+    // const incrementResult = await jane.increment('age', { by: 2 });
+
+    // const user = await User.create(
+    //     {
+    //         name: 'alice123',
+    //         isAdmin: true,
+    //     },
+    //     { fields: ['name'] },
+    // );
+    // // let's assume the default of isAdmin is false
+    // console.log(user.name); // 'alice123'
+    // console.log(user.isAdmin); // false
+
+    // Find all users
+    // const users = await User.findAll();
+    // console.log(users.every(user => user instanceof User)); // true
+    // console.log('All users:', JSON.stringify(users, null, 2));
+
+    // // Find all users
+    // const users = await User.findAll({ attributes: ['id', 'name'], });
+    // console.log(users.every(user => user instanceof User)); // true
+    // console.log('All users:', JSON.stringify(users, null, 2));
+
+    // Find all users
+    // const users = await User.findAll({ attributes: ['id', ['name','fname']], });
+    // console.log(users.every(user => user instanceof User)); // true
+    // console.log('All users:', JSON.stringify(users, null, 2));
+
+    // const users = await User.findAll({ attributes: ['name', [sequelize.fn('COUNT', sequelize.col('name')), 'totalDupName']], group: ['name'], });
+    // console.log('All users:', JSON.stringify(users, null, 2));
+
+    // const users = await User.findAll({
+    //     attributes: [
+    //         [sequelize.fn('COUNT', sequelize.col('age')), 'totalAge']
+    //     ],
+    // });
+    // console.log('All users:', JSON.stringify(users, null, 2));
+
+    // const users = await User.findAll({
+    //     attributes: { exclude: ['id'] },
+    // });
+    // console.log('All users:', JSON.stringify(users, null, 2));
+
+    // const users = await User.findAll({
+    //     attributes: { exclude: ['id'] },
+    //     where: {
+    //         id: 1
+    //     }
+    // });
+    // console.log('All users:', JSON.stringify(users, null, 2));
+
+    // const users = await User.findAll({
+    //     where: {
+    //         id: {
+    //           [Op.eq]: 2,
+    //         },
+    //       },
+    // });
+
+    // const users = await User.findAll({
+    //     where: {
+    //         id: 2,
+    //         "name": "Ada",
+    //     },
+    // });
+
+    // const users = await User.findAll({
+    //     where: {
+    //         [Op.and]: [{ id: 2, }, { "name": "Ada", }],
+    //     },
+    // });
+
+    // const users = await User.findAll({
+    //     where: {
+    //         [Op.or]: [{ id: 2, }, { "name": "Ada", }],
+    //     },
+    // });
+
+    // const users = await User.destroy({
+    //     where: {
+    //         [Op.or]: [{ id: 2, }, { "name": "Ada", }],
+    //     },
+    // });
+
+    // const users = await User.findAll({
+    //     where: {
+    //         id: {
+    //             [Op.in]: [12, 2],
+    //         },
+    //         name: {
+    //             [Op.like]: '%ne',
+    //         }
+    //     },
+    // });
+
+    // const users = await User.findAll({
+    //     where: {
+    //         id: [12, 2, 3],
+    //     },
+    // });
+
+    // const users = await User.findAll({
+    //     where: sequelize.where(sequelize.fn('char_length', sequelize.col('name')), 7),
+    // });
+
+    // const users = await User.findAll({
+    //     where: {
+    //         [Op.or]: [
+    //             sequelize.where(sequelize.fn('char_length', sequelize.col('name')), 7),
+    //             {
+    //                 name: {
+    //                     [Op.like]: 'Jane%',
+    //                 },
+    //             },
+    //             {
+    //                 [Op.and]: [
+    //                     {
+    //                         email: {
+    //                             [Op.is]: null
+    //                         }
+    //                     },
+    //                     sequelize.where(sequelize.fn('char_length', sequelize.col('name')),),
+    //                 ],
+    //             },
+    //         ],
+    //     },
+    // });
+
+
+    // Change everyone without a last name to "Doe"
+    // await User.update(
+    //     { email: 'Jane111@gmail.com' },
+    //     {
+    //         where: {
+    //             email: 'Jane111',
+    //         },
+    //     },
+    // );
+
+    // Truncate the table
+    // await User.destroy({
+    //     truncate: true,
+    //   });
+
+
+    // const captains = await User.bulkCreate([{ name: 'Jack Sparrow' }, { name: 'Davy Jones' }]);
+    // console.log(captains.length); // 2
+    // console.log(captains[0] instanceof User); // true
+    // console.log(captains[0].name); // 'Jack Sparrow'
+    // console.log(captains[0].id); // 1 // (or another auto-generated value)
+
+    // await User.bulkCreate([{ name: 'foo' }, { name: 'bar', admin: true }], {
+    //     fields: ['name'],
+    // });
+
+    // const users = await User.findAll({
+    //     order: [
+    //         // ['name', 'DESC'],
+    //         sequelize.fn('max', sequelize.col('age')),
+    //     ]
+    // });
+
+    // const users = await User.findAll({
+    //     attributes: [
+    //         'name',
+    //         [sequelize.fn('COUNT', sequelize.col('id')), 'user_count']
+    //     ],
+    //     group: ['name'],
+    //     order: [[sequelize.fn('COUNT', sequelize.col('id')), 'DESC']] // Orders by user_count in descending order
+    // });
+
+    // const users = await User.findAll({
+    //     attributes: [
+    //         'age',
+    //         'favoriteColor',
+    //         [sequelize.fn('COUNT', sequelize.col('id')), 'user_count']
+    //     ],
+    //     group: ['age', 'favoriteColor']
+    // });
+
+
+    // const users = await User.findAll({ limit: 10 });
+
+
+    // const users = await User.findAll({ offset: 8 });
+
+    // const users = await User.findAll({ offset: 5, limit: 5 });
+
+    // const users = await User.count({
+    //     where: {
+    //       id: {
+    //         [Op.gt]: 1,
+    //       },
+    //     },
+    //   });
+
+
+    // await User.max('age'); // 40
+    // await User.max('age', { where: { age: { [Op.lt]: 20 } } }); // 10
+    // await User.min('age'); // 5
+    // await User.min('age', { where: { age: { [Op.gt]: 5 } } }); // 10
+    // await User.sum('age'); // 55
+    // await User.sum('age', { where: { age: { [Op.gt]: 5 } } }); // 50
+
+    // await User.increment({ age: 5 }, { where: { id: 1 } }); // Will increase age to 15
+    // await User.increment({ age: -5 }, { where: { id: 1 } }); // Will decrease age to 5
+
+    // const users = await User.findByPk(12);
+
+
+    // const [user, created] = await User.findOrCreate({
+    //     where: { name: 'sdepold' },
+    //     defaults: {
+    //         email: 'ok@gmail.com',
+    //     },
+    // });
+    // console.log(user.name); // 'sdepold'
+    // console.log(user.job); // This may or may not be 'Technical Lead JavaScript'
+    // console.log(created); // The boolean indicating whether this instance was just created
+    // if (created) {
+    //     console.log(user.job); // This will certainly be 'Technical Lead JavaScript'
+    // }
+
+
+    // const { count, rows } = await User.findAndCountAll({
+    //     where: {
+    //         name: {
+    //             [Op.like]: 'Jane%',
+    //         },
+    //     },
+    //     // offset: 10,
+    //     // limit: 2,
+    // });
+    // console.log(count);
+    // console.log(rows);
+
+    // const post = await Post.create({
+    //     title: 'nodejs4',
+    //     content: 'with postgress',
+    //     userId: 12, // Associate post with user by setting userId
+    // });
+    // console.log('Post created successfully:', post);
+
+    const users = await User.findAll({
+        include: {
+          model: Post,
+          as: 'Posts',
+          where: {
+            title: 'Specific Title', // Add your condition here
+          },
+          required: true,
+        },
+      })
+
+    console.log('All users:', JSON.stringify(users, null, 2));
+    return users;
+
+};
+
+testing().then((result) => {
+    // console.log("Done-=======", result);
+})
+
+module.exports = { registerUser, authenticateUser };
+
+
+
+
+
+// sequelize.define('foo', {
+//     bar: {
+//       type: DataTypes.STRING,
+//       validate: {
+//         is: /^[a-z]+$/i,          // matches this RegExp
+//         is: ["^[a-z]+$",'i'],     // same as above, but constructing the RegExp from a string
+//         not: /^[a-z]+$/i,         // does not match this RegExp
+//         not: ["^[a-z]+$",'i'],    // same as above, but constructing the RegExp from a string
+//         isEmail: true,            // checks for email format (foo@bar.com)
+//         isUrl: true,              // checks for url format (https://foo.com)
+//         isIP: true,               // checks for IPv4 (129.89.23.1) or IPv6 format
+//         isIPv4: true,             // checks for IPv4 (129.89.23.1)
+//         isIPv6: true,             // checks for IPv6 format
+//         isAlpha: true,            // will only allow letters
+//         isAlphanumeric: true,     // will only allow alphanumeric characters, so "_abc" will fail
+//         isNumeric: true,          // will only allow numbers
+//         isInt: true,              // checks for valid integers
+//         isFloat: true,            // checks for valid floating point numbers
+//         isDecimal: true,          // checks for any numbers
+//         isLowercase: true,        // checks for lowercase
+//         isUppercase: true,        // checks for uppercase
+//         notNull: true,            // won't allow null
+//         isNull: true,             // only allows null
+//         notEmpty: true,           // don't allow empty strings
+//         equals: 'specific value', // only allow a specific value
+//         contains: 'foo',          // force specific substrings
+//         notIn: [['foo', 'bar']],  // check the value is not one of these
+//         isIn: [['foo', 'bar']],   // check the value is one of these
+//         notContains: 'bar',       // don't allow specific substrings
+//         len: [2,10],              // only allow values with length between 2 and 10
+//         isUUID: 4,                // only allow uuids
+//         isDate: true,             // only allow date strings
+//         isAfter: "2011-11-05",    // only allow date strings after a specific date
+//         isBefore: "2011-11-05",   // only allow date strings before a specific date
+//         max: 23,                  // only allow values <= 23
+//         min: 23,                  // only allow values >= 23
+//         isCreditCard: true,       // check for valid credit card numbers
+  
+//         // Examples of custom validators:
+//         isEven(value) {
+//           if (parseInt(value) % 2 !== 0) {
+//             throw new Error('Only even values are allowed!');
+//           }
+//         }
+//         isGreaterThanOtherField(value) {
+//           if (parseInt(value) <= parseInt(this.otherField)) {
+//             throw new Error('Bar must be greater than otherField.');
+//           }
+//         }
+//       }
+//     }
+//   });
