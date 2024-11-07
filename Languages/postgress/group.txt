@@ -1,0 +1,118 @@
+In Sequelize, you can use the `group` option to perform a `GROUP BY` operation, which is useful for aggregating data based on a specific column or set of columns. Here's how you can use `group` in a basic query.
+
+### Example: Basic Grouping by a Single Column
+
+Let's assume you have a `User` model with columns like `name` and `age`. You want to count how many users there are for each unique `age`.
+
+```javascript
+const users = await User.findAll({
+  attributes: [
+    'age', // Group by age
+    [sequelize.fn('COUNT', sequelize.col('id')), 'user_count'] // Count the number of users for each age
+  ],
+  group: ['age'] // Group by the 'age' column
+});
+
+console.log(users);
+```
+
+### Output:
+
+```json
+[
+  {
+    "age": 25,
+    "user_count": 3
+  },
+  {
+    "age": 30,
+    "user_count": 5
+  }
+]
+```
+
+### Explanation:
+- **`attributes`**: The attributes you're selecting. Here, we're selecting the `age` and using the `COUNT` function to count the number of users for each unique age.
+- **`group`**: Specifies the column by which to group the results. In this case, it’s `age`.
+
+### Example 2: Grouping by Multiple Columns
+
+If you wanted to group by both `age` and `favoriteColor`, you can specify both in the `group` option.
+
+```javascript
+const users = await User.findAll({
+  attributes: [
+    'age', 
+    'favoriteColor',
+    [sequelize.fn('COUNT', sequelize.col('id')), 'user_count']
+  ],
+  group: ['age', 'favoriteColor']
+});
+
+console.log(users);
+```
+
+### Output:
+
+```json
+[
+  {
+    "age": 25,
+    "favoriteColor": "blue",
+    "user_count": 2
+  },
+  {
+    "age": 30,
+    "favoriteColor": "green",
+    "user_count": 3
+  }
+]
+```
+
+### Explanation:
+- **`group: ['age', 'favoriteColor']`**: This groups the results by both `age` and `favoriteColor`, so you'll get counts for each unique combination of `age` and `favoriteColor`.
+
+### Example 3: Using Group with HAVING
+
+If you want to filter groups based on an aggregate function, you can use the `having` option. For example, if you only want to get ages with more than 2 users:
+
+```javascript
+const users = await User.findAll({
+  attributes: [
+    'age',
+    [sequelize.fn('COUNT', sequelize.col('id')), 'user_count']
+  ],
+  group: ['age'],
+  having: sequelize.literal('COUNT(id) > 2') // Only include ages with more than 2 users
+});
+
+console.log(users);
+```
+
+### Output:
+
+```json
+[
+  {
+    "age": 30,
+    "user_count": 5
+  }
+]
+```
+
+### Explanation:
+- **`having`**: This filters the groups based on the result of the aggregate function. In this case, we're only selecting groups where the count of users (`COUNT(id)`) is greater than 2.
+
+### Key Points:
+- **`group`**: Used to group the results by one or more columns.
+- **`having`**: Used to filter grouped results based on aggregate functions.
+- **`attributes`**: Allows you to select which columns and aggregate functions you want in the results.
+
+This is how basic grouping works in Sequelize, and it allows you to perform complex aggregations and filtering on your grouped data.
+
+
+
+Team.hasMany(Player, {
+  foreignKey: 'clubId',
+});
+Player.belongsTo(Team);

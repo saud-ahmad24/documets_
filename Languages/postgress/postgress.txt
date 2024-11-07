@@ -1,0 +1,215 @@
+const { Model, DataTypes, Deferrable } = require('sequelize');
+
+class Foo extends Model {}
+Foo.init(
+  {
+    // instantiating will automatically set the flag to true if not set
+    flag: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
+
+    // default values for dates => current time
+    myDate: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+
+    // setting allowNull to false will add NOT NULL to the column, which means an error will be
+    // thrown from the DB when the query is executed if the column is null. If you want to check that a value
+    // is not null before querying the DB, look at the validations section below.
+    title: { type: DataTypes.STRING, allowNull: false },
+
+    // Creating two objects with the same value will throw an error. The unique property can be either a
+    // boolean, or a string. If you provide the same string for multiple columns, they will form a
+    // composite unique key.
+    uniqueOne: { type: DataTypes.STRING, unique: 'compositeIndex' },
+    uniqueTwo: { type: DataTypes.INTEGER, unique: 'compositeIndex' },
+
+    // The unique property is simply a shorthand to create a unique constraint.
+    someUnique: { type: DataTypes.STRING, unique: true },
+
+    // Go on reading for further information about primary keys
+    identifier: { type: DataTypes.STRING, primaryKey: true },
+
+    // autoIncrement can be used to create auto_incrementing integer columns
+    incrementMe: { type: DataTypes.INTEGER, autoIncrement: true },
+
+    // You can specify a custom column name via the 'field' attribute:
+    fieldWithUnderscores: {
+      type: DataTypes.STRING,
+      field: 'field_with_underscores',
+    },
+
+    // It is possible to create foreign keys:
+    bar_id: {
+      type: DataTypes.INTEGER,
+
+      references: {
+        // This is a reference to another model
+        model: Bar,
+
+        // This is the column name of the referenced model
+        key: 'id',
+
+        // With PostgreSQL, it is optionally possible to declare when to check the foreign key constraint, passing the Deferrable type.
+        deferrable: Deferrable.INITIALLY_IMMEDIATE,
+        // Options:
+        // - `Deferrable.INITIALLY_IMMEDIATE` - Immediately check the foreign key constraints
+        // - `Deferrable.INITIALLY_DEFERRED` - Defer all foreign key constraint check to the end of a transaction
+        // - `Deferrable.NOT` - Don't defer the checks at all (default) - This won't allow you to dynamically change the rule in a transaction
+      },
+    },
+
+    // Comments can only be added to columns in MySQL, MariaDB, PostgreSQL and MSSQL
+    commentMe: {
+      type: DataTypes.INTEGER,
+      comment: 'This is a column name that has a comment',
+    },
+  },
+  {
+    sequelize,
+    modelName: 'foo',
+
+    // Using `unique: true` in an attribute above is exactly the same as creating the index in the model's options:
+    indexes: [{ unique: true, fields: ['someUnique'] }],
+  },
+);
+
+
+
+
+npx sequelize-cli migration:generate --name add-favoriteColor-to-users
+
+'use strict';
+
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.addColumn('Users', 'favoriteColor', {
+      type: Sequelize.STRING,
+      defaultValue: 'green',  // Default color
+    });
+  },
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.removeColumn('Users', 'favoriteColor');
+  },
+};
+
+
+npx sequelize-cli db:migrate
+
+npx sequelize-cli db:migrate:undo
+
+
+
+const { Op } = require('sequelize');
+const { RangeModel } = require('./models'); // Assuming RangeModel is your model
+
+// Example data in the "range" column (type is PostgreSQL range):
+// id  | range
+// --- | --------
+// 1   | [1, 5]
+// 2   | [2, 6]
+// 3   | [3, 4]
+
+// 1. [Op.contains]: The range contains a specific element (e.g., 2 is contained in the range [1, 5])
+const resultContains = await RangeModel.findAll({
+  where: {
+    range: {
+      [Op.contains]: 2,  // Range contains element 2
+    },
+  },
+});
+
+console.log('Ranges that contain 2:', resultContains);
+
+// 2. [Op.contains]: The range contains another range (e.g., [1, 2] is contained in the range [1, 5])
+const resultContainsRange = await RangeModel.findAll({
+  where: {
+    range: {
+      [Op.contains]: [1, 2],  // Range contains the range [1, 2]
+    },
+  },
+});
+
+console.log('Ranges that contain the range [1, 2]:', resultContainsRange);
+
+// 3. [Op.contained]: The range is contained by another range (e.g., [1, 2] is contained in [1, 5])
+const resultContained = await RangeModel.findAll({
+  where: {
+    range: {
+      [Op.contained]: [1, 2], // Range is contained by [1, 2]
+    },
+  },
+});
+
+console.log('Ranges that are contained by [1, 2]:', resultContained);
+
+// 4. [Op.overlap]: The range overlaps with another range (e.g., [1, 5] overlaps with [4, 6])
+const resultOverlap = await RangeModel.findAll({
+  where: {
+    range: {
+      [Op.overlap]: [4, 6],  // Overlaps with the range [4, 6]
+    },
+  },
+});
+
+console.log('Ranges that overlap with [4, 6]:', resultOverlap);
+
+// 5. [Op.adjacent]: The range is adjacent to another range (e.g., [1, 5] is adjacent to [5, 6])
+const resultAdjacent = await RangeModel.findAll({
+  where: {
+    range: {
+      [Op.adjacent]: [5, 6],  // Adjacent to the range [5, 6]
+    },
+  },
+});
+
+console.log('Ranges adjacent to [5, 6]:', resultAdjacent);
+
+// 6. [Op.strictLeft]: The range is strictly to the left of another range (e.g., [1, 4] is strictly left of [4, 5])
+const resultStrictLeft = await RangeModel.findAll({
+  where: {
+    range: {
+      [Op.strictLeft]: [4, 5],  // Strictly left of the range [4, 5]
+    },
+  },
+});
+
+console.log('Ranges strictly left of [4, 5]:', resultStrictLeft);
+
+// 7. [Op.strictRight]: The range is strictly to the right of another range (e.g., [6, 10] is strictly right of [1, 6])
+const resultStrictRight = await RangeModel.findAll({
+  where: {
+    range: {
+      [Op.strictRight]: [1, 6],  // Strictly right of the range [1, 6]
+    },
+  },
+});
+
+console.log('Ranges strictly right of [1, 6]:', resultStrictRight);
+
+// 8. [Op.noExtendRight]: The range does not extend to the right of another range (e.g., [1, 5] does not extend past 5)
+const resultNoExtendRight = await RangeModel.findAll({
+  where: {
+    range: {
+      [Op.noExtendRight]: [1, 5],  // Range does not extend to the right of [1, 5]
+    },
+  },
+});
+
+console.log('Ranges that do not extend to the right of [1, 5]:', resultNoExtendRight);
+
+// 9. [Op.noExtendLeft]: The range does not extend to the left of another range (e.g., [2, 6] does not extend past 2)
+const resultNoExtendLeft = await RangeModel.findAll({
+  where: {
+    range: {
+      [Op.noExtendLeft]: [2, 6],  // Range does not extend to the left of [2, 6]
+    },
+  },
+});
+
+console.log('Ranges that do not extend to the left of [2, 6]:', resultNoExtendLeft);
+
+
+
+SELECT department, AVG(salary) AS average_salary
+FROM employees
+GROUP BY department
+HAVING AVG(salary) > 50000
+ORDER BY average_salary DESC;
+
