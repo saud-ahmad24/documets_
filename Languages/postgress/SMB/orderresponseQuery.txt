@@ -1,0 +1,110 @@
+To retrieve what a customer has purchased (including products and any associated add-ons) using Node.js with Sequelize, you can construct a query that joins the Orders, OrderItems, and OrderItemAddOns tables.
+
+Assuming you have the tables set up as outlined previously, here’s how you might structure the Sequelize query.
+
+### Sequelize Models (for Reference)
+Let’s assume we have the following Sequelize models set up:
+
+- Order (order header for each purchase)
+- OrderItem (each product in an order)
+- OrderItemAddOn (each add-on associated with an OrderItem)
+
+### Query to Retrieve Customer Purchases
+
+This query retrieves all orders for a specific customer, along with each product and its add-ons.
+
+javascript
+const getCustomerPurchases = async (customerId) => {
+  try {
+    const purchases = await Order.findAll({
+      where: { user_id: customerId }, // assuming `user_id` is the customer ID in the `Order` table
+      include: [
+        {
+          model: OrderItem,
+          as: 'items', // Assuming this alias was set in associations
+          include: [
+            {
+              model: Product, // assuming Product is associated with OrderItem
+              attributes: ['product_id', 'name', 'base_price'],
+            },
+            {
+              model: OrderItemAddOn,
+              as: 'addons', // Assuming this alias was set in associations
+              include: [
+                {
+                  model: AddOn, // assuming AddOn is associated with OrderItemAddOn
+                  attributes: ['addon_id', 'name', 'addon_price', 'type', 'subscription_period'],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    return purchases;
+  } catch (error) {
+    console.error('Error fetching customer purchases:', error);
+    throw error;
+  }
+};
+
+
+### Explanation
+
+1. *Order.findAll*:
+   - This retrieves all orders for the specified customerId.
+
+2. *OrderItem Include*:
+   - The OrderItem model is included to fetch each product in the order.
+
+3. *Product Details*:
+   - The Product model is joined with OrderItem to show product details such as name and base_price.
+
+4. *OrderItemAddOn Include*:
+   - OrderItemAddOn entries are included to retrieve each add-on for the ordered product.
+
+5. *AddOn Details*:
+   - Finally, each AddOn associated with OrderItemAddOn is included to show details like name, addon_price, type, and subscription_period.
+
+### Usage
+
+You can call getCustomerPurchases(customerId) with the customer’s ID to get a list of all orders, each product within each order, and any add-ons associated with the products. 
+
+### Sample Output
+
+The returned structure will look like this:
+
+json
+[
+  {
+    "order_id": 1,
+    "user_id": 123,
+    "items": [
+      {
+        "product_id": 101,
+        "name": "Product A",
+        "base_price": 100,
+        "addons": [
+          {
+            "addon_id": 201,
+            "name": "Add-on 1",
+            "addon_price": 20,
+            "type": "one-off",
+            "subscription_period": null
+          },
+          {
+            "addon_id": 202,
+            "name": "Add-on 2",
+            "addon_price": 30,
+            "type": "subscription",
+            "subscription_period": "monthly"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+
+This structure gives you a clear view of each product a customer has purchased, along with any associated add-ons and relevant pricing and subscription details.

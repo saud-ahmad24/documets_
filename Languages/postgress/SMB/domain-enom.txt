@@ -1,0 +1,131 @@
+For integrating Enom’s domain-related features into your app, here are the essential API commands you’ll need to cover domain search, registration, renewal, management, and DNS updates.
+
+### 1. Domain Availability Check
+
+Command `Check`
+
+- Purpose Check if a domain is available for registration.
+- Endpoint 
+  ```
+  GET interface.aspcommand=Check&uid=YOUR_USERNAME&pw=YOUR_PASSWORD&sld=example&tld=com
+  ```
+- Parameters
+  - `sld` Second-Level Domain (e.g., example in example.com).
+  - `tld` Top-Level Domain (e.g., com, net).
+
+### 2. Domain Purchase  Registration
+
+Command `Purchase`
+
+- Purpose Register a new domain for a user.
+- Endpoint 
+  ```
+  GET interface.aspcommand=Purchase&uid=YOUR_USERNAME&pw=YOUR_PASSWORD&sld=example&tld=com&NumYears=1&RegistrantFirstName=John&RegistrantLastName=Doe&RegistrantEmailAddress=john@example.com
+  ```
+- Parameters
+  - `sld` and `tld` Same as above.
+  - `NumYears` Number of years to register the domain (e.g., 1 for one year).
+  - Registrant Info Required registrant fields, such as `RegistrantFirstName`, `RegistrantLastName`, `RegistrantEmailAddress`, etc.
+  - Optional
+    - `UseDNS` `default` for Enom’s DNS or `custom` for an external DNS.
+    - `Autorenew` Set to `1` for auto-renewal or `0` for manual.
+
+### 3. Domain Renewal
+
+Command `Extend`
+
+- Purpose Renew an existing domain registration.
+- Endpoint
+  ```
+  GET interface.aspcommand=Extend&uid=YOUR_USERNAME&pw=YOUR_PASSWORD&sld=example&tld=com&NumYears=1
+  ```
+- Parameters
+  - `sld`, `tld` Same as above.
+  - `NumYears` Number of years to renew.
+
+### 4. Retrieve Domain Information
+
+Command `GetDomainInfo`
+
+- Purpose Retrieve details about an existing domain, such as expiration date, status, and contact info.
+- Endpoint
+  ```
+  GET interface.aspcommand=GetDomainInfo&uid=YOUR_USERNAME&pw=YOUR_PASSWORD&sld=example&tld=com
+  ```
+- Parameters
+  - `sld`, `tld` Same as above.
+
+### 5. Update DNS Settings
+
+Command `ModifyNS`
+
+- Purpose Update the name servers for a domain to custom DNS.
+- Endpoint
+  ```
+  GET interface.aspcommand=ModifyNS&uid=YOUR_USERNAME&pw=YOUR_PASSWORD&sld=example&tld=com&NS1=ns1.customdns.com&NS2=ns2.customdns.com
+  ```
+- Parameters
+  - `NS1`, `NS2`, ... `NS5` Specify up to 5 name servers.
+
+### 6. Modify WHOIS Contact Information
+
+Command `Contacts`
+
+- Purpose Update the WHOIS contact details for a registered domain.
+- Endpoint
+  ```
+  GET interface.aspcommand=Contacts&uid=YOUR_USERNAME&pw=YOUR_PASSWORD&sld=example&tld=com&RegistrantFirstName=John&RegistrantLastName=Doe&RegistrantEmailAddress=john@example.com
+  ```
+- Parameters
+  - Contact fields for `Registrant`, `Admin`, `Tech`, and `Billing` (like `RegistrantFirstName`, `RegistrantLastName`, `RegistrantEmailAddress`).
+
+### 7. Set Auto-Renew
+
+Command `SetRenew`
+
+- Purpose Enable or disable auto-renewal for a domain.
+- Endpoint
+  ```
+  GET interface.aspcommand=SetRenew&uid=YOUR_USERNAME&pw=YOUR_PASSWORD&sld=example&tld=com&AutoRenew=1
+  ```
+- Parameters
+  - `AutoRenew` Set to `1` to enable auto-renew or `0` to disable it.
+
+### 8. Retrieve List of Domains
+
+Command `GetDomains`
+
+- Purpose Retrieve a list of domains under the account.
+- Endpoint
+  ```
+  GET interface.aspcommand=GetDomains&uid=YOUR_USERNAME&pw=YOUR_PASSWORD
+  ```
+- Parameters
+  - Optional pagination parameters (e.g., `Page`, `RecordsPerPage`).
+
+### 9. Domain Transfer
+
+If you support transferring domains from other registrars to Enom, the following command is helpful
+
+Command `TP_CreateOrder`
+
+- Purpose Initiate a domain transfer from another registrar to Enom.
+- Endpoint
+  ```
+  GET interface.aspcommand=TP_CreateOrder&uid=YOUR_USERNAME&pw=YOUR_PASSWORD&sld=example&tld=com&OrderType=Transfer
+  ```
+- Parameters
+  - `OrderType` Set to `Transfer`.
+  - `AuthInfo` The EPP code (or transfer code) provided by the current registrar.
+
+### 10. Check Transfer Status
+
+Command `TP_GetStatus`
+
+- Purpose Check the status of an ongoing domain transfer.
+- Endpoint
+  ```
+  GET interface.aspcommand=TP_GetStatus&uid=YOUR_USERNAME&pw=YOUR_PASSWORD&sld=example&tld=com
+  ```
+
+These commands cover the most common domain-related actions. For production, ensure to add error handling, logging, and proper security practices (such as safely storing your credentials and using HTTPS for secure communication). Refer to Enom's [API documentation](httpswww.enom.comapi) for detailed parameter requirements and optional settings.

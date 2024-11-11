@@ -1,0 +1,58 @@
+{
+    "id": 1,
+    "userId": 1,
+    "totalAmount": 240,
+    "status": "completed",
+    "paymentMethod": "card",
+    "transactionId": "dsfswertwerw453",
+    "createdAt": "2024-11-11T09:35:52.614Z",
+    "updatedAt": "2024-11-11T09:35:52.616Z",
+    "UserId": null,
+    "OrderItems": [
+        {
+            "id": 1,
+            "orderId": 1,
+            "productId": 3,
+            "quantity": 1,
+            "subscriptionStartDate": null,
+            "subscriptionEndDate": null,
+            "createdAt": "2024-11-11T09:35:52.625Z",
+            "updatedAt": "2024-11-11T09:35:52.625Z",
+            "Product": {
+                "id": 3,
+                "name": "Bespoke Landing Page Design",
+                "description": "Creating a landing page that converts visitors into leads, and then clients is a vital aspect of online success. Our Landing Page Design Experts will come up with an exquisite Landing Page Design that is optimised to grab the attention of visitors and really get them interested in your brand and your service.",
+                "price": 285,
+                "isSubscription": false,
+                "isPackage": false,
+                "groupName": null,
+                "hasAddOns": true,
+                "createdAt": "2024-11-08T11:12:42.762Z",
+                "updatedAt": "2024-11-08T11:12:42.762Z"
+            },
+            "OrderItemAddOns": [
+                {
+                    "id": 1,
+                    "orderItemId": 1,
+                    "addOnId": 1,
+                    "quantity": 1,
+                    "subscriptionStartDate": null,
+                    "subscriptionEndDate": null,
+                    "createdAt": "2024-11-11T09:35:52.628Z",
+                    "updatedAt": "2024-11-11T09:35:52.628Z",
+                    "AddOn": {
+                        "id": 1,
+                        "name": "Include Fully Responsive for Desktop, Laptop, Tablet and Mobile Devices",
+                        "description": "We will create another design to ensure it looks great on mobile and tablet devices as well as desktop.",
+                        "price": 165,
+                        "billingType": "one-off",
+                        "isQuantityBased": false,
+                        "subscriptionInterval": null,
+                        "createdAt": "2024-11-08T11:35:24.468Z",
+                        "updatedAt": "2024-11-08T11:35:24.468Z"
+                    }
+                }
+            ]
+        }
+    ]
+}
