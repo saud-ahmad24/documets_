@@ -1,0 +1,197 @@
+In modern React development, the most commonly approached way to manage state and handle API calls depends on the size and complexity of your application. However, here are the most commonly used solutions:
+
+### 1. **React State + `useEffect` (for Simple Apps)**
+   - **When to use**: For simple applications or smaller components that don't require sharing state across many parts of the app. React's built-in `useState` and `useEffect` hooks are the easiest and most straightforward way to handle local state and side-effects (such as API calls).
+   - **Usage**: You can manage local component state (e.g., user input, form data) and trigger API calls within components using `useEffect`.
+
+   **Example**: 
+   ```javascript
+   import React, { useState, useEffect } from 'react';
+   import axios from 'axios';
+
+   const ProductList = () => {
+       const [products, setProducts] = useState([]);
+       const [loading, setLoading] = useState(true);
+       const [error, setError] = useState(null);
+
+       useEffect(() => {
+           const fetchProducts = async () => {
+               try {
+                   const { data } = await axios.get('https://api.example.com/products');
+                   setProducts(data);
+               } catch (err) {
+                   setError('Error fetching products');
+               } finally {
+                   setLoading(false);
+               }
+           };
+
+           fetchProducts();
+       }, []);  // Empty dependency array, runs only once
+
+       if (loading) return <div>Loading...</div>;
+       if (error) return <div>{error}</div>;
+
+       return (
+           <div>
+               {products.map(product => (
+                   <div key={product.id}>{product.name}</div>
+               ))}
+           </div>
+       );
+   };
+   ```
+
+   **Why it's common**: It's simple, easy to understand, and doesn't require any external libraries. This is the go-to for smaller applications or isolated features within larger apps.
+
+---
+
+### 2. **React Context API + `useReducer` (for Medium-sized Apps)**
+   - **When to use**: When you need to share state across multiple components without prop drilling and you don't want to introduce a heavy state management library like Redux. React's **Context API** allows you to create global state and share it across components.
+   - **Usage**: Ideal for app-wide state (e.g., user authentication, theme settings) in apps that don't require complex state logic.
+
+   **Example**:
+   ```javascript
+   import React, { createContext, useState, useContext } from 'react';
+
+   const UserContext = createContext();
+
+   export const useUser = () => useContext(UserContext);
+
+   export const UserProvider = ({ children }) => {
+       const [user, setUser] = useState(null);
+
+       const login = (userData) => setUser(userData);
+       const logout = () => setUser(null);
+
+       return (
+           <UserContext.Provider value={{ user, login, logout }}>
+               {children}
+           </UserContext.Provider>
+       );
+   };
+
+   // Usage in a component
+   const LoginButton = () => {
+       const { login } = useUser();
+
+       const handleLogin = () => {
+           const mockUser = { name: 'John Doe' };  // Mock user
+           login(mockUser);
+       };
+
+       return <button onClick={handleLogin}>Login</button>;
+   };
+   ```
+
+   **Why it's common**: The **Context API** is built into React, so you don't need to install additional libraries. It provides a simple way to share state across components without prop drilling.
+
+---
+
+### 3. **Redux (for Complex Apps with Global State)**
+   - **When to use**: Redux is ideal for large-scale applications that require a **global state management** solution, especially when you have complex logic for managing and updating state from various parts of the app.
+   - **Usage**: Redux is commonly used for managing **global state** (e.g., user authentication, product catalogs, etc.) and is often paired with **redux-thunk** or **redux-saga** for handling asynchronous operations like API calls.
+
+   **Example**:
+   ```javascript
+   // userSlice.js
+   import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+   import axios from 'axios';
+
+   export const loginUser = createAsyncThunk('user/login', async (user) => {
+       const response = await axios.post('/api/login', user);
+       return response.data;
+   });
+
+   const userSlice = createSlice({
+       name: 'user',
+       initialState: { user: null, loading: false, error: null },
+       reducers: {
+           logout: (state) => {
+               state.user = null;
+           },
+       },
+       extraReducers: (builder) => {
+           builder
+               .addCase(loginUser.pending, (state) => {
+                   state.loading = true;
+               })
+               .addCase(loginUser.fulfilled, (state, action) => {
+                   state.loading = false;
+                   state.user = action.payload;
+               })
+               .addCase(loginUser.rejected, (state, action) => {
+                   state.loading = false;
+                   state.error = action.error.message;
+               });
+       },
+   });
+
+   export const { logout } = userSlice.actions;
+   export default userSlice.reducer;
+
+   // In your component
+   const Login = () => {
+       const dispatch = useDispatch();
+       const { user, loading, error } = useSelector((state) => state.user);
+
+       const handleSubmit = (e) => {
+           e.preventDefault();
+           dispatch(loginUser({ email: 'test@example.com', password: 'password123' }));
+       };
+
+       return (
+           <div>
+               {loading && <div>Loading...</div>}
+               {error && <div>{error}</div>}
+               {user ? <div>Welcome, {user.name}</div> : <button onClick={handleSubmit}>Login</button>}
+           </div>
+       );
+   };
+   ```
+
+   **Why it's common**: Redux is great for managing large, complex applications with a global state that is needed across many components. It is highly scalable and integrates well with other middlewares for handling side effects like API calls.
+
+---
+
+### 4. **React Query (for Managing Server-side Data and API Calls)**
+   - **When to use**: For managing **server-side data** such as API calls, caching, synchronization, and background updates. React Query simplifies data fetching, caching, and synchronization, reducing boilerplate code.
+   - **Usage**: You don't need Redux for handling server-side data fetching if you're using **React Query**. It abstracts away complex logic like caching, pagination, and retries.
+
+   **Example**:
+   ```javascript
+   import { useQuery } from 'react-query';
+   import axios from 'axios';
+
+   const fetchProducts = async () => {
+       const { data } = await axios.get('/api/products');
+       return data;
+   };
+
+   const ProductList = () => {
+       const { data, isLoading, isError, error } = useQuery('products', fetchProducts);
+
+       if (isLoading) return <div>Loading...</div>;
+       if (isError) return <div>Error: {error.message}</div>;
+
+       return (
+           <div>
+               {data.map((product) => (
+                   <div key={product.id}>{product.name}</div>
+               ))}
+           </div>
+       );
+   };
+   ```
+
+   **Why it's common**: **React Query** is widely used because it handles **server-state** efficiently, caching data and synchronizing with the server automatically. It helps reduce the complexity of managing API data.
+
+---
+
+### Conclusion: Most Approached Way
+
+- **For small to medium applications**: Using **React state** (`useState` and `useEffect`) or **Context API** is the most common approach. It's simple, and you don't need extra libraries for global state management.
+  
+- **For larger applications**: **Redux** is commonly used for managing complex global state and side effects like API calls. However, **React Query** is increasingly being used for handling server-side state and API calls efficiently, reducing the need for complex Redux setups.
+
+In general, use **Context API** or **React state** for simpler applications, and **Redux** or **React Query** when managing complex global state or server-side data.

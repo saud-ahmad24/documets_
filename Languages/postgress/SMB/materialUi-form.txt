@@ -1,0 +1,227 @@
+import React, { useState } from 'react';
+import { Box, Container, Typography, TextField, Button, IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import logo from './images/logo.svg';
+import roundCheck from './images/round-check.svg';
+import formImg from './images/form-img.png';
+
+export default function LoginForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({ email, password });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  return (
+    <>
+      <header id="header">
+        <Container>
+          <Box display="flex" justifyContent="space-between" alignItems="center" py={2}>
+            <Box>
+              <a href="/">
+                <img src={logo} alt="Logo" />
+              </a>
+            </Box>
+            <Box display="flex" alignItems="center">
+              <Typography variant="body2" mr={1}>No account?</Typography>
+              <Button variant="contained" href="/signup">Signup</Button>
+            </Box>
+          </Box>
+        </Container>
+      </header>
+
+      <Container>
+        <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} mt={4} alignItems="center">
+          <Box flex={1} mr={{ md: 4 }} textAlign={{ xs: 'center', md: 'left' }}>
+            <Typography variant="h4" gutterBottom>
+              <span style={{ fontWeight: 700 }}>Join our community</span> of thousands of Founders, Advisors, and Experts to take your startup to the next level.
+            </Typography>
+            <ul style={{ paddingLeft: 0, listStyle: 'none' }}>
+              <li><img src={roundCheck} alt="Check" /> Work directly with Expert Startups.com Advisors</li>
+              <li><img src={roundCheck} alt="Check" /> Get support on business strategies</li>
+              <li><img src={roundCheck} alt="Check" /> Expand your network and grow faster</li>
+            </ul>
+            <Box mt={2}>
+              <img src={formImg} alt="Join Community" style={{ maxWidth: '100%' }} />
+            </Box>
+          </Box>
+
+          <Box flex={1} mt={{ xs: 4, md: 0 }} textAlign="center">
+            <Box component="form" onSubmit={handleSubmit} maxWidth={400} mx="auto" px={2} py={4} boxShadow={3} borderRadius={2}>
+              <Typography variant="h5" mb={3}>Log in</Typography>
+              
+              <TextField
+                label="Email Address"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+
+              <TextField
+                label="Password"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={togglePasswordVisibility} edge="end">
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              <Box textAlign="right" mb={2}>
+                <Button href="/forgot-password" size="small">Forgot Password?</Button>
+              </Box>
+
+              <Button type="submit" variant="contained" color="primary" fullWidth>
+                Submit
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Container>
+    </>
+  );
+}
+
+npm install @mui/material @emotion/react @emotion/styled
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+Here's how you can convert this HTML code into a React component using `useState` to manage form inputs and a `handleSubmit` function to handle form submission. This example includes a password show/hide toggle, which uses `useState` to track the password's visibility.
+
+### LoginForm.jsx
+
+```javascript
+import React, { useState } from 'react';
+import logo from './images/logo.svg';
+import roundCheck from './images/round-check.svg';
+import formImg from './images/form-img.png';
+import passEyeOpen from './images/pass-eye.svg';
+import passEyeClose from './images/pass-eye-close.svg';
+
+export default function LoginForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission here
+    console.log({ email, password });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  return (
+    <>
+      <header id="header">
+        <div className="container">
+          <div className="wrapper">
+            <div className="logo">
+              <a href="/">
+                <img src={logo} alt="Logo" />
+              </a>
+            </div>
+            <div className="right-header">
+              <p className="have-account">No account?</p>
+              <a href="/signup" className="login">Signup</a>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <div className="common-form padding">
+        <div className="container">
+          <div className="wrap">
+            <div className="content">
+              <h3 className="for-desktop">
+                <span>Join our community</span> of thousands of Founders, Advisors, and Experts to take your startup to the next level.
+              </h3>
+              <ul className="points">
+                <li><img src={roundCheck} alt="Check" />Work directly with Expert Startups.com Advisors</li>
+                <li><img src={roundCheck} alt="Check" />Get support on business strategies</li>
+                <li><img src={roundCheck} alt="Check" />Expand your network and grow faster</li>
+              </ul>
+              <img src={formImg} alt="Join Community" />
+            </div>
+            
+            <div className="form">
+              <h3 className="for-mobile center">
+                <span>Join our community</span> of thousands of Founders, Advisors, and Experts to take your startup to the next level.
+              </h3>
+              <div className="inner-wrap">
+                <h3>Log in</h3>
+                <form onSubmit={handleSubmit} id="login-form">
+                  <div className="form-group">
+                    <label htmlFor="email">Email Address</label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="You@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="psw">Choose a Password</label>
+                    <a href="/forgot-password" className="forgot-pass">Forgot Password</a>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="Enter Password"
+                      className="password"
+                      name="psw"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <span className="show-hide-btn" onClick={togglePasswordVisibility}>
+                      <img src={showPassword ? passEyeClose : passEyeOpen} alt="Toggle Password" />
+                    </span>
+                  </div>
+
+                  <div className="submit-button">
+                    <input type="submit" value="Submit" />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+```
+https://chatgpt.com/c/6734499f-f038-8008-8d05-8951999a9f28
+### Explanation
+
+1. **State Variables**: `email`, `password`, and `showPassword` are managed using `useState`.
+2. **Form Submission**: `handleSubmit` prevents default form submission and logs the form data. You can replace this with actual form handling logic.
+3. **Password Toggle**: The `togglePasswordVisibility` function toggles `showPassword`, controlling the password input's type.
+4. **Assets Import**: Make sure to replace the asset paths with the actual paths to your assets (e.g., `logo`, `roundCheck`, `formImg`, `passEyeOpen`, and `passEyeClose`).
+
