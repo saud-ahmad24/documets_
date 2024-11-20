@@ -1,0 +1,59 @@
+// 'use strict';
+// const { Model, DataTypes } = require('sequelize');
+
+// module.exports = (sequelize) => {
+//   class UserPlan extends Model {
+//     static associate(models) {
+//       UserPlan.belongsTo(models.User, { foreignKey: 'userId' });
+//       UserPlan.belongsTo(models.Plan, { foreignKey: 'planId' });
+//     }
+//   }
+
+//   UserPlan.init({
+//     id: {
+//       type: DataTypes.UUID,
+//       defaultValue: DataTypes.UUIDV4,
+//       allowNull: false,
+//       primaryKey: true,
+//     },
+//     userId: {
+//       type: DataTypes.UUID,
+//       allowNull: false,
+//     },
+//     planId: {
+//       type: DataTypes.UUID,
+//       allowNull: false,
+//       references: {
+//         model: 'Plans',
+//         key: 'id',
+//       },
+//       onDelete: 'SET NULL',
+//     },
+//     subscriptionStartDate: {
+//       type: DataTypes.DATE,
+//       allowNull: false,
+//     },
+//     subscriptionEndDate: {
+//       type: DataTypes.DATE,
+//       allowNull: false,
+//     },
+//     status: {
+//       type: DataTypes.ENUM('active', 'expired', 'cancelled'),
+//       defaultValue: 'active',
+//       allowNull: false,
+//     },
+//     renewalDate: {
+//       type: DataTypes.DATE,
+//       allowNull: false,
+//     },
+//     billingInterval: {
+//       type: DataTypes.STRING,
+//       allowNull: true,
+//     },
+//   }, {
+//     sequelize,
+//     modelName: 'UserPlan',
+//   });
+
+//   return UserPlan;
+// };

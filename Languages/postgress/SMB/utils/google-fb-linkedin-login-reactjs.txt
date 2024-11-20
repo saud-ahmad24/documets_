@@ -229,4 +229,236 @@ async function getLinkedInAccessToken(code) {
 
 Let me know if you'd like help with any specific steps!
 
+-=====================-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+
+To integrate Google OAuth for **signup** and **login** with **Node.js**, **Sequelize**, and **PostgreSQL**, follow these steps:
+
+---
+
+### 1. **Update Your User Model**
+Your `User` model already supports basic fields like `name`, `email`, `password`, and `phone`. To support Google OAuth:
+- Add a new column for `googleId` (to store the unique Google ID for users logging in with Google).
+- Mark `password` optional since Google OAuth users won't provide passwords.
+
+Modify your `User.init`:
+
+```javascript
+User.init({
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: true, // Optional for Google OAuth users
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: true, // Optional for Google OAuth users
+  },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: true, // Optional for Google OAuth users
+  },
+  googleId: {
+    type: DataTypes.STRING,
+    allowNull: true, // Used for Google OAuth users
+  },
+}, {
+  sequelize,
+  modelName: 'User',
+  timestamps: true, // Adds createdAt and updatedAt
+});
+```
+
+---
+
+### 2. **Setup Google OAuth in Your Backend**
+Install dependencies for Google OAuth and JWT authentication:
+```bash
+npm install google-auth-library jsonwebtoken bcrypt
+```
+
+#### Google OAuth Configuration
+Create a utility file (e.g., `googleAuth.js`):
+
+```javascript
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client('YOUR_GOOGLE_CLIENT_ID');
+
+async function verifyGoogleToken(token) {
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: 'YOUR_GOOGLE_CLIENT_ID',
+  });
+  const payload = ticket.getPayload();
+  return {
+    googleId: payload.sub,
+    name: payload.name,
+    email: payload.email,
+    picture: payload.picture,
+  };
+}
+
+module.exports = { verifyGoogleToken };
+```
+
+---
+
+### 3. **Create Auth Routes**
+Add Google OAuth handling in your Express routes (`auth.js`):
+
+#### Login/Signup Route
+```javascript
+const express = require('express');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { verifyGoogleToken } = require('./googleAuth');
+const { User } = require('./models'); // Adjust path as needed
+const router = express.Router();
+
+// Generate JWT Token
+const generateToken = (user) => {
+  return jwt.sign(
+    { id: user.id, email: user.email },
+    'YOUR_SECRET_KEY', // Use an environment variable in production
+    { expiresIn: '1d' }
+  );
+};
+
+// Google Sign-In
+router.post('/google', async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    // Verify Google Token
+    const googleUser = await verifyGoogleToken(token);
+
+    // Check if user already exists
+    let user = await User.findOne({ where: { email: googleUser.email } });
+
+    if (!user) {
+      // If user doesn't exist, create a new one
+      user = await User.create({
+        googleId: googleUser.googleId,
+        email: googleUser.email,
+        name: googleUser.name,
+        phone: null, // Optional: Handle this separately if required
+        password: null, // Google OAuth users don't need a password
+      });
+    }
+
+    // Generate JWT Token
+    const jwtToken = generateToken(user);
+
+    res.json({
+      message: 'Login successful',
+      token: jwtToken,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    console.error('Error during Google login:', error);
+    res.status(500).json({ message: 'Google login failed' });
+  }
+});
+
+module.exports = router;
+```
+
+---
+
+### 4. **Frontend Integration**
+Use `@react-oauth/google` for Google Sign-In in React. When successful, send the token to your backend for processing.
+
+Example React Code:
+```javascript
+import { GoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
+
+function GoogleAuthButton() {
+  const handleSuccess = async (credentialResponse) => {
+    try {
+      const { data } = await axios.post('/api/auth/google', {
+        token: credentialResponse.credential,
+      });
+
+      console.log('Login successful:', data);
+      // Save token to localStorage or Redux
+      localStorage.setItem('authToken', data.token);
+    } catch (error) {
+      console.error('Google login error:', error);
+    }
+  };
+
+  const handleError = () => {
+    console.error('Google login failed');
+  };
+
+  return (
+    <GoogleLogin
+      onSuccess={handleSuccess}
+      onError={handleError}
+    />
+  );
+}
+
+export default GoogleAuthButton;
+```
+
+---
+
+### 5. **Secure Backend Endpoints**
+Use middleware to secure endpoints with JWT:
+
+```javascript
+const jwt = require('jsonwebtoken');
+
+const authMiddleware = (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, 'YOUR_SECRET_KEY');
+    req.user = decoded;
+    next();
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid token' });
+  }
+};
+
+module.exports = authMiddleware;
+```
+
+Use this middleware in your routes:
+```javascript
+const authMiddleware = require('./middleware/auth');
+
+router.get('/protected', authMiddleware, (req, res) => {
+  res.json({ message: 'This is a protected route' });
+});
+```
+
+---
+
+### Summary
+1. **Database**: Add a `googleId` field to your `User` model.
+2. **Google OAuth**: Verify Google tokens using `google-auth-library`.
+3. **Backend**: Use the token to create or find users, and return a JWT for authentication.
+4. **Frontend**: Use `@react-oauth/google` to handle the Google Sign-In button.
+5. **Secure Routes**: Use JWT tokens to protect backend routes.
+
+This setup allows you to handle both Google OAuth-based signup and login seamlessly!

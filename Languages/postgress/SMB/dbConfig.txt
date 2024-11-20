@@ -1,0 +1,60 @@
+const fs = require('fs');
+const pg = require('pg');
+const url = require('url');
+
+const config = {
+    user: "avnadmin",
+    password: "AVNS_-UD7K7TRdlpkzO0qb53",
+    host: "sbm-dev-sbm-dev.f.aivencloud.com",
+    port: 21264,
+    database: "defaultdb",
+    ssl: {
+        rejectUnauthorized: true,
+        ca: `-----BEGIN CERTIFICATE-----
+MIIEQTCCAqmgAwIBAgIURtZ5zB7k4RipvMk5KZWKNfcTXAkwDQYJKoZIhvcNAQEM
+BQAwOjE4MDYGA1UEAwwvNjJlZGQyMjctNDAyOC00YmRjLTg1MTMtNmM2YmQ4ZGQy
+Mzk4IFByb2plY3QgQ0EwHhcNMjQxMTE1MDg1NDE1WhcNMzQxMTEzMDg1NDE1WjA6
+MTgwNgYDVQQDDC82MmVkZDIyNy00MDI4LTRiZGMtODUxMy02YzZiZDhkZDIzOTgg
+UHJvamVjdCBDQTCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBANdoLb++
+vNm7TkaF7VV1BmqC9no/KHdnVYdDJspVZsmejzW6TLvabr23eafexWhSVO7QvtMK
+KohIjjdVzWyGSbKIA3E8IJKk8PTx8fSYJq4QaJzFRRazqCZJNWoHX3rzz0A3SN7w
+7Elv4r3+a0fYd+UNFeHO01zuTVPIfugg3acOqT2TgDc5ETGT3BzktPhGFPRWyMNJ
+fAq2SMDaLObBvfnSKEf7y9HNSiuW4Z3SOx56+4zwkhgu9YAWzk0CbJKI6Y0nuaso
+mCrWUscT5F5MP793KGvjU2ZK8eY5E71IKVuqLse6wRxEpZJlntvzsIN+miNw8S2D
+NmZxphObVMdncxU2qF6nvDDqQc+QM1XMVcjMnSghEPKynzQr8KB7sicX0QndbSAX
+a+QLEVQkUiRzEFM6JlNo8k5thlCwFXCdrZeeTRLR07lykFM3I6/HqOjBrctoJIVQ
+mMqkFfr8uiWuoMRKiXtWeIegpvTGWDSSNOMeQ8rv8mGF+LHLfR5W/cS9OwIDAQAB
+oz8wPTAdBgNVHQ4EFgQUzTA3NmNRabASIfxJjR/C1omvHL0wDwYDVR0TBAgwBgEB
+/wIBADALBgNVHQ8EBAMCAQYwDQYJKoZIhvcNAQEMBQADggGBACRxfTNMII+UJvdu
+r38MaG1S5H4RbPlmPNP1bOddvr03cq2v3emyMQtTpRzwxap0pzfDm6VYitb+2/Ct
+hBeiVzo5WWCYRxQe3CfHM0RzoSUTCBxBl3uynYcO0XIH3Lh3RgaOWvmTG0w9Yhv0
+or5Ad4Ve8/1YXZhEX+1FZg9+8Vuf40ilYfz+Mf0FGFpUrdGE3xKGxiTqH4rhA8z4
+sp6QLAtlZkMJ0T/4E8FbSLPQQLxLzyqAqLS3y+lFGeaz6pNPIf5Jj84ZyRCXzw3e
+TH2gJ2/iWc5JkC0tEADNXYAxu9nfVNAViLmh7zgZGtEzT6EGv/AtoR/f0zeFooxl
+i9LkaVdAkcFb7LXinG7OCctW5AYYM+9fPrcGLxznJ9v8zLQPOVBXmXol06NIAjoy
+hDHKaCLmCnqpR1+ry8X1iFqvLWggkcfbcKwbTl9NspASqNY2aJqJc546HUZ26WxN
+JntvhfVdN13BmduEKWj9WfNewqt5n+GBHDQVjgkiUlhp2MYocA==
+-----END CERTIFICATE-----`,
+    },
+};
+
+const client = new pg.Client(config);
+client.connect(function (err) {
+    if (err)
+        throw err;
+    client.query("SELECT VERSION()", [], function (err, result) {
+        if (err)
+            throw err;
+
+        console.log(result.rows[0].version);
+        client.end(function (err) {
+            if (err)
+                throw err;
+        });
+    });
+});
+
+
+npm install pg --save
+
+node index.ts

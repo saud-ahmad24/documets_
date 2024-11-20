@@ -1,0 +1,1 @@
+git add . && git commit -m "network page working" && git push
