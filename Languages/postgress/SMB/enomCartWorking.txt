@@ -1,0 +1,94 @@
+The **`AddToCart`** command in the **eNom API** is used to add domain names (or other products) to a shopping cart, allowing you to batch multiple items together before proceeding to checkout. This is useful when a user wants to purchase multiple domains but you don't want to complete the purchase immediately for each domain. Instead, you add all the domains to the cart and then proceed with a single checkout operation.
+
+Once the domains are added to the cart, you can later use the **`Purchase`** command to process the domains in the cart and finalize the purchase.
+
+### **How AddToCart Works**
+1. **Add domains to the cart**: Each domain you want to purchase is added to the cart by specifying the **Second-Level Domain (SLD)**, **Top-Level Domain (TLD)**, and other domain-specific details.
+2. **Get Cart Content**: After adding the domains to the cart, you can view the content of the cart (using `GetCartContent`) to check the domains that are in it.
+3. **Purchase domains**: Once all domains are in the cart, you can then use the **`Purchase`** command to process the entire cart of domains at once.
+
+### **Example of Using AddToCart Command**
+Here's an example of how you would use the **`AddToCart`** command to add multiple domains to the cart:
+
+```plaintext
+https://resellertest.enom.com/interface.asp?command=AddToCart&uid=YourAccountID&pw=YourApiToken&SLD=example1&TLD=com&NumYears=1&ResponseType=XML
+```
+
+If you want to add multiple domains, you would call this `AddToCart` command for each domain individually:
+
+```javascript
+const domains = [
+    { sld: "example1", tld: "com" },
+    { sld: "example2", tld: "net" },
+    { sld: "example3", tld: "org" }
+];
+
+const addDomainToCart = async (domain) => {
+    const apiUrl = `https://resellertest.enom.com/interface.asp`;
+    const params = new URLSearchParams({
+        command: "AddToCart",
+        uid: "YourAccountID",
+        pw: "YourApiToken",
+        SLD: domain.sld,
+        TLD: domain.tld,
+        NumYears: 1, // Number of years to register the domain
+        ResponseType: "XML"
+    });
+
+    try {
+        const response = await fetch(`${apiUrl}?${params.toString()}`);
+        const result = await response.text();
+        console.log(`Added ${domain.sld}.${domain.tld} to cart: ${result}`);
+    } catch (error) {
+        console.error(`Error adding domain ${domain.sld}.${domain.tld} to cart:`, error);
+    }
+};
+
+// Add multiple domains to the cart
+const addMultipleDomainsToCart = () => {
+    domains.forEach(domain => {
+        addDomainToCart(domain);
+    });
+};
+
+// Call function to add domains
+addMultipleDomainsToCart();
+```
+
+### **View Cart Content (GetCartContent)**
+Once the domains are added to the cart, you can retrieve the content of the cart to confirm the items added. Here’s how you can use the **`GetCartContent`** command:
+
+```plaintext
+https://resellertest.enom.com/interface.asp?command=GetCartContent&uid=YourAccountID&pw=YourApiToken&ResponseType=XML
+```
+
+This will return the contents of the cart, including all the domains that have been added. You can check if the domains were successfully added before proceeding to checkout.
+
+### **Purchase the Domains (Purchase Command)**
+Once all the domains are in the cart, use the **`Purchase`** command to finalize the order:
+
+```plaintext
+https://resellertest.enom.com/interface.asp?command=Purchase&uid=YourAccountID&pw=YourApiToken&EndUserIP=UserIP&ResponseType=XML
+```
+
+You can process all the domains added to the cart in one go, without having to make separate API calls for each domain.
+
+### **Parameters for AddToCart Command**
+- **SLD**: Second-level domain (e.g., "example" in "example.com").
+- **TLD**: Top-level domain (e.g., "com", "net", "org").
+- **NumYears**: Number of years to register the domain.
+- **ResponseType**: Response format (e.g., XML, HTML, or Text).
+
+### **Use Case for AddToCart**
+The **`AddToCart`** feature is ideal when:
+- A user wants to add multiple domains to their cart before checking out (e.g., registering several domains at once).
+- The user might need to review or modify their cart before finalizing the purchase.
+- You want to give the user the flexibility to add various products or domains to their cart (e.g., premium domains, extra services, or packages).
+
+### **Advantages of AddToCart**
+- **Simplifies bulk purchases**: By adding multiple domains to the cart first, you can batch the purchases and reduce API calls.
+- **Flexible checkout**: Users can review all domains before completing the checkout process.
+- **Error handling**: If one domain cannot be added to the cart (e.g., due to unavailability), it won’t affect the rest of the domains, making it easier to handle errors and reattempt the purchase.
+
+### **Summary**
+The **`AddToCart`** command in the **eNom API** allows you to add domains (and other products) to a shopping cart, which can then be processed in bulk during checkout. This is useful for managing multiple domain purchases in one workflow, rather than handling each domain purchase individually. You can later use the **`Purchase`** command to complete the checkout for all domains added to the cart.

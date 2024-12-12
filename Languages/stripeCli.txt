@@ -1,0 +1,12 @@
+wise-pardon-fast-affirm
+
+whsec_ce204431edd52eac802eee687c14721751cf379b4699b5ed78a6e52616a5e57b
+stripe listen --forward-to localhost:4242/webhook
+
+whsec_ce204431edd52eac802eee687c14721751cf379b4699b5ed78a6e52616a5e57b
+
+
+stripe listen --events payment_intent.created,customer.created,payment_intent.succeeded,checkout.session.completed,payment_intent.payment_failed --forward-to localhost:3001/webhook
+
+
+stripe listen --forward-to localhost:3001/webhook

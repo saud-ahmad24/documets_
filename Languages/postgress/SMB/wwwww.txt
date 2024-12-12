@@ -1,0 +1,144 @@
+If you don’t want to predefine products on Stripe and instead want to dynamically handle products in your system, you can use *Stripe’s Payment Intents API* or *Checkout Sessions* by providing custom product data. This approach gives you complete control over the products without requiring them to be listed on Stripe.
+
+---
+
+### *Steps for Dynamic Products Checkout*
+
+#### 1. *Backend Setup (Node.js)*
+You’ll send the product details (e.g., names, prices, types) from your frontend to your backend, where Stripe handles payment processing.
+
+#### Install dependencies:
+bash
+npm install express stripe body-parser cors dotenv
+
+
+#### Code:
+Create or modify your server.js file:
+
+javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const Stripe = require('stripe');
+require('dotenv').config();
+
+const app = express();
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+
+app.use(cors());
+app.use(bodyParser.json());
+
+app.post('/create-checkout-session', async (req, res) => {
+    const { products } = req.body;
+
+    try {
+        const line_items = products.map((product) => {
+            if (product.type === 'recurring') {
+                return {
+                    price_data: {
+                        currency: 'usd',
+                        recurring: { interval: product.interval }, // e.g., "month", "year"
+                        product_data: { name: product.name },
+                        unit_amount: product.amount, // Amount in cents
+                    },
+                    quantity: product.quantity || 1,
+                };
+            }
+
+            return {
+                price_data: {
+                    currency: 'usd',
+                    product_data: { name: product.name },
+                    unit_amount: product.amount, // Amount in cents
+                },
+                quantity: product.quantity || 1,
+            };
+        });
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items,
+            mode: 'payment', // Use 'payment' or 'subscription' depending on your use case
+            success_url: `${process.env.FRONTEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${process.env.FRONTEND_URL}/cancel`,
+        });
+
+        res.json({ url: session.url });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+---
+
+#### 2. *Frontend Setup (ReactJS)*
+Update the product details dynamically before sending them to the backend.
+
+#### Install dependencies:
+bash
+npm install @stripe/stripe-js axios
+
+
+#### Code:
+Example for Checkout.js:
+javascript
+import React from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
+
+const stripePromise = loadStripe('your-publishable-key-here');
+
+const Checkout = () => {
+    const handleCheckout = async () => {
+        // Dynamic product data
+        const products = [
+            { type: 'recurring', name: 'Subscription Plan', amount: 1000, interval: 'month', quantity: 1 },
+            { type: 'one-off', name: 'E-book', amount: 5000, quantity: 1 },
+        ];
+
+        try {
+            const { data } = await axios.post('http://localhost:4000/create-checkout-session', { products });
+            window.location.href = data.url; // Redirect to Stripe Checkout
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    return <button onClick={handleCheckout}>Checkout</button>;
+};
+
+export default Checkout;
+
+
+---
+
+### *How This Works*
+1. *Frontend*:
+   - Sends dynamic product data (e.g., name, amount, interval) to the backend.
+2. *Backend*:
+   - Uses Stripe’s API to create a Checkout Session with custom product data.
+3. *Stripe Checkout*:
+   - Displays the dynamically provided product details for payment.
+4. *After Payment*:
+   - Users are redirected to the success or cancellation page.
+
+---
+
+### *Advantages*
+- No need to create and manage products in Stripe.
+- Full control over product details from your application.
+- Supports both one-off and subscription products dynamically.
+
+---
+
+### *Additional Features*
+- *Webhook Integration*: To handle events like payment success or subscription updates.
+- *Custom Currency*: Modify currency: 'usd' to your desired currency.
+- *Testing*: Use Stripe’s test cards during development. For example:
+  - Card Number: 4242 4242 4242 4242
+  - Expiry: Any future date
+  - CVC: Any 3 digits

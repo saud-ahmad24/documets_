@@ -1,0 +1,54 @@
+**DNS Servers** and **Name Servers** are both critical components in the process of accessing websites and other internet services using domain names, but they have different roles.
+
+### **DNS Servers**
+A **DNS (Domain Name System) server** is a system that translates human-readable domain names (like `example.com`) into machine-readable IP addresses (like `192.168.1.1`). This system makes it possible to access websites by typing a name instead of a long string of numbers.
+
+Here’s how DNS works:
+1. **User Request**: When a user types `example.com` into their web browser, the browser needs to find out the corresponding IP address of the server hosting the website.
+2. **DNS Query**: The browser sends a request to a **DNS server** (usually provided by your ISP or configured manually) asking, "What is the IP address for `example.com`?"
+3. **DNS Response**: The DNS server looks up the domain name in its database, and if it has the corresponding record, it returns the IP address (e.g., `192.168.1.1`). This allows the browser to connect to the correct web server.
+
+**Key Points About DNS Servers:**
+- DNS servers store and resolve DNS records (such as A records, MX records, etc.).
+- These servers perform the task of translating domain names to IP addresses.
+- They can be public (Google DNS, Cloudflare DNS) or private (your ISP’s DNS server).
+
+### **Name Servers**
+**Name servers** are a type of server that is part of the DNS system and specifically holds the **DNS records** for a domain name. These records provide instructions about where the domain should point for various services like websites, emails, etc.
+
+For example, if you own the domain `example.com`, you need to set up **name servers** to point the domain to the appropriate locations:
+- **A record** for the website.
+- **MX record** for email servers.
+
+**Key Points About Name Servers:**
+- Name servers are responsible for storing the DNS records of your domain.
+- Each domain has a **set of name servers** that can be used to manage its DNS settings. For example, you might use `ns1.examplehost.com` and `ns2.examplehost.com` as the name servers for your domain.
+- They are typically provided by your domain registrar or hosting provider.
+
+### **How They Work Together:**
+1. **Setting Name Servers**: When you register a domain (e.g., `example.com`), you need to specify name servers. These name servers hold the DNS records for the domain.
+   - For example, if you choose to use the default name servers from your domain registrar, those name servers will hold records like:
+     - `example.com` → `192.168.1.1` (website’s IP address)
+     - `mail.example.com` → `mailserver.example.com` (email server)
+2. **Resolving DNS**: When someone types `example.com` into their browser, the browser asks a DNS server to resolve `example.com`. The DNS server then checks which name servers are associated with `example.com`, retrieves the correct DNS records from those name servers, and provides the corresponding IP address (for the website or other services).
+
+---
+
+### **Summary of the Difference:**
+
+- **DNS Servers**: These servers are responsible for translating domain names (e.g., `example.com`) into IP addresses (e.g., `192.168.1.1`). They perform the query resolution process for the client (like a web browser).
+  
+- **Name Servers**: These servers store the DNS records for a domain and are where DNS queries are directed to get the domain’s associated IP addresses or other services like email. They play a key role in managing DNS settings for your domain.
+
+---
+
+### **Example Scenario:**
+1. You own `example.com` and have it hosted on a server with the IP address `123.45.67.89`.
+2. You set `ns1.examplehost.com` and `ns2.examplehost.com` as your domain's **name servers** in your domain registrar’s control panel.
+3. When someone types `example.com` into their browser:
+   - The browser queries a **DNS server** (which might be your ISP’s DNS or a public one like Google DNS).
+   - The DNS server sees that `example.com`’s name servers are `ns1.examplehost.com` and `ns2.examplehost.com`.
+   - It queries those **name servers** to get the DNS records for `example.com`, which tells it the IP address `123.45.67.89`.
+   - The browser connects to `123.45.67.89` to load the website. 
+
+This process is quick, seamless, and happens every time you access a website!

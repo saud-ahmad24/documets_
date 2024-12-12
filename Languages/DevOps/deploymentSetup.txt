@@ -1,0 +1,87 @@
+Here’s a detailed breakdown of configuring Cloudflare to work with your GoDaddy domain, backend (hosted on AWS EC2), and frontend (hosted on AWS S3/CloudFront):
+
+---
+
+### **1. Add Your Domain to Cloudflare**
+#### a. **Log in to Cloudflare**
+- Go to the [Cloudflare dashboard](https://www.cloudflare.com/).
+- If you don’t have an account, sign up and log in.
+
+#### b. **Add Your Domain**
+- In the Cloudflare dashboard, click on **Add a Site**.
+- Enter your domain name (e.g., `example.com`) and click **Add Site**.
+
+#### c. **Choose a Plan**
+- Select a Cloudflare plan. The free plan is sufficient for most setups.
+
+#### d. **Review Existing DNS Records**
+- Cloudflare will scan your existing DNS records from GoDaddy. Verify that all the records have been imported correctly. If something is missing, you can add it manually later.
+
+#### e. **Update GoDaddy Nameservers**
+1. Go to your [GoDaddy Domain Manager](https://www.godaddy.com/).
+2. Find your domain and click **DNS Settings**.
+3. Replace the default nameservers with the ones provided by Cloudflare (e.g., `ns1.cloudflare.com` and `ns2.cloudflare.com`).
+4. Save your changes. It might take a few hours for the DNS to propagate.
+
+---
+
+### **2. Configure DNS Records in Cloudflare**
+#### a. **Add an A Record for the Backend**
+1. Go to the **DNS** section of your Cloudflare dashboard.
+2. Click **Add Record**.
+3. Set the record type to **A**.
+4. Enter the following details:
+   - **Name**: `api` (or leave blank if your backend is accessible at the root domain).
+   - **IPv4 Address**: Enter the public IP address of your EC2 instance.
+   - **Proxy Status**: Enable the orange cloud icon (Proxied) to route traffic through Cloudflare.
+5. Save the record.
+
+Now, your backend will be accessible at `api.example.com` (or `example.com` if no subdomain is used).
+
+---
+
+#### b. **Add a CNAME Record for the Frontend**
+1. In the **DNS** section, click **Add Record**.
+2. Set the record type to **CNAME**.
+3. Enter the following details:
+   - **Name**: `www` (or leave blank for the root domain).
+   - **Target**: Your CloudFront distribution domain (e.g., `d123abc456xyz.cloudfront.net`) or your S3 bucket URL (e.g., `example-bucket.s3-website-us-east-1.amazonaws.com`).
+   - **Proxy Status**: Enable the orange cloud icon (Proxied) to route traffic through Cloudflare.
+4. Save the record.
+
+Now, your frontend will be accessible at `www.example.com` (or `example.com` if no subdomain is used).
+
+---
+
+### **3. Enable HTTPS**
+#### a. **Enable SSL/TLS in Cloudflare**
+1. Go to the **SSL/TLS** section in Cloudflare.
+2. Choose the SSL/TLS encryption mode:
+   - **Flexible**: If your EC2 or S3 setup doesn’t have an SSL certificate. Traffic between Cloudflare and your server isn’t encrypted.
+   - **Full**: If your EC2 instance has a self-signed SSL certificate or S3 has HTTPS enabled.
+   - **Full (Strict)**: If you have a valid SSL certificate on your EC2 instance or S3.
+3. Set it to **Full** if possible for better security.
+
+#### b. **Automatic HTTPS Redirect**
+1. In the **SSL/TLS** section, go to **Edge Certificates**.
+2. Enable **Always Use HTTPS** and **Automatic HTTPS Rewrites**.
+
+---
+
+### **4. Cache and Performance Optimization**
+1. Go to the **Caching** section in Cloudflare:
+   - Enable **Caching Level** as Standard.
+   - Enable **Development Mode** during deployment (to bypass the cache) and disable it afterward.
+2. Use **Page Rules** to customize caching behavior for your backend or frontend if needed.
+
+---
+
+### **5. Verify Everything**
+- Test your frontend:
+  Open `www.example.com` in a browser and ensure it loads correctly.
+- Test your backend:
+  Use a tool like Postman or your browser to verify that `api.example.com` (or `example.com/api`) routes traffic correctly.
+
+---
+
+If you encounter any issues, let me know—I can guide you through troubleshooting!

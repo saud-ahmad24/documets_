@@ -1,0 +1,38 @@
+Todo
+
+Code refactoring
+Network and Invertors profile page added
+
+
+Changing Table name
+
+ALTER TABLE public."Products"
+RENAME TO "productsDup";
+
+
+Adding new column
+
+ALTER TABLE public."Carts"
+ADD COLUMN status VARCHAR NOT NULL;
+
+
+
+If you're changing the data type to one that isn't compatible with the existing data, you may need to use USING to specify how to convert the old values to the new type.
+
+ALTER TABLE public."productsDup"
+ALTER COLUMN "totalAmount"
+SET DATA TYPE FLOAT USING "totalAmount"::FLOAT;
+
+
+ALTER TABLE public."productsDup"
+ALTER COLUMN "totalAmount"
+SET DATA TYPE TEXT;
+
+
+INSERT INTO "Groups" (id, name, description, unitType)
+VALUES
+  (uuid_generate_v4(), 'Group 1', 'Description for Group 1', 'website'),
+  (uuid_generate_v4(), 'Group 2', 'Description for Group 2', 'brand'),
+  (uuid_generate_v4(), 'Group 3', 'Description for Group 3', 'app');
+
+

@@ -1,0 +1,9 @@
+css problem
+
+startups-list owl-carousel owl-loaded owl-drag
+
+investors/networks load animation change
+
+testimonial problem
+
+faq 

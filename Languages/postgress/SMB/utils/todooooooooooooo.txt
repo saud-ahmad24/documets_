@@ -4,66 +4,6 @@ meta auth working
 
 first purchage register working fb-auth
 
-
-
-import React, { useEffect, useState } from "react";
-
-export default function Meta1() {
-  const [isFBReady, setFBReady] = useState(false);
-
-  useEffect(() => {
-    // Dynamically load the Facebook SDK
-    const loadFacebookSDK = () => {
-      if (document.getElementById("facebook-jssdk")) {
-        return;
-      }
-
-      const script = document.createElement("script");
-      script.id = "facebook-jssdk";
-      script.src = "https://connect.facebook.net/en_US/sdk.js";
-      script.async = true;
-      script.defer = true;
-      document.body.appendChild(script);
-
-      script.onload = () => {
-        window.FB.init({
-          appId: "580223524518940", // Replace with your App ID
-          cookie: true,
-          xfbml: true,
-          version: "v16.0",
-        });
-        console.log("Facebook SDK initialized");
-        setFBReady(true); // Mark SDK as ready
-      };
-    };
-
-    loadFacebookSDK();
-  }, []);
-
-  const handleLogin = () => {
-    if (!isFBReady) {
-      console.error("Facebook SDK is not ready yet");
-      return;
-    }
-
-    window.FB.login(
-      (response) => {
-        if (response.authResponse) {
-          console.log("Login Success:", response);
-        } else {
-          console.error("Login Failed");
-        }
-      },
-      { scope: "email" }
-    );
-  };
-
-  return (
-    <div>
-      <h1>Facebook Login</h1>
-      <button onClick={handleLogin} disabled={!isFBReady}>
-        {isFBReady ? "Login with Facebook" : "Loading..."}
-      </button>
-    </div>
-  );
-}
+20-nov
+meta auth working complete
+code/components refactoring

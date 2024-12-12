@@ -1,0 +1,71 @@
+Here’s a list of the most commonly used and necessary HTTP status codes, grouped by category, with a brief explanation of their use cases:
+
+---
+
+### **1xx: Informational**
+- **100 Continue**: Indicates that the initial part of a request has been received and the client should continue with the rest of the request.
+
+---
+
+### **2xx: Success**
+- **200 OK**: The request was successful. Common for retrieving data (`GET`), submitting forms (`POST`), or updating resources (`PUT`/`PATCH`).
+- **201 Created**: A resource was successfully created (e.g., after a `POST` request to create a new user).
+- **204 No Content**: The request was successful, but no content is returned (e.g., after a successful `DELETE` operation).
+
+---
+
+### **3xx: Redirection**
+- **301 Moved Permanently**: The resource has been permanently moved to a new URL.
+- **302 Found**: Temporary redirect to another URL (browser continues to use the original URL in future requests).
+- **304 Not Modified**: Indicates that the resource has not been modified and can be loaded from the cache.
+
+---
+
+### **4xx: Client Errors**
+- **400 Bad Request**: The request is malformed or invalid (e.g., missing required fields or invalid data).
+- **401 Unauthorized**: Authentication is required and has failed or is not provided (e.g., missing or invalid token).
+- **403 Forbidden**: The client is authenticated but does not have permission to access the resource.
+- **404 Not Found**: The requested resource does not exist.
+- **405 Method Not Allowed**: The HTTP method used is not supported for this resource.
+- **409 Conflict**: The request conflicts with the current state of the resource (e.g., trying to create a duplicate record).
+- **422 Unprocessable Entity**: The request is well-formed but cannot be processed (e.g., validation errors).
+
+---
+
+### **5xx: Server Errors**
+- **500 Internal Server Error**: A generic error indicating that something went wrong on the server.
+- **501 Not Implemented**: The server does not support the functionality required to process the request.
+- **502 Bad Gateway**: The server, acting as a gateway, received an invalid response from the upstream server.
+- **503 Service Unavailable**: The server is temporarily unable to handle the request (e.g., due to maintenance or overload).
+- **504 Gateway Timeout**: The server, acting as a gateway, did not receive a timely response from the upstream server.
+
+---
+
+### **Most Commonly Used Codes**
+For typical REST APIs:
+1. **200 OK**: Successful operations.
+2. **201 Created**: Resource creation.
+3. **204 No Content**: Successful operations with no response body.
+4. **400 Bad Request**: Client errors like validation issues.
+5. **401 Unauthorized**: Authentication issues.
+6. **403 Forbidden**: Authorization issues.
+7. **404 Not Found**: Resource not found.
+8. **409 Conflict**: Resource state conflicts (e.g., duplicates).
+9. **500 Internal Server Error**: Generic server issues.
+
+---
+
+### **Status Codes Cheat Sheet**
+| Code | Meaning                  | Use Case                                      |
+|------|--------------------------|-----------------------------------------------|
+| 200  | OK                       | Success, data retrieved or action completed. |
+| 201  | Created                  | A new resource has been successfully created.|
+| 204  | No Content               | Request succeeded, but no content returned.  |
+| 400  | Bad Request              | Malformed or invalid request.                |
+| 401  | Unauthorized             | Authentication required or failed.           |
+| 403  | Forbidden                | Access denied, even with authentication.     |
+| 404  | Not Found                | Resource does not exist.                     |
+| 409  | Conflict                 | Conflict with resource state (e.g., duplicates). |
+| 500  | Internal Server Error    | General server error.                        |
+
+By mastering these essential codes, you can effectively design robust and user-friendly APIs.

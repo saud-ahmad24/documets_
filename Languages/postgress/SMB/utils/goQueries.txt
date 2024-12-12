@@ -1,0 +1,6 @@
+ALTER TABLE "Users"
+ALTER COLUMN "avatarUrl" TYPE TEXT;
+
+
+ALTER TABLE "Users"
+ADD COLUMN "metaId" VARCHAR NULL;
