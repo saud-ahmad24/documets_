@@ -1,0 +1,194 @@
+To manage **user subscriptions** with a single active plan at a time and provide options to **upgrade**, here's how you can enhance your implementation and manage the logic:
+
+---
+
+### 1. **Add Plan Information**
+Update the `Subscription` model to reflect specific plan details (`planType` and `status`).
+
+```js
+planType: {
+  type: DataTypes.ENUM('basic', 'launch', 'grow'),
+  allowNull: false,
+  comment: 'The type of subscription plan (basic, launch, grow)',
+},
+planDuration: {
+  type: DataTypes.ENUM('monthly', 'quarterly', 'yearly'),
+  allowNull: true,
+  comment: 'Billing duration for the subscription plan',
+},
+status: {
+  type: DataTypes.ENUM('active', 'expired', 'cancelled'),
+  allowNull: false,
+  defaultValue: 'active',
+  comment: 'Current status of the subscription',
+},
+```
+
+---
+
+### 2. **Allow Only One Active Plan**
+When creating a new subscription, check if the user already has an active plan:
+
+#### **Service/Controller Code**
+```js
+const { Subscription, User } = require('../models');
+
+// Service to create or upgrade a subscription
+const createOrUpdateSubscription = async (userId, planType, planDuration) => {
+  const transaction = await Subscription.sequelize.transaction();
+
+  try {
+    // Check for any active subscription
+    const activeSubscription = await Subscription.findOne({
+      where: { userId, status: 'active' },
+    });
+
+    // If there's an active plan, handle the upgrade logic
+    if (activeSubscription) {
+      // Basic plan can't be renewed or upgraded
+      if (activeSubscription.planType === 'basic') {
+        throw new Error('Basic plan cannot be upgraded. Please select another plan.');
+      }
+
+      // End current subscription
+      activeSubscription.status = 'cancelled';
+      activeSubscription.end_date = new Date();
+      await activeSubscription.save({ transaction });
+    }
+
+    // Calculate new subscription end date based on duration
+    const now = new Date();
+    let endDate;
+    switch (planDuration) {
+      case 'monthly':
+        endDate = new Date(now.setMonth(now.getMonth() + 1));
+        break;
+      case 'quarterly':
+        endDate = new Date(now.setMonth(now.getMonth() + 3));
+        break;
+      case 'yearly':
+        endDate = new Date(now.setFullYear(now.getFullYear() + 1));
+        break;
+      default:
+        throw new Error('Invalid plan duration');
+    }
+
+    // Create new subscription
+    const newSubscription = await Subscription.create(
+      {
+        userId,
+        planType,
+        planDuration,
+        status: 'active',
+        start_date: new Date(),
+        end_date: endDate,
+        unit_price: calculatePrice(planType, planDuration), // Helper function to get price
+        total_amount: calculatePrice(planType, planDuration),
+      },
+      { transaction }
+    );
+
+    await transaction.commit();
+    return newSubscription;
+  } catch (error) {
+    await transaction.rollback();
+    throw error;
+  }
+};
+```
+
+---
+
+### 3. **Calculate Prices Dynamically**
+You can calculate plan prices dynamically based on `planType` and `planDuration`.
+
+```js
+const calculatePrice = (planType, planDuration) => {
+  const prices = {
+    launch: { monthly: 20, quarterly: 50, yearly: 180 },
+    grow: { monthly: 50, quarterly: 140, yearly: 500 },
+  };
+
+  if (!prices[planType] || !prices[planType][planDuration]) {
+    throw new Error('Invalid plan type or duration');
+  }
+
+  return prices[planType][planDuration];
+};
+```
+
+---
+
+### 4. **Handle Free Basic Plan**
+For the basic plan, you can set a default duration of **1 month**. Add validation logic:
+
+```js
+if (planType === 'basic') {
+  planDuration = 'monthly'; // Override to monthly for basic plan
+}
+```
+
+---
+
+### 5. **Prevent Duplicate Basic Plan**
+Add a check to prevent multiple basic plans:
+
+```js
+const existingBasic = await Subscription.findOne({
+  where: { userId, planType: 'basic', status: 'active' },
+});
+
+if (existingBasic) {
+  throw new Error('Basic plan is already active for this user.');
+}
+```
+
+---
+
+### 6. **API Route Example**
+Here’s an example of an Express route to manage subscriptions:
+
+```js
+const express = require('express');
+const router = express.Router();
+const { createOrUpdateSubscription } = require('../services/subscriptionService');
+
+router.post('/subscriptions', async (req, res) => {
+  const { userId, planType, planDuration } = req.body;
+
+  try {
+    const subscription = await createOrUpdateSubscription(userId, planType, planDuration);
+    res.status(200).json({ message: 'Subscription updated successfully', subscription });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+module.exports = router;
+```
+
+---
+
+### 7. **Test Scenarios**
+1. **Basic Plan**:
+   - Ensure users can only have one basic plan for one month.
+
+2. **Upgrade to Paid Plans**:
+   - Users with a basic plan or another paid plan can upgrade seamlessly.
+
+3. **Plan Durations**:
+   - Test monthly, quarterly, and yearly durations for `launch` and `grow` plans.
+
+4. **Plan Expiration**:
+   - Use a **cron job** to check for expired plans and update their status.
+
+---
+
+### Summary
+- Enforce only one active subscription per user.
+- Basic plans are free but limited to one month.
+- Allow upgrades to `launch` or `grow` plans.
+- Dynamically calculate prices for different durations.
+- Ensure robust validation to prevent duplicates or invalid inputs.
+
+Let me know if you need further clarifications or refinements! 🚀

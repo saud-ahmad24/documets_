@@ -1,0 +1,91 @@
+Yes, you can use the **Tax Calculation** object and **Tax Creation** functionality in Stripe to help with tax management for your global sales. Stripe provides tools for automatic tax calculations through **Stripe Tax**.
+
+Here's how you can approach it:
+
+### 1. **Tax Calculation Object**
+   Stripe Tax allows you to calculate taxes based on your customers' location and the products/services you're selling. The **Tax Calculation** object enables you to calculate the tax for a given order or transaction before it’s processed.
+
+   You can create a tax calculation using the `tax.calculations` API. This will give you an estimate of how much tax you need to collect, based on various factors like the location of the customer and the type of product or service.
+
+   **Example Request:**
+   ```javascript
+   const stripe = require('stripe')('your-secret-key');
+
+   const taxCalculation = await stripe.tax.calculations.create({
+     amount: 1000, // Amount of the transaction in the smallest currency unit (e.g., cents)
+     currency: 'usd',
+     customer: 'customer-id', // Customer ID (Stripe customer)
+     shipping_address: {
+       line1: '123 Main Street',
+       city: 'San Francisco',
+       state: 'CA',
+       postal_code: '94105',
+       country: 'US',
+     },
+     line_items: [
+       {
+         amount: 1000,
+         currency: 'usd',
+         description: 'Online service subscription',
+         quantity: 1,
+       },
+     ],
+   });
+
+   console.log(taxCalculation);
+   ```
+
+   This object will give you a detailed breakdown of the tax to be applied, including the rate and the total tax amount, based on the customer's location and the type of service.
+
+### 2. **Tax Create (Creating a Tax)**
+
+   The **tax.create** functionality in Stripe is used to **create and store tax records** for transactions, so that the tax is properly applied to your invoices and payments. You’ll use this when you're ready to apply the tax calculation to a payment.
+
+   Typically, you'll use **Tax Rates** (in Stripe) in combination with tax calculations. For example, once you calculate the tax, you can create a **Tax Rate** that applies to the transaction.
+
+   **Example Request to Create a Tax Rate:**
+   ```javascript
+   const stripe = require('stripe')('your-secret-key');
+
+   const taxRate = await stripe.tax.rates.create({
+     display_name: 'VAT',
+     percentage: 20.0, // VAT rate (for example 20%)
+     inclusive: false, // Whether tax is included in the price or added on top
+     country: 'GB', // UK VAT rate
+   });
+
+   console.log(taxRate);
+   ```
+
+   After creating a tax rate, you can apply it when creating an invoice or processing payments.
+
+### 3. **Combining Tax Calculation and Creation:**
+   - **Step 1**: Calculate the tax using `tax.calculations.create` to get the tax amount for the transaction.
+   - **Step 2**: If necessary, create the tax rate using `tax.rates.create` to define your tax rules.
+   - **Step 3**: Apply the calculated tax or tax rate to the customer’s invoice or payment.
+
+### Example: Applying Tax Calculation to an Invoice
+
+   After calculating the tax and creating the necessary tax rate, you can apply it to an invoice as shown below:
+
+   ```javascript
+   const stripe = require('stripe')('your-secret-key');
+
+   // Assuming you've already created tax calculation or tax rate
+   const invoice = await stripe.invoices.create({
+     customer: 'customer-id',
+     amount: 1000, // Transaction amount
+     currency: 'usd',
+     description: 'Online service subscription',
+     tax: taxRate.id, // Attach the created tax rate to the invoice
+   });
+
+   console.log(invoice);
+   ```
+
+### Things to Keep in Mind:
+   - You need to **set up Stripe Tax** in your Stripe account and make sure that tax collection is enabled.
+   - For international sales, ensure you're calculating the tax based on the correct **country and region** of the customer, as tax laws vary widely.
+   - **Stripe Tax** supports automatic tax calculation and can apply the correct tax rates based on the customer's address, so manually creating tax rates can be bypassed if you use Stripe's automated system.
+
+Using **Stripe Tax** and the `tax.calculations.create` and `tax.rates.create` objects should allow you to manage tax collection effectively across different regions. Always make sure you're following the tax laws of the countries you're operating in.

@@ -1,0 +1,26 @@
+const addNewDepartment = async (departmentName) => {
+  const transaction = await ActiveDepartments.sequelize.transaction();
+  try {
+    const add = await Departments.create(
+      { departmentName: departmentName },
+      { transaction }
+    );
+    const hospital = await TenantHospitals.findAll({
+      attributes: ["id"],
+      raw: true,
+      nest: true,
+    });
+    const newActiveDept = hospital.map((tenant) => ({
+      tenantId: tenant.id,
+      deptId: add.id,
+      isActive: false,
+    }));
+    await ActiveDepartments.bulkCreate(newActiveDept, { transaction });
+    await transaction.commit();
+    return add;
+  } catch (error) {
+    await transaction.rollback();
+    logger.error("Error in adding role :%o", error);
+    throw error;
+  }
+};

@@ -1,0 +1,113 @@
+Stripe applies tax in many countries based on local tax laws and regulations. Below are some countries where **tax is typically applied** on sales (especially for digital products and services like SaaS, software, and other online services):
+
+### 1. **European Union (EU)**
+   - **VAT (Value Added Tax)** is applied to sales within the EU.
+   - **VAT rates** vary by country, but the standard rate is often between **17% and 27%**.
+   - Stripe Tax will automatically calculate VAT for each EU country based on the customer's location (e.g., Germany, France, Spain, Italy, etc.).
+   
+   **Example Countries:**
+   - **Germany (DE)**: VAT rate is 19%.
+   - **France (FR)**: VAT rate is 20%.
+   - **Spain (ES)**: VAT rate is 21%.
+   - **Italy (IT)**: VAT rate is 22%.
+
+### 2. **United States (US)**
+   - In the US, **sales tax** applies at the **state level**. Each state has its own rules for taxing services and goods.
+   - Some states do not tax digital products or services, while others apply a sales tax.
+   - **Sales tax rates** vary by state (e.g., **California** has a rate of 7.25%, and **New York** has a rate of 4% at the state level).
+   - **Nexus** rules determine whether you need to collect sales tax based on your business presence in a state.
+
+   **Example States:**
+   - **California (CA)**: Sales tax rate can be as high as **7.25%**.
+   - **New York (NY)**: Sales tax rate is **4%**, with additional local taxes.
+   - **Texas (TX)**: Sales tax rate is **6.25%**.
+   - **Florida (FL)**: Sales tax rate is **6%**.
+
+### 3. **Australia**
+   - **GST (Goods and Services Tax)** applies to most goods and services in Australia.
+   - The GST rate is **10%** for taxable supplies.
+   - Digital products and services sold to Australian customers are subject to GST.
+
+   **Example Country:**
+   - **Australia (AU)**: GST rate is **10%**.
+
+### 4. **Canada**
+   - **GST/HST (Goods and Services Tax/Harmonized Sales Tax)** is applied to goods and services in Canada.
+   - The GST rate is **5%**, but some provinces use the **HST**, which combines both federal and provincial sales tax.
+   
+   **Example Provinces:**
+   - **Ontario (ON)**: HST rate is **13%**.
+   - **British Columbia (BC)**: GST rate is **5%** (with additional PST in some cases).
+   - **Quebec (QC)**: QST (Quebec Sales Tax) is **9.975%**, along with the federal GST rate of **5%**.
+
+### 5. **Japan**
+   - **Consumption Tax** (similar to VAT) applies to most goods and services sold in Japan.
+   - The tax rate is **10%** for standard goods and services, and **8%** for food and non-alcoholic beverages.
+   
+   **Example Country:**
+   - **Japan (JP)**: Consumption tax rate is **10%**.
+
+### 6. **Mexico**
+   - **IVA (Impuesto al Valor Agregado)** is the equivalent of VAT in Mexico.
+   - The VAT rate is generally **16%** for goods and services.
+   
+   **Example Country:**
+   - **Mexico (MX)**: IVA rate is **16%**.
+
+### 7. **Brazil**
+   - **ICMS (Imposto sobre Circulação de Mercadorias e Serviços)** is a state-level sales tax, and **ISS (Imposto sobre Serviços)** applies to services.
+   - Tax rates vary depending on the state and type of service/product but generally range from **7% to 18%**.
+
+   **Example Country:**
+   - **Brazil (BR)**: ICMS ranges from **7% to 18%** depending on the state.
+
+### 8. **India**
+   - **GST (Goods and Services Tax)** is applied to most goods and services in India.
+   - The GST rates vary based on the type of product or service, typically **18%** for most digital services and **5%** for some essential services.
+   
+   **Example Country:**
+   - **India (IN)**: GST rate is typically **18%** for digital services.
+
+### 9. **New Zealand**
+   - **GST** is applied to goods and services in New Zealand at a rate of **15%**.
+   
+   **Example Country:**
+   - **New Zealand (NZ)**: GST rate is **15%**.
+
+### 10. **South Africa**
+   - **VAT** applies to most goods and services in South Africa at a rate of **15%**.
+   
+   **Example Country:**
+   - **South Africa (ZA)**: VAT rate is **15%**.
+
+### 11. **Singapore**
+   - **GST** is applied to most goods and services at a rate of **8%** (as of 2024).
+   
+   **Example Country:**
+   - **Singapore (SG)**: GST rate is **8%**.
+
+### 12. **South Korea**
+   - **VAT** applies to most goods and services at a rate of **10%**.
+   
+   **Example Country:**
+   - **South Korea (KR)**: VAT rate is **10%**.
+
+### How Stripe Calculates Tax:
+- **Automatic Tax Calculation**: If you have **Stripe Tax** enabled, Stripe will automatically calculate the tax based on the customer's location and the product/service you're selling.
+- **Tax Rates**: Stripe allows you to apply different tax rates based on the customer's country, and it uses the appropriate VAT or sales tax rate for each region.
+
+### Summary of Countries with Tax Applied:
+- **European Union (e.g., Germany, France, Spain)**: VAT rates vary.
+- **United States (e.g., California, New York, Texas)**: Sales tax, varying by state.
+- **Australia**: GST at **10%**.
+- **Canada**: GST/HST at **5%** (higher in some provinces).
+- **Japan**: Consumption Tax at **10%**.
+- **Mexico**: IVA at **16%**.
+- **Brazil**: ICMS/ISS, rates vary.
+- **India**: GST at **18%**.
+- **New Zealand**: GST at **15%**.
+- **South Africa**: VAT at **15%**.
+- **Singapore**: GST at **8%**.
+- **South Korea**: VAT at **10%**.
+
+You should ensure that your Stripe account is configured correctly to handle taxes in these countries. Stripe Tax can help automate tax calculation in many regions, reducing the manual effort needed to comply with local tax laws.

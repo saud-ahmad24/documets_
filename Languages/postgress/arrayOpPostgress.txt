@@ -1,0 +1,89 @@
+When dealing with arrays in databases like PostgreSQL (with Sequelize), there are several methods to filter based on array fields. Depending on the use case, you can use Sequelize operators like `Op.contains`, `Op.overlap`, and `Op.any`. Below are explanations and examples for these operators:
+
+---
+
+### 1. **`Op.contains`**
+- **Use Case:** To find rows where the array **contains** all specified elements.
+- **PostgreSQL Operator:** `@>`
+- **Example:** Find investors whose `profession` array contains all of the specified values (e.g., `["Angel", "VC"]`).
+
+```javascript
+whereCondition.profession = { [Op.contains]: ["Angel", "VC"] };
+```
+
+---
+
+### 2. **`Op.overlap`**
+- **Use Case:** To find rows where the array **overlaps** with any of the specified elements.
+- **PostgreSQL Operator:** `&&`
+- **Example:** Find investors whose `profession` array overlaps with at least one of the values (e.g., `["Angel", "VC"]`).
+
+```javascript
+whereCondition.profession = { [Op.overlap]: ["Angel", "VC"] };
+```
+
+---
+
+### 3. **`Op.any`**
+- **Use Case:** To find rows where **any element** in the array matches one of the specified values.
+- **PostgreSQL Operator:** `= ANY`
+- **Example:** Find investors whose `profession` matches any of the specified values (requires a Sequelize literal query).
+
+```javascript
+whereCondition.profession = {
+    [Op.any]: Sequelize.literal(`ARRAY['Angel', 'VC']`)
+};
+```
+
+---
+
+### 4. **Exact Match (`Op.eq`)**
+- **Use Case:** To find rows where the array matches **exactly** (order and elements must be identical).
+- **PostgreSQL Operator:** `=`
+- **Example:** Find investors whose `profession` array exactly matches `["Angel", "VC"]`.
+
+```javascript
+whereCondition.profession = { [Op.eq]: ["Angel", "VC"] };
+```
+
+---
+
+### 5. **Using `Op.contains` for Partial Matches**
+If you want to match rows where a single value exists in the array, you can use `Op.contains` with a single element:
+
+- **Example:** Find investors whose `profession` array contains `"Angel"`.
+
+```javascript
+whereCondition.profession = { [Op.contains]: ["Angel"] };
+```
+
+---
+
+### 6. **Raw Query with `ANY` for More Complex Logic**
+For more advanced logic, you can write raw SQL queries with `ANY` and use Sequelize's `Sequelize.literal`.
+
+- **Example:** Find rows where any element in the `profession` array matches a dynamic list.
+
+```javascript
+whereCondition.profession = Sequelize.literal(`ARRAY['Angel', 'VC'] && profession`);
+```
+
+---
+
+### Comparison of Methods
+| **Method**     | **Operator** | **Behavior**                                                                                   | **Example Query**                                                   |
+|-----------------|--------------|-----------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
+| `Op.contains`   | `@>`         | Array contains **all** specified elements.                                                    | Find rows where `profession` contains `["Angel", "VC"]`.            |
+| `Op.overlap`    | `&&`         | Array contains **any** of the specified elements.                                             | Find rows where `profession` overlaps with `["Angel", "VC"]`.       |
+| `Op.any`        | `ANY`        | **Any element** in the array matches one of the specified values (used with a raw query).     | Find rows where any element in `profession` is in `["Angel", "VC"]`.|
+| `Op.eq`         | `=`          | Exact match (array order and elements must match).                                            | Find rows where `profession` equals `["Angel", "VC"]`.              |
+
+---
+
+### Choosing the Right Method
+- **`Op.contains`:** Use when the array **must include all specified values**.
+- **`Op.overlap`:** Use when the array **should match at least one of the values**.
+- **`Op.any`:** Use for flexible, complex queries with raw SQL.
+- **`Op.eq`:** Use when looking for an exact match.
+
+Let me know if you'd like help integrating one of these methods into your code!
