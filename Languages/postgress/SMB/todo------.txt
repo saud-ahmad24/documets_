@@ -1,0 +1,67 @@
+seo integration
+learn page - intro section dynamic working
+apply promo code working
+cancel subscription -- done, payment method change
+plan overwrite - upgrade/downgrade plan
+linkedin login
+notification working
+
+
+
+S@Ud8866186841a
+ssh-keygen -t rsa -b 4096 -C "saudeng.webforest@gmail.com
+"
+ssh-keygen -t ed25519 -C "saudeng.webforest@gmail.com"
+.
+
+support page - Live Chat - 2nd phase
+
+pm2 serve build 3000 --name "react-app"
+pm2 startup 
+pm2 save   
+vi /etc/nginx/sites-available/react-app
+sudo nginx -t  
+sudo systemctl restart nginx
+ pm2 start npm --name "node-backend" -- run dev
+sudo cp -r build/ /var/www/
+
+
+Admin side thing management
+
+businesName working
+12 page form workign
+
+Done - 21 jan
+one section dynamic working remaing  product page
+payemtn method change on cart page
+auto increment number
+wiggle effect added
+product not included show
+cancelation request for invoice
+primary card error solve
+free plan working
+date validation in plan check, 
+plan count validation for ai launchpad working
+
+                                            <MenuItem value="" selected disabled>Select</MenuItem>
+displayEmpty
+
+Done - 22 jan
+SEO and otp/forgot password working
+otp page design - done
+
+Done - 23 jan
+organizational chart - download working
+profile working for investor
+admin working for user add
+navigation error solve
+user add update working
+investor status working
+profile show working
+s3 working for image upload from url
+
+Done - 24 jan
+pdf download for business plan
+Invoice show on admin/ api
+
+

@@ -1,0 +1,23 @@
+company name logo - companyName, fileName
+
+headline and desc - descriptions
+
+problem solve - problemList,problemDescription
+
+Your Business’s Solution - solutionList,solutionDescription
+
+Target market - notes, targetMarkets
+
+Competitors - competitors
+
+Funding - fundingUsage, fundingAmount
+
+Sales Channels - salesChannelsList, salesChannelsDescription
+
+Marketing Strategy - marketingActivities, marketingStrategy
+
+Milestones - milestones
+
+Team and Key Roles - teamMembers
+
+Partners and Resources - resources

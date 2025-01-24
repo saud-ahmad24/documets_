@@ -1,0 +1,143 @@
+Hello there. I'm Bessie, your Enom virtual support advisor.
+Agent profile picture
+Enom Virtual Support Advisor
+How can I help you today Shoaib? Here are some topics you can start with:
+Managing your API access
+an hour ago
+Agent profile picture
+Enom Virtual Support Advisor
+Here's how to manage your API access Shoaib:
+Managing your API access
+Was this helpful Shoaib?
+No
+an hour ago
+Agent profile picture
+Enom Virtual Support Advisor
+Would you like to try again or chat with a representative Shoaib?
+Chat with a live support advisor
+an hour ago
+Agent profile picture
+Enom Virtual Support Advisor
+Thank you for providing that information,Shoaib. We will assign this chat to one of our support advisors who will try to understand your concern and see if we can help you out. Also feel free to check out our Help Center anytime.
+
+Leen
+Hello, thank you for reaching out
+how can I help you
+I have a reseller account
+I need some help, as I have some doubts regarding the api documentation
+an hour ago
+
+Leen
+Sure, how can I help
+let me explain you
+can we go on a call or something
+I can explain you what working I want to implement on my side
+an hour ago
+
+Leen
+Please feel free to call us on Toll-Free:1-855-266-8838 Local: 425-974-4689
+or you can explain here
+Okay
+https://resellertest.enom.com/interface.asp?command=check&sld=SuperDuperDomainName&tld=com&uid=resellid&pw=resellpw&responsetype=xml
+
+i am using this api v2, but it only returns values but not the prices for the domain
+an hour ago
+
+Leen
+Can I have your login ID pelase
+my credentials
+?
+first let me explain you
+an hour ago
+
+Leen
+Yes, your login ID pelase
+I need to check your account
+wait
+an hour ago
+
+Leen
+ok
+startmybusiness.com
+an hour ago
+
+Leen
+Can I have your login ID please?
+this is my login id
+an hour ago
+
+Leen
+I've generated a PIN for your account, which you'll see under My Account > My Dashboard. Can you share that PIN with me so I can verify your account?
+Sure
+8813205
+an hour ago
+
+Leen
+Thank you, now please explain the issue for me
+first, I can see that you don't have an API token, you will need to creat one
+the check commands have v1 and v2, v1 have domainList working where i can enter upto 30 domain, but it only returns with the availability details not the prices, v2 provides the price but only for one domain
+an hour ago
+
+Leen
+you can find the steps here https://support.enom.com/support/solutions/articles/201000065295#h_01FX3W8F0Z89R215DJS6SA77JA
+I am using the test account
+How can i overcome this problem, where i can provide with the list of related domains along with prices and other details
+from a single api
+an hour ago
+
+Leen
+please give me a minute to check
+Sure
+an hour ago
+
+Leen
+is the domain in your account or you will purchase the domain first?
+I want to show a list of available domains to my users, and that domains are not in my account
+just like you provide the domain search option and get all relevant details like price, EAP, isPremium,
+an hour ago
+
+Leen
+this is the closest call for what you are looking for https://api.enom.com/docs/queue-domain-purchase
+
+Leen
+there is this one as well https://api.enom.com/docs/Queue_GetDomains
+image
+Check this
+image
+I want working like this
+where user comes, search the domain name and get all relevant list
+Just as before i ltold you
+
+the check commands have v1 and v2, v1 have domainList working where i can enter upto 30 domain, but it only returns with the availability details not the prices, v2 provides the price but only for one domain
+an hour ago
+
+Leen
+I will need to check if we have such a call, please bear with me
+Sure
+The main thing is I need all relevant domains list along with its prices, the users search for
+an hour ago
+
+Leen
+are you looking for this call https://api.enom.com/docs/PL_Search
+wait
+an hour ago
+
+Leen
+here you can find all the calls for API https://api.enom.com/docs/api-test-account
+Kindly check the calls
+I have gone through all domain apis
+an hour ago
+
+Leen
+If you can't find the call in the link I have provided, then unfortunately we do not have such call
+I didnt found anything like I told you
+an hour ago
+New Messages
+
+Leen
+then unfortunately we don't have one
+Is there anything else I can help you with?
+an hour ago
+It looks like you've stepped away. I'll go ahead and close our chat but if there's anything else we can help with, don't hesitate to get back in touch. Have a great day!
+
+just take my chat and summirze my issue as i need to mail them
