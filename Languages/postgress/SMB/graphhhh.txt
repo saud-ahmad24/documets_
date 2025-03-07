@@ -1,0 +1,38 @@
+All below data will be based on Filter for time range
+
+- Last 30 days
+
+- Last 90 days
+
+- Custom Range
+
+.......
+
+Total orders (quantity)
+
+-  one off (and comparison in yellow for prior period, and percentage change in red or green)
+-  Recurring (and comparison in yellow for prior period, and percentage change in red or green)
+- Total (and comparison in yellow for prior period, and percentage change in red or green)
+
+Total orders (sales)
+
+- one off (and comparison in yellow for prior period, and percentage change in red or green)
+- Recurring (and comparison in yellow for prior period, and percentage change in red or green)
+- Total (and comparison in yellow for prior period, and percentage change in red or green)
+
+Top 5 performing products (based on one column for quantity and one column for sales) -  (and comparison in yellow for prior period, and percentage change in red or green)
+
+Total users
+
+- Basic (and comparison in yellow for prior period, and percentage change in red or green)
+- Launch (and comparison in yellow for prior period, and percentage change in red or green)
+- Grow (and comparison in yellow for prior period, and percentage change in red or green)
+
+Total products
+
+- Draft products (not live)
+- Live products
+
+Recent transactions
+
+Yearly sales (month by month) last 6 months

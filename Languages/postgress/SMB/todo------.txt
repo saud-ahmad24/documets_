@@ -6,6 +6,20 @@ plan overwrite - upgrade/downgrade plan
 linkedin login
 notification working
 
+req.body=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- {
+0|node-backend  |   state: 'random_string',
+0|node-backend  |   code: 'c2a65614637124bf18e093b43252ebc56.0.pruzu.mLsrYA0tbgGVOOCq12XguQ'
+0|node-backend  | }
+
+isAcitve and isDelete working-  admin / customer end
+apple login working
+permission wise view tabs on admin
+country code working admin 
+37 blogs added to live through script
+adding remaining product/section data admin
+
+shoaibaslam359@admin.com
+shoaibaslam359@Admin
 
 
 S@Ud8866186841a
@@ -17,13 +31,98 @@ ssh-keygen -t ed25519 -C "saudeng.webforest@gmail.com"
 support page - Live Chat - 2nd phase
 
 pm2 serve build 3000 --name "react-app"
+ pm2 start npm --name "node-backend" -- run dev
 pm2 startup 
 pm2 save   
-vi /etc/nginx/sites-available/react-app
-sudo nginx -t  
+vi /etc/nginx/sites-available/smb
+sudo nginx -t 
+npm run build 
+sudo cp -r dist/* /var/www/admin-panel/
+sudo cp -r build/* /var/www/main-frontend/
 sudo systemctl restart nginx
- pm2 start npm --name "node-backend" -- run dev
-sudo cp -r build/ /var/www/
+
+
+tail -n 1000 -f /root/.pm2/logs/node-backend-error.log
+
+
+
+https://hostnextra.com/learn/tutorials/install-certbot-on-ubuntu-with-nginx
+
+cd /var/www/
+sudo su
+cd /var/www/
+exit
+sudo mkdir -p /var/www/main-frontend
+sudo mkdir -p /var/www/admin-panel
+cd /path/to/main-frontend
+npm run build
+sudo cp -r build/* /var/www/main-frontend/
+cd /path/to/admin-panel
+npm run build
+sudo cp -r build/* /var/www/admin-panel/
+
+sudo cp -r dist/* /var/www/admin-panel/
+sudo cp -r build/* /var/www/main-frontend/
+
+ sudo cp /etc/nginx/sites-available/react-app /etc/nginx/sites-available/admin-panel
+
+sudo ln -s /etc/nginx/sites-available/admin-panel /etc/nginx/sites-enabled/
+ mv smb-backend backend
+
+cd /etc/nginx/sites-available/
+
+
+pm2 stop react-app
+pm2 delete react-app
+
+
+sudo rm -rf build html
+cd ~/app
+cd /root/app
+
+
+server {
+    listen 80;
+    server_name internal.startmybusiness.com;
+
+    # Serve the main frontend
+    location / {
+        root /var/www/main-frontend;
+        index index.html;
+        try_files $uri /index.html;
+    }
+
+    # Serve the admin panel at /admin
+    location /admin/ {
+        root /var/www/admin-panel;
+        index index.html;
+        try_files $uri /index.html;
+    }
+
+    # Backend Node.js API (served by PM2)
+    location /api/ {
+        proxy_pass http://localhost:4000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+
+
+legal doument - download and design
+businessPlan - donwload
+mail send to memeber for member/investor
+apply investor status on profile
+unlock button stauts event, community, perk
+learn dynamic
+dashbaord dynamic, order history ,cancel refund, email cahnge, payment change, delete account, package refund
+
+request intro, member, investor, community
+
+
 
 
 Admin side thing management
@@ -63,5 +162,29 @@ s3 working for image upload from url
 Done - 24 jan
 pdf download for business plan
 Invoice show on admin/ api
+
+
+Done - 29 jan
+domain data show invoice
+plan details show
+business plan download workig
+learn dashboard dynamic
+investor profile show
+
+
+server {
+    listen 80;
+    server_name admin.startmybusiness.com;
+
+    root /var/www/admin-panel;
+    index index.html index.htm;
+
+    # Serve React build files (static assets)
+    location / {
+        try_files $uri /index.html;
+    }
+}
+~
+
 
 

@@ -1,0 +1,91 @@
+### **📌 Uses of Enom API Commands (Related to Email Services & Forwarding)**  
+
+These API commands are used to **manage email services, forwarding, and mail-related settings** for domains via Enom’s reseller API. Here’s what each one does:  
+
+---
+
+### **🗑️ POP3 & POP Bundle Management** (Email Accounts)  
+These commands handle **POP3 email accounts** (mailboxes) associated with a domain.  
+
+1️⃣ **`DeleteAllPOPPaks`** → Deletes **all** purchased POP3 email bundles associated with a domain.  
+2️⃣ **`DeletePOP3`** → Deletes a specific **POP3 email account** from the domain.  
+3️⃣ **`DeletePOPPak`** → Deletes a **POP3 bundle** (a package containing multiple POP3 email accounts).  
+4️⃣ **`ModifyPOP3`** → Modifies an existing **POP3 email account** (e.g., password change, storage limits).  
+5️⃣ **`PurchasePOPBundle`** → Buys a new **POP3 email bundle** (allows creating multiple email accounts under a domain).  
+6️⃣ **`RenewPOPBundle`** → Renews an existing **POP3 bundle** before expiration.  
+
+---
+
+### **🛠️ Enabling & Disabling Services**  
+These commands manage email-related **services** for domains.  
+
+7️⃣ **`DisableServices`** → Disables specific **email-related services** for a domain.  
+8️⃣ **`EnableServices`** → Enables specific **email-related services** for a domain.  
+
+---
+
+### **📨 Email Forwarding & Catch-All**  
+These commands control **email forwarding and catch-all settings** for a domain.  
+
+9️⃣ **`Forwarding`** → Enables **email forwarding** (redirects incoming emails to another address).  
+🔟 **`GetCatchAll`** → Retrieves the **Catch-All email settings** (catches all emails sent to non-existent addresses on a domain).  
+1️⃣1️⃣ **`GetForwarding`** → Gets existing **email forwarding rules** for a domain.  
+1️⃣2️⃣ **`SetCatchAll`** → Configures a **Catch-All email address** (e.g., all emails sent to `anything@yourdomain.com` go to `admin@yourdomain.com`).  
+1️⃣3️⃣ **`SetPOPForwarding`** → Configures email **forwarding for a POP3 email account** (e.g., forward `info@yourdomain.com` to `gmail.com`).  
+
+---
+
+### **📍 Webmail & Hosted Mail Settings**  
+These commands retrieve or modify **mail host details** for domains.  
+
+1️⃣4️⃣ **`GetMailHosts`** → Retrieves **mail server details** (SMTP/IMAP/POP3) for a domain.  
+1️⃣5️⃣ **`GetPOP3`** → Gets **list of all POP3 email accounts** under a domain.  
+1️⃣6️⃣ **`GetPOPExpirations`** → Checks **when POP3 email accounts** are set to expire.  
+1️⃣7️⃣ **`GetPOPForwarding`** → Gets **forwarding details** for a POP3 account.  
+1️⃣8️⃣ **`SetUpPOP3User`** → Creates a **new POP3 email account** for a domain.  
+
+---
+
+### **🌐 Domain-Specific Email Forwarding**  
+These commands manage **email forwarding settings specific to dot-name domains**.  
+
+1️⃣9️⃣ **`GetDotNameForwarding`** → Gets **email forwarding settings** for `.name` domains.  
+2️⃣0️⃣ **`SetDotNameForwarding`** → Configures **email forwarding for .name domains**.  
+
+---
+
+### **🔄 Auto-Renew & Expiry Management**  
+These commands ensure email services **renew automatically** before expiration.  
+
+2️⃣1️⃣ **`SetPakRenew`** → Enables **auto-renewal for POP3 email bundles**.  
+
+---
+
+## **🚨 API Error Codes (Troubleshooting API Issues)**
+When using these commands, if an error occurs, the API will return an **error code** along with a message. Common reasons for errors include:  
+
+- **Invalid Credentials** → Incorrect API Token, User ID, or Password.  
+- **Domain Restrictions** → The domain doesn’t belong to the reseller’s account.  
+- **Invalid Input Parameters** → Missing or incorrect values in the request.  
+- **Service Not Enabled** → The requested action cannot be performed because the service is not enabled for that domain.  
+
+---
+
+## **✅ Summary: When to Use These Commands?**
+| **Function** | **Command** | **Use Case** |
+|-------------|------------|-------------|
+| **Delete POP3 Email Accounts** | `DeletePOP3`, `DeletePOPPak`, `DeleteAllPOPPaks` | Remove POP3 emails/bundles. |
+| **Modify POP3 Accounts** | `ModifyPOP3` | Change password, storage, etc. |
+| **Purchase/Renew POP3 Bundles** | `PurchasePOPBundle`, `RenewPOPBundle` | Buy or extend email services. |
+| **Enable/Disable Services** | `EnableServices`, `DisableServices` | Turn email services on/off. |
+| **Setup & Manage Forwarding** | `Forwarding`, `SetPOPForwarding`, `GetForwarding` | Redirect emails to another address. |
+| **Catch-All Email Management** | `GetCatchAll`, `SetCatchAll` | Handle emails sent to non-existent addresses. |
+| **Check Mail Server Info** | `GetMailHosts`, `GetPOP3`, `GetPOPExpirations` | Retrieve email service details. |
+| **Manage `.name` Email Forwarding** | `GetDotNameForwarding`, `SetDotNameForwarding` | Set up forwarding for `.name` domains. |
+| **Set Up New POP3 Email Users** | `SetUpPOP3User` | Create a new email account. |
+| **Enable Auto-Renewal** | `SetPakRenew` | Automatically renew email services. |
+
+---
+
+### **🚀 Need Help?**
+Let me know if you need sample API requests, integration guidance, or more details! 🎯

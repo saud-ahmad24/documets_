@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psf</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            padding: 0;
+            margin: 0x;
+        }
+
+        body * {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px; /* Adjust the width */
+            margin: 0 auto;
+            padding: 0 8px; /* Increase padding */
+        }
+
+    </style>
+</head>
+
+<body>
+    <header class="header"
+        style="background-image: url('${process.env.BACKEND_URL}/images/header-bg-image.png');background-repeat: no-repeat;background-size: cover;background-color: #000;padding-top: 20px;padding-bottom: 20px;">
+        <div class="container">
+            <div class="wrap" style="display: flex;align-items: center;justify-content: space-between;">
+                <div class="left">
+                    <img src="${process.env.BACKEND_URL}/images/logo.png" alt="">
+                    <h1
+                        style="color: #FFF;font-size: 64px;font-weight: 500;line-height: normal;letter-spacing: -1.92px;margin: 0;">
+                        Business Plan</h1>
+                </div>
+                <div class="right" style="padding-right: 120px;">
+                    <img src="${process.env.BACKEND_URL}/images/header-image.png" alt="">
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="main">
+        <div class="container">
+            <div class="section" style="padding-top: 50px;">
+                <div class="number-bar" style="display: flex;align-items: center;margin-bottom: 30px;">
+                    <div class="icon">
+                        <img style="vertical-align: middle;" src="${process.env.BACKEND_URL}/images/company-icon.png" alt="">
+                    </div>
+                    <p class="title" style="margin-left: 15px;margin-right: 15px;color: #06050C;font-size: 18px;font-weight: 600;letter-spacing: -0.72px;">
+                        Company Information</p>
+                    <div class="line" style="display: block;height: 1px;background: rgba(0, 0, 0, 0.10);width: 1050px;">
+                    </div>
+                    <p class="number" style="color: #999;font-family: Inter;font-size: 36px;font-weight: 500;line-height: 80%; letter-spacing: -1.08px;margin-left: 15px;">
+                        01</p>
+                </div>
+                <div class="wrap" style="display: flex;justify-content: space-between;align-items: center;margin-bottom: 0;">
+                    <div class="">
+                        <p style="color: #3E3D41;font-family: Inter;font-size: 20px;font-weight: 500;line-height: 150%;letter-spacing: -0.6px;">
+                            Company Name</p>
+                        <p style="color: #06050C;font-size: 28px;font-weight: 600;letter-spacing: -1.02px;">London's
+                            Coffee Haven</p>
+                    </div>
+                    <div class="">
+                        <img src="${process.env.BACKEND_URL}/images/coffee-logo.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="section" style="padding-top: 50px;">
+                <div class="number-bar" style="display: flex;align-items: center;margin-bottom: 30px;">
+                    <div class="icon">
+                        <img style="vertical-align: middle;" src="${process.env.BACKEND_URL}/images/headline-icon.png" alt="">
+                    </div>
+                    <p class="title" style="margin-left: 15px;margin-right: 15px;color: #06050C;font-size: 18px;font-weight: 600;letter-spacing: -0.72px;">
+                        Headline and Description</p>
+                    <div class="line" style="display: block;height: 1px;background: rgba(0, 0, 0, 0.10);width: 1010px;">
+                    </div>
+                    <p class="number" style="color: #999;font-family: Inter;font-size: 36px;font-weight: 500;line-height: 80%;letter-spacing: -1.08px;margin-left: 15px;">
+                        02</p>
+                </div>
+                <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Description</p>
+                <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                    Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis, gravida
+                    velit sit amet, pharetra nisl. Maecenas mollis quam elementum aliquam ultrices. Vivamus ornare nulla
+                    tristique, vulputate leo at, aliquam lectus. Suspendisse vitae sagittis neque. Integer at ipsum
+                    urna. Aenean eu faucibus elit, quis sollicitudin dui. Curabitur accumsan sollicitudin magna non
+                    dapibus. Nunc in efficitur odio. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                    ipsum lacus, tempus quis ligula in, tristique condimentum leo. Curabitur id aliquet dolor, non
+                    egestas nulla. Aliquam pretium id mi et imperdiet. Aliquam non ornare enim, in molestie elit.
+                    Aliquam est dolor, scelerisque ac nunc dapibus, feugiat accumsan libero.</p>
+            </div>
+            <div class="section" style="padding-top: 50px;">
+                <div class="number-bar" style="display: flex;align-items: center;margin-bottom: 30px;">
+                    <div class="icon">
+                        <img style="vertical-align: middle;" src="${process.env.BACKEND_URL}/images/problems-your-icon.png" alt="">
+                    </div>
+                    <p class="title" style="margin-left: 15px;margin-right: 15px;color: #06050C;font-size: 18px;font-weight: 600;letter-spacing: -0.72px;">
+                        Problems Your Business Solves</p>
+                    <div class="line" style="display: block;height: 1px;background: rgba(0, 0, 0, 0.10);width: 944px;">
+                    </div>
+                    <p class="number" style="color: #999;font-family: Inter;font-size: 36px;font-weight: 500;line-height: 80%; letter-spacing: -1.08px;margin-left: 15px;">
+                        03</p>
+                </div>
+                <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Descriptions (problem you
+                    solve)</p>
+                <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                    Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis, gravida
+                    velit sit amet, pharetra nisl. Maecenas mollis quam elementum aliquam ultrices. </p>
+                <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;margin-top: 30px;margin-bottom: 30px;">
+                    Problem Solve</p>
+                <div class="wrap" style="display: flex;justify-content: space-between;flex-wrap: wrap;">
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">01</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">02</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">03</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">04</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">05</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                </div>
+            </div>
+            <div class="section" style="padding-top: 50px;">
+                <div class="number-bar" style="display: flex;align-items: center;margin-bottom: 30px;">
+                    <div class="icon">
+                        <img style="vertical-align: middle;" src="${process.env.BACKEND_URL}/images/business-icon.png" alt="">
+                    </div>
+                    <p class="title" style="margin-left: 15px;margin-right: 15px;color: #06050C;font-size: 18px;font-weight: 600;letter-spacing: -0.72px;">
+                        Your Business’s Solution</p>
+                    <div class="line" style="display: block;height: 1px;background: rgba(0, 0, 0, 0.10);width: 944px;">
+                    </div>
+                    <p class="number" style="color: #999;font-family: Inter;font-size: 36px;font-weight: 500;line-height: 80%; letter-spacing: -1.08px;margin-left: 15px;">
+                        04</p>
+                </div>
+                <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Descriptions (problem you
+                    solve)</p>
+                <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                    Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis, gravida
+                    velit sit amet, pharetra nisl. Maecenas mollis quam elementum aliquam ultrices. </p>
+                <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;margin-top: 30px;margin-bottom: 30px;">
+                    Solve</p>
+                <div class="wrap" style="display: flex;justify-content: space-between;flex-wrap: wrap;">
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">01</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">02</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">03</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">04</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">05</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                </div>
+            </div>
+            <div class="section" style="padding-top: 50px;">
+                <div class="number-bar" style="display: flex;align-items: center;margin-bottom: 30px;">
+                    <div class="icon">
+                        <img style="vertical-align: middle;" src="${process.env.BACKEND_URL}/images/target-market-icon.png" alt="">
+                    </div>
+                    <p class="title" style="margin-left: 15px;margin-right: 15px;color: #06050C;font-size: 18px;font-weight: 600;letter-spacing: -0.72px;">
+                        Target market</p>
+                    <div class="line" style="display: block;height: 1px;background: rgba(0, 0, 0, 0.10);width: 1124px;">
+                    </div>
+                    <p class="number" style="color: #999;font-family: Inter;font-size: 36px;font-weight: 500;line-height: 80%; letter-spacing: -1.08px;margin-left: 15px;">
+                        05</p>
+                </div>
+                <div class="wrap" style="display: flex;justify-content: space-between;flex-wrap: wrap;">
+                    <div class="" style="width: 46%;margin-bottom: 30px;">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">What do you want to call this segment?</p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">Aenean nec neque vestibulum, tempus quam non.</p>
+                    </div>
+                    <div class="" style="width: 46%;margin-bottom: 30px;">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">How many prospects do you think are in this segment?</p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">Aenean nec neque vestibulum, tempus quam non.</p>
+                    </div>
+                    <div class="" style="width: 46%;margin-bottom: 30px;">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">How much does each prospect spend annually on the problem you solve?</p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">Aenean nec neque vestibulum, tempus quam non.</p>
+                    </div>
+                </div>
+                <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;margin-bottom: 30px;">Target</p>
+                <div class="wrap" style="display: flex;justify-content: space-between;flex-wrap: wrap;">
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">01</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">02</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">03</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">04</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">05</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                </div>
+            </div>
+            <div class="section" style="padding-top: 50px;">
+                <div class="number-bar" style="display: flex;align-items: center;margin-bottom: 30px;">
+                    <div class="icon">
+                        <img style="vertical-align: middle;" src="${process.env.BACKEND_URL}/images/Competitors-icon.png" alt="">
+                    </div>
+                    <p class="title" style="margin-left: 15px;margin-right: 15px;color: #06050C;font-size: 18px;font-weight: 600;letter-spacing: -0.72px;">Competitors</p>
+                    <div class="line" style="display: block;height: 1px;background: rgba(0, 0, 0, 0.10);width: 1164px;">
+                    </div>
+                    <p class="number" style="color: #999;font-family: Inter;font-size: 36px;font-weight: 500;line-height: 80%; letter-spacing: -1.08px;margin-left: 15px;">
+                        06</p>
+                </div>
+                <div class="wrap" style="display: flex;justify-content: space-between;flex-wrap: wrap;">
+                    <div class="" style="width: 46%;margin-bottom: 30px;">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">What do you want to call this segment?</p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">Aenean nec neque vestibulum, tempus quam non.</p>
+                    </div>
+                    <div class="" style="width: 46%;margin-bottom: 30px;">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">How many prospects do you think are in this segment?</p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">Aenean nec neque vestibulum, tempus quam non.</p>
+                    </div>
+                    <div class="" style="width: 46%;margin-bottom: 30px;">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">How much does each prospect spend annually on the problem you solve?</p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">Aenean nec neque vestibulum, tempus quam non.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section" style="padding-top: 50px;">
+                <div class="number-bar" style="display: flex;align-items: center;margin-bottom: 30px;">
+                    <div class="icon">
+                        <img style="vertical-align: middle;" src="${process.env.BACKEND_URL}/images/funding-icon.png" alt="">
+                    </div>
+                    <p class="title" style="margin-left: 15px;margin-right: 15px;color: #06050C;font-size: 18px;font-weight: 600;letter-spacing: -0.72px;">Funding</p>
+                    <div class="line" style="display: block;height: 1px;background: rgba(0, 0, 0, 0.10);width: 1214px;">
+                    </div>
+                    <p class="number" style="color: #999;font-family: Inter;font-size: 36px;font-weight: 500;line-height: 80%; letter-spacing: -1.08px;margin-left: 15px;">
+                        07</p>
+                </div>
+                <div class="wrap" style="">
+                    <div class="" style="margin-bottom: 30px;">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Funding Amount</p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">Aenean nec neque vestibulum, tempus quam non.</p>
+                    </div>
+                    <div class="" style="
+    margin-bottom: 30px;
+">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Funding Usage  </p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">Aenean nec neque vestibulum, tempus quam non.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section" style="padding-top: 50px;">
+                <div class="number-bar" style="display: flex;align-items: center;margin-bottom: 30px;">
+                    <div class="icon">
+                        <img style="vertical-align: middle;" src="${process.env.BACKEND_URL}/images/sales-channel-icon.png" alt="">
+                    </div>
+                    <p class="title" style="margin-left: 15px;margin-right: 15px;color: #06050C;font-size: 18px;font-weight: 600;letter-spacing: -0.72px;">
+                        Sales Channels</p>
+                    <div class="line" style="display: block;height: 1px;background: rgba(0, 0, 0, 0.10);width: 1120px;">
+                    </div>
+                    <p class="number" style="color: #999;font-family: Inter;font-size: 36px;font-weight: 500;line-height: 80%; letter-spacing: -1.08px;margin-left: 15px;">
+                        08</p>
+                </div>
+                <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Sales Channels Description  </p>
+                <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">Aenean nec neque vestibulum, tempus quam non, eleifend quam.  Pellentesque id mauris iaculis, gravida velit sit amet, pharetra nisl.  Maecenas mollis quam elementum aliquam ultrices. </p>
+                <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;margin-top: 30px;margin-bottom: 30px;">Channel</p>
+                <div class="wrap" style="display: flex;justify-content: space-between;flex-wrap: wrap;">
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">01</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">02</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">03</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">04</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">05</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                </div>
+            </div>
+            <div class="section" style="padding-top: 50px;">
+                <div class="number-bar" style="display: flex;align-items: center;margin-bottom: 30px;">
+                    <div class="icon">
+                        <img style="vertical-align: middle;" src="${process.env.BACKEND_URL}/images/marketing-icon.png" alt="">
+                    </div>
+                    <p class="title" style="margin-left: 15px;margin-right: 15px;color: #06050C;font-size: 18px;font-weight: 600;letter-spacing: -0.72px;">Marketing Strategy</p>
+                    <div class="line" style="display: block;height: 1px;background: rgba(0, 0, 0, 0.10);width: 1075px;">
+                    </div>
+                    <p class="number" style="color: #999;font-family: Inter;font-size: 36px;font-weight: 500;line-height: 80%; letter-spacing: -1.08px;margin-left: 15px;">
+                        09</p>
+                </div>
+                <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Marketing strategy Description</p>
+                <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">Aenean nec neque vestibulum, tempus quam non, eleifend quam.  Pellentesque id mauris iaculis, gravida velit sit amet, pharetra nisl.  Maecenas mollis quam elementum aliquam ultrices. </p>
+                <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;margin-top: 30px;margin-bottom: 30px;">Marketing strategy</p>
+                <div class="wrap" style="display: flex;justify-content: space-between;flex-wrap: wrap;">
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">01</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">02</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">03</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">04</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                    <div class="" style="display: flex;padding-bottom: 30px;width: 46%;border-bottom: 1px solid rgba(0, 0, 0, 0.30);margin-bottom: 30px;">
+                        <span style="color: #999;font-family: Inter;font-size: 18px;font-weight: 500;line-height: 125%;letter-spacing: -1.08px;padding-top: 8px;padding-right: 15px;">05</span>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">
+                            Aenean nec neque vestibulum, tempus quam non, eleifend quam. Pellentesque id mauris iaculis,
+                            gravida </p>
+                    </div>
+                </div>
+            </div>
+            <div class="section" style="padding-top: 50px;">
+                <div class="number-bar" style="display: flex;align-items: center;margin-bottom: 30px;">
+                    <div class="icon">
+                        <img style="vertical-align: middle;" src="${process.env.BACKEND_URL}/images/milestone-icon.png" alt="">
+                    </div>
+                    <p class="title" style="margin-left: 15px;margin-right: 15px;color: #06050C;font-size: 18px;font-weight: 600;letter-spacing: -0.72px;">Milestones</p>
+                    <div class="line" style="display: block;height: 1px;background: rgba(0, 0, 0, 0.10);width: 1185px;">
+                    </div>
+                    <p class="number" style="color: #999;font-family: Inter;font-size: 36px;font-weight: 500;line-height: 80%; letter-spacing: -1.08px;margin-left: 15px;">
+                        10</p>
+                </div>
+                <div class="wrap" style="display: flex; margin-bottom: 30px;">
+                   <div class="" style="padding-right: 80px;">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Milestones</p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">Aenean nec neque vestibulum, tempus quam non.</p>
+                   </div>
+                   <div class="" style="padding-right: 140px;">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Due Date</p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">2025-01-09</p>
+                   </div>
+                   <div class="">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Responsible</p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">asdfasd</p>
+                   </div>
+                </div>
+                <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Details</p>
+                <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;margin-bottom: 30px;">Aenean nec neque vestibulum, tempus quam non, eleifend quam.  Pellentesque id mauris iaculis, gravida velit sit amet, pharetra nisl.  Maecenas mollis quam elementum aliquam ultrices. </p>
+            </div>
+            <div class="section" style="padding-top: 50px;">
+                <div class="number-bar" style="display: flex;align-items: center;margin-bottom: 30px;">
+                    <div class="icon">
+                        <img style="vertical-align: middle;" src="${process.env.BACKEND_URL}/images/team-icon.png" alt="">
+                    </div>
+                    <p class="title" style="margin-left: 15px;margin-right: 15px;color: #06050C;font-size: 18px;font-weight: 600;letter-spacing: -0.72px;">Team and Key Roles</p>
+                    <div class="line" style="display: block;height: 1px;background: rgba(0, 0, 0, 0.10);width: 1085px;">
+                    </div>
+                    <p class="number" style="color: #999;font-family: Inter;font-size: 36px;font-weight: 500;line-height: 80%; letter-spacing: -1.08px;margin-left: 15px;">
+                        11</p>
+                </div>
+                <div class="wrap" style="display: flex; margin-bottom: 30px;">
+                   <div class="" style="padding-right: 80px;">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Name</p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">Aenean nec neque vestibulum, tempus quam non.</p>
+                   </div>
+                   <div class="">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Role</p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">asdfasd</p>
+                   </div>
+                </div>
+                <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Biography</p>
+                <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;margin-bottom: 30px;">Aenean nec neque vestibulum, tempus quam non, eleifend quam.  Pellentesque id mauris iaculis, gravida velit sit amet, pharetra nisl.  Maecenas mollis quam elementum aliquam ultrices. </p>
+            </div>
+            <div class="section" style="padding-top: 50px;">
+                <div class="number-bar" style="display: flex;align-items: center;margin-bottom: 30px;">
+                    <div class="icon">
+                        <img style="vertical-align: middle;" src="${process.env.BACKEND_URL}/images/partners-icon.png" alt="">
+                    </div>
+                    <p class="title" style="margin-left: 15px;margin-right: 15px;color: #06050C;font-size: 18px;font-weight: 600;letter-spacing: -0.72px;">Partners and Resources</p>
+                    <div class="line" style="display: block;height: 1px;background: rgba(0, 0, 0, 0.10);width: 1034px;">
+                    </div>
+                    <p class="number" style="color: #999;font-family: Inter;font-size: 36px;font-weight: 500;line-height: 80%; letter-spacing: -1.08px;margin-left: 15px;">
+                        12</p>
+                </div>
+                <div class="wrap" style="display: flex; margin-bottom: 30px;">
+                   <div class="" style="padding-right: 80px;">
+                        <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Name</p>
+                        <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;">Aenean nec neque vestibulum, tempus quam non.</p>
+                   </div>
+                </div>
+                <p style="color: #06050C;font-family: Inter;font-size: 10px;font-weight: 600;">Description</p>
+                <p style="color: #424145;font-size: 18px;font-weight: 400;line-height: 150%; /* 150% */letter-spacing: -0.72px;margin-top: 5px;margin-bottom: 30px;">Aenean nec neque vestibulum, tempus quam non, eleifend quam.  Pellentesque id mauris iaculis, gravida velit sit amet, pharetra nisl.  Maecenas mollis quam elementum aliquam ultrices. </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

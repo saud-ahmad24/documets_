@@ -1,0 +1,71 @@
+Stripe creates invoices depending on the subscription action and the billing cycle. Here's a breakdown of when an **invoice is created** and when it's not:
+
+---
+
+## **1. Creating a New Subscription**  
+🟢 **Invoice Created** (If the plan is chargeable)  
+- When you create a subscription with `payment_behavior: 'default_incomplete'` or `'allow_incomplete'`, Stripe generates an **invoice** for the first payment.
+- If using **automatic payment methods**, the invoice is **paid automatically**.
+- If manual invoicing (`collection_method: 'send_invoice'`), the invoice is sent to the user to pay manually.
+
+💡 **No invoice is created** if you set `trial_period_days`, as the charge happens at the end of the trial.
+
+---
+
+## **2. Upgrading a Subscription (Higher Price Plan)**  
+🟢 **Invoice Created Immediately**  
+- When a user upgrades, Stripe charges them immediately for the **difference** in cost.
+- Stripe automatically **prorates** the unused portion of the previous plan and bills for the new plan.
+- This results in an invoice with:
+  - **Prorated credit for the unused time of the old plan**
+  - **Charge for the new plan**
+  - **Total amount due for the difference**
+- You can **disable proration** using `proration_behavior: 'none'`.
+
+---
+
+## **3. Downgrading a Subscription (Lower Price Plan)**  
+🔴 **No Immediate Invoice Created** (But credit is applied)  
+- Stripe **does not charge** immediately.
+- Instead, it applies a **negative proration (credit)** for the unused time of the higher plan.
+- This credit is **applied to the next invoice** (next billing cycle).
+- If `proration_behavior: 'create_prorations'`, Stripe adjusts the next invoice automatically.
+
+💡 **If the credit exceeds the new plan’s cost**, the next invoice might be **$0**, and any remaining credit rolls over.
+
+---
+
+## **4. Updating a Subscription (Same Price, Minor Changes)**  
+🔴 **No Invoice Created** (Unless there's a chargeable change)  
+- If you update metadata, billing cycle, or other non-pricing details, no invoice is created.
+- If the plan price changes, follow the upgrade/downgrade behavior above.
+
+---
+
+## **5. Canceling a Subscription**  
+🔴 **No Invoice Created** (Unless unpaid invoices exist)  
+- If a user cancels, any **unpaid invoices remain due**.
+- If `proration_behavior: 'create_prorations'`, Stripe might **issue a final invoice or credit** depending on the plan.
+
+---
+
+## **Key Takeaways**  
+| Action           | Invoice Created? | Notes |
+|-----------------|----------------|-------|
+| **New Subscription** | ✅ Yes | Immediate invoice unless trial |
+| **Upgrade (Higher Price)** | ✅ Yes | Immediate proration invoice |
+| **Downgrade (Lower Price)** | ❌ No | Negative credit applied to next invoice |
+| **Minor Updates** | ❌ No | No invoice unless price changes |
+| **Cancellation** | ❌ No | Unpaid invoices still due |
+
+---
+
+### **Best Practices for Your System:**
+1. **Store Stripe's `latest_invoice` ID** when creating or upgrading subscriptions.
+2. **Check the `credit_balance` on customer records** to manage downgrade credits.
+3. **Notify users of invoice changes** (e.g., when a downgrade results in a credit).
+4. **Use Stripe Webhooks (`invoice.created`, `invoice.payment_succeeded`)** to keep invoices updated in your DB.
+
+---
+
+Let me know if you need help implementing this in your system! 🚀

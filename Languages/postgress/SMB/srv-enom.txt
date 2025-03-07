@@ -1,0 +1,151 @@
+### **📌 Understanding SRV (Service) Records & Enom API Commands for Managing SRV Records**  
+
+SRV (Service) records are DNS records that specify **the location (hostname and port number) of servers for specific services**. They are commonly used for:  
+- **VoIP (Voice over IP) services**  
+- **XMPP (Jabber) for messaging**  
+- **Microsoft services like Office 365**  
+- **Minecraft servers**  
+
+---
+
+## **🛠️ How SRV Records Work**  
+
+An **SRV record** follows this format:  
+```
+_service._protocol.domain TTL priority weight port target
+```
+
+### **Example: Microsoft Teams SRV Record**
+```
+_sip._tls.example.com. 3600 IN SRV 100 1 443 sipdir.online.lync.com.
+```
+- **`_sip`** → The service name (Session Initiation Protocol).  
+- **`_tls`** → The protocol (TLS encryption).  
+- **`example.com`** → The domain name.  
+- **`3600`** → TTL (Time to Live).  
+- **`100`** → Priority (lower numbers have higher priority).  
+- **`1`** → Weight (used when multiple servers have the same priority).  
+- **`443`** → The port number (HTTPS communication).  
+- **`sipdir.online.lync.com.`** → The target server.  
+
+---
+
+## **🖥️ Enom API Commands for Managing SRV Records**  
+
+These API commands allow you to **retrieve, update, and set SRV records** for domains.
+
+| **Command** | **Function** |
+|-------------|-------------|
+| **`GetDomainSRVHosts`** | Retrieves the current **SRV records** for a domain. |
+| **`SetDomainSRVHosts`** | Adds or updates **SRV records** for a domain. |
+
+---
+
+## **📌 Using the Enom API for SRV Records**
+### 1️⃣ **Retrieve SRV Records (`GetDomainSRVHosts`)**
+**Purpose:** Get the current SRV records for a specific domain.  
+
+**Example API Request:**  
+```bash
+https://reseller.enom.com/interface.asp?command=GetDomainSRVHosts
+&uid=yourusername
+&pw=yourpassword
+&SLD=example
+&TLD=com
+&ResponseType=XML
+```
+**Response (Example in XML):**  
+```xml
+<GetDomainSRVHosts>
+    <domain>example.com</domain>
+    <srvhost>
+        <Service>_sip</Service>
+        <Protocol>_tls</Protocol>
+        <Priority>100</Priority>
+        <Weight>1</Weight>
+        <Port>443</Port>
+        <Target>sipdir.online.lync.com</Target>
+    </srvhost>
+</GetDomainSRVHosts>
+```
+
+---
+
+### 2️⃣ **Add or Update SRV Records (`SetDomainSRVHosts`)**
+**Purpose:** Add or modify SRV records for a domain.  
+
+**Example API Request:**  
+```bash
+https://reseller.enom.com/interface.asp?command=SetDomainSRVHosts
+&uid=yourusername
+&pw=yourpassword
+&SLD=example
+&TLD=com
+&Service1=_sip
+&Protocol1=_tls
+&Priority1=100
+&Weight1=1
+&Port1=443
+&Target1=sipdir.online.lync.com
+&ResponseType=XML
+```
+- **`Service1=_sip`** → The service name.  
+- **`Protocol1=_tls`** → The protocol.  
+- **`Priority1=100`** → Priority of the record.  
+- **`Weight1=1`** → Weight value (used when multiple records have the same priority).  
+- **`Port1=443`** → The service port number.  
+- **`Target1=sipdir.online.lync.com`** → The hostname of the service provider.  
+
+**Response (Example in XML):**  
+```xml
+<SetDomainSRVHosts>
+    <ErrCount>0</ErrCount>
+    <ResponseCode>200</ResponseCode>
+    <Success>1</Success>
+</SetDomainSRVHosts>
+```
+If `ErrCount > 0`, an error occurred, and the response will include the error message.
+
+---
+
+## **🚀 Use Cases for SRV Records**
+1. **VoIP Services (SIP Trunks)**
+   - Used for setting up **SIP-based VoIP services**.
+   - Example:
+     ```
+     _sip._udp.voip.example.com. 3600 IN SRV 10 5 5060 sip.voipprovider.com.
+     ```
+
+2. **Microsoft Office 365 & Teams**
+   - Required for Microsoft communication services.
+   - Example:
+     ```
+     _sip._tls.example.com. 3600 IN SRV 100 1 443 sipdir.online.lync.com.
+     ```
+
+3. **Jabber/XMPP Chat Services**
+   - Used for **instant messaging platforms**.
+   - Example:
+     ```
+     _xmpp-server._tcp.example.com. 3600 IN SRV 5 0 5269 xmpp.example.com.
+     ```
+
+4. **Minecraft Multiplayer Servers**
+   - Allows players to **connect to a server using a domain** instead of an IP address.
+   - Example:
+     ```
+     _minecraft._tcp.example.com. 3600 IN SRV 0 5 25565 mc.example.com.
+     ```
+
+---
+
+## **✅ Summary: When to Use These Commands?**
+| **Function** | **Command** | **Use Case** |
+|-------------|------------|-------------|
+| **Retrieve SRV records** | `GetDomainSRVHosts` | Get the current SRV records for a domain. |
+| **Set or update SRV records** | `SetDomainSRVHosts` | Add or modify SRV records for services like VoIP, Teams, or gaming. |
+
+---
+
+### **🚀 Need Help?**
+Let me know if you need **sample API requests for other DNS records**, troubleshooting tips, or more details! 😊

@@ -1,0 +1,174 @@
+It looks like you're handling a variety of tasks, including server management, frontend and backend deployments, SEO integration, payment methods, user authentication, and admin-side management. Below is a step-by-step breakdown of essential processes, including setting up SSH on Ubuntu, server configuration, and deployment workflows.
+
+---
+
+## **Step 1: Set Up SSH on Ubuntu**
+Before you can securely access the server, you need to create and configure SSH keys.
+
+1. **Generate an SSH key (RSA or Ed25519)**
+   ```sh
+   ssh-keygen -t rsa -b 4096 -C "saudeng.webforest@gmail.com"
+   ssh-keygen -t ed25519 -C "saudeng.webforest@gmail.com"
+   ```
+2. **Copy the public key to the server**
+   ```sh
+   ssh-copy-id user@your-server-ip
+   ```
+   Alternatively, if `ssh-copy-id` is not available:
+   ```sh
+   cat ~/.ssh/id_rsa.pub | ssh user@your-server-ip "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys"
+   ```
+3. **Verify SSH access**
+   ```sh
+   ssh user@your-server-ip
+   ```
+
+---
+
+## **Step 2: Set Up PM2 for Node.js Backend**
+1. **Install PM2 (if not installed)**
+   ```sh
+   npm install -g pm2
+   ```
+2. **Start the backend**
+   ```sh
+   pm2 start npm --name "node-backend" -- run dev
+   ```
+3. **Save PM2 processes to restart on reboot**
+   ```sh
+   pm2 save
+   pm2 startup
+   ```
+4. **Check logs for errors**
+   ```sh
+   tail -n 1000 -f /root/.pm2/logs/node-backend-error.log
+   ```
+
+---
+
+## **Step 3: Configure Nginx for Deployment**
+1. **Create an Nginx config file**
+   ```sh
+   sudo vi /etc/nginx/sites-available/smb
+   ```
+2. **Add the following configuration:**
+   ```nginx
+   server {
+       listen 80;
+       server_name internal.startmybusiness.com;
+
+       # Serve the main frontend
+       location / {
+           root /var/www/main-frontend;
+           index index.html;
+           try_files $uri /index.html;
+       }
+
+       # Serve the admin panel
+       location /admin/ {
+           root /var/www/admin-panel;
+           index index.html;
+           try_files $uri /index.html;
+       }
+
+       # Backend Node.js API (served by PM2)
+       location /api/ {
+           proxy_pass http://localhost:4000;
+           proxy_http_version 1.1;
+           proxy_set_header Upgrade $http_upgrade;
+           proxy_set_header Connection 'upgrade';
+           proxy_set_header Host $host;
+           proxy_cache_bypass $http_upgrade;
+       }
+   }
+   ```
+3. **Enable the configuration**
+   ```sh
+   sudo ln -s /etc/nginx/sites-available/smb /etc/nginx/sites-enabled/
+   ```
+4. **Test Nginx configuration**
+   ```sh
+   sudo nginx -t
+   ```
+5. **Restart Nginx**
+   ```sh
+   sudo systemctl restart nginx
+   ```
+
+---
+
+## **Step 4: SSL Setup with Certbot (HTTPS)**
+1. **Install Certbot**
+   ```sh
+   sudo apt update
+   sudo apt install certbot python3-certbot-nginx -y
+   ```
+2. **Generate and apply SSL certificate**
+   ```sh
+   sudo certbot --nginx -d internal.startmybusiness.com
+   ```
+3. **Renew SSL certificates automatically**
+   ```sh
+   sudo certbot renew --dry-run
+   ```
+
+---
+
+## **Step 5: Deploy Frontend and Admin Panel**
+1. **Build the frontend**
+   ```sh
+   cd /path/to/main-frontend
+   npm run build
+   ```
+2. **Copy the build files to the server**
+   ```sh
+   sudo cp -r build/* /var/www/main-frontend/
+   ```
+3. **Repeat for the admin panel**
+   ```sh
+   cd /path/to/admin-panel
+   npm run build
+   sudo cp -r build/* /var/www/admin-panel/
+   ```
+
+---
+
+## **Step 6: Manage Services with PM2**
+1. **Stop React app if needed**
+   ```sh
+   pm2 stop react-app
+   pm2 delete react-app
+   ```
+2. **Restart the backend**
+   ```sh
+   pm2 restart node-backend
+   ```
+3. **Monitor logs**
+   ```sh
+   tail -f /root/.pm2/logs/node-backend-error.log
+   ```
+
+---
+
+## **Step 7: Handle Business Logic Updates**
+### **Done Tasks**
+✅ Cancel subscription  
+✅ Payment method change  
+✅ Plan overwrite (upgrade/downgrade)  
+✅ Profile for investors  
+✅ Admin working for user add  
+✅ Learn dashboard dynamic  
+
+### **Pending Tasks**
+🔲 **SEO Integration**  
+🔲 **Apply promo code functionality**  
+🔲 **LinkedIn Login Integration**  
+🔲 **Notification System**  
+🔲 **Business Plan Download & Legal Document Design**  
+🔲 **Apply Investor Status on Profile**  
+🔲 **Unlock Button for Event, Community, Perks**  
+🔲 **Dynamic Dashboard - Order History, Refunds, Email & Payment Changes, Account Deletion**  
+
+---
+
+This should help you set up your server, manage deployments, and ensure services are running smoothly. Let me know which specific task you need detailed guidance on! 🚀

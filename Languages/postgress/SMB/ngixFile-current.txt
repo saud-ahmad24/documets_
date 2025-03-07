@@ -1,0 +1,93 @@
+server {
+
+    client_max_body_size 50M;
+    server_name admin.startmybusiness.com;
+
+    root /var/www/admin-panel;
+    index index.html index.htm;
+
+    location / {
+        try_files $uri /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://localhost:4000;  # Node.js backend running on port 4000 (adjust as needed)
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    location /socket.io/ {
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $host;
+
+      proxy_pass http://localhost:4000;
+
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+      proxy_cache_bypass $http_upgrade;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/admin.startmybusiness.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/admin.startmybusiness.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    client_max_body_size 50M;
+    server_name internal.startmybusiness.com;
+
+    root /var/www/main-frontend;
+    index index.html index.htm;
+
+    location / {
+        try_files $uri /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://localhost:4000;  # Node.js backend running on port 4000 (adjust as needed)
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+     listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/internal.startmybusiness.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/internal.startmybusiness.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+
+server {
+    if ($host = internal.startmybusiness.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name internal.startmybusiness.com;
+    return 404; # managed by Certbot
+
+
+}server {
+    if ($host = admin.startmybusiness.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name admin.startmybusiness.com;
+    return 404; # managed by Certbot
+
+
+}

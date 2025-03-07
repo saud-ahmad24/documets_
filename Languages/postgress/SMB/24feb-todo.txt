@@ -1,0 +1,16 @@
+amex, visa, mastercard logo add for different cards | footer change |tools svgs added
+cancel startup plan subscription working
+blogs, tipsandtricks, guides load search filter problem solve
+no details avalable text added blog/ guides/ network/ investor
+addon quantity selection disbaled if not selected
+country selection close error solve
+delete working blog/guide/tipTricks admin
+401 auto logout management admin
+data preview management admin
+
+
+
+addOn/product added
+network -investor no data avail - done
+postal code 
+?pageType working change

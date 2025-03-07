@@ -1,0 +1,102 @@
+### **📌 Enom API Commands for SSL Management & Security Services**  
+These API commands allow resellers to **manage SSL certificates, auto-renewals, and security services like SiteLock** for their customers.  
+
+---
+
+## **🔐 SSL Management Commands**  
+Used for purchasing, configuring, modifying, and retrieving details of **SSL certificates**.  
+
+1️⃣ **`CertChangeApproverEmail`** → Changes the **approver email address** for an SSL certificate request.  
+   - When purchasing an SSL certificate, the **CA (Certificate Authority)** sends a verification email to an approver email (e.g., `admin@yourdomain.com`).  
+   - This API allows updating that email if it was incorrect.  
+
+2️⃣ **`CertConfigureCert`** → Configures an SSL certificate after purchase.  
+   - Used to **submit CSR (Certificate Signing Request)** and other required details to the CA.  
+
+3️⃣ **`CertGetApproverEmail`** → Retrieves the **current approver email** for a domain.  
+   - Useful for checking which email will receive SSL approval requests.  
+
+4️⃣ **`CertGetCertDetail`** → Retrieves detailed **SSL certificate information**, including:  
+   - Issuer  
+   - Expiry Date  
+   - Domain Name  
+   - Certificate Type  
+   - CSR Details  
+
+5️⃣ **`CertModifyOrder`** → Modifies an **existing SSL order** (e.g., upgrade, extend, or change certificate details).  
+
+6️⃣ **`CertParseCSR`** → Parses a **CSR (Certificate Signing Request)** to extract details such as:  
+   - Domain Name  
+   - Organization  
+   - Country Code  
+   - Key Algorithm  
+
+7️⃣ **`CertPurchaseCert`** → Purchases a **new SSL certificate** for a domain.  
+
+8️⃣ **`CertReissueCert`** → Requests a **certificate reissue** (e.g., if the private key was compromised or details need updating).  
+
+9️⃣ **`CertResendApproverEmail`** → Resends the **verification email** to the certificate approver.  
+
+🔟 **`CertResendFulfillmentEmail`** → Resends the **SSL certificate delivery email** after approval.  
+   - Useful if the customer didn't receive the email with their certificate files.  
+
+1️⃣1️⃣ **`GetCerts`** → Retrieves a list of **all SSL certificates** for an account.  
+
+1️⃣2️⃣ **`CertGetCertDetail`** (Duplicate Entry) → Retrieves SSL details (same as `CertGetCertDetail`).  
+
+---
+
+## **🔄 Auto-Renewal & Account Management Commands**  
+These commands manage **auto-renewal settings** and **account details** for various services.  
+
+1️⃣3️⃣ **`AM_AutoRenew`** → Enables or disables **auto-renewal** for a service.  
+   - Can be applied to SSL certificates, domains, or other subscription-based services.  
+
+1️⃣4️⃣ **`AM_Configure`** → Configures auto-renewal settings for an account.  
+
+1️⃣5️⃣ **`AM_GetAccounts`** → Retrieves a list of **all accounts** that have auto-renewal enabled.  
+
+1️⃣6️⃣ **`AM_GetAccountDetail`** → Retrieves **auto-renewal details** for a specific account.  
+
+---
+
+## **🛡️ SiteLock Security Management**  
+**SiteLock** is a website security solution that provides malware detection, vulnerability scans, and protection against cyber threats. These APIs allow you to manage SiteLock subscriptions for customers.  
+
+1️⃣7️⃣ **`SiteLock`** → Manages **SiteLock security services** (purchase, renewal, modification).  
+
+1️⃣8️⃣ **`GetProductSelectionList`** → Retrieves the **list of available SiteLock plans** and their pricing.  
+
+1️⃣9️⃣ **`SL_AutoRenew`** → Enables or disables **auto-renewal for SiteLock** security services.  
+
+2️⃣0️⃣ **`SL_Configure`** → Configures **SiteLock settings** for a website.  
+
+2️⃣1️⃣ **`SL_GetAccountDetail`** → Retrieves **detailed information about a SiteLock account**, such as:  
+   - Plan Type  
+   - Security Scan Status  
+   - Next Billing Date  
+
+2️⃣2️⃣ **`SL_GetAccounts`** → Retrieves a **list of all SiteLock accounts** under a reseller.  
+
+---
+
+## **✅ Summary: When to Use These Commands?**
+| **Function** | **Command** | **Use Case** |
+|-------------|------------|-------------|
+| **Change Approver Email** | `CertChangeApproverEmail` | Update the email used for SSL certificate approval. |
+| **Configure SSL** | `CertConfigureCert` | Submit CSR and configure the SSL certificate. |
+| **Retrieve Approver Email** | `CertGetApproverEmail` | Check which email will receive SSL verification requests. |
+| **Get SSL Certificate Details** | `CertGetCertDetail`, `GetCerts` | Retrieve SSL certificate information. |
+| **Modify SSL Order** | `CertModifyOrder` | Modify an existing SSL certificate order. |
+| **Parse CSR** | `CertParseCSR` | Extract domain and organization details from a CSR. |
+| **Purchase SSL** | `CertPurchaseCert` | Buy a new SSL certificate. |
+| **Reissue SSL** | `CertReissueCert` | Request an SSL certificate reissue. |
+| **Resend Verification Email** | `CertResendApproverEmail` | Resend the verification email to the approver. |
+| **Resend SSL Certificate Email** | `CertResendFulfillmentEmail` | Resend the SSL certificate delivery email. |
+| **Auto-Renewal Management** | `AM_AutoRenew`, `AM_Configure`, `AM_GetAccounts`, `AM_GetAccountDetail` | Manage auto-renewal settings for SSL and other services. |
+| **SiteLock Security Management** | `SiteLock`, `GetProductSelectionList`, `SL_AutoRenew`, `SL_Configure`, `SL_GetAccountDetail`, `SL_GetAccounts` | Manage SiteLock security services. |
+
+---
+
+### **🚀 Need Help?**
+Let me know if you need **sample API requests**, integration guidance, or more details! 😊

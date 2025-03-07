@@ -1,0 +1,79 @@
+isAcitve and isDelete working-  admin / customer end
+apple login working
+permission wise view tabs on admin
+country code working admin 
+37 blogs added to live through script
+adding remaining product/section data admin
+
+multi tab section gets on automaticly
+
+business plan -- done
+bookkeeping-accounting-in-the-uk -- done
+startup-business-funding -- done
+banking-setup-package-- done
+trademark working -- with country - faq
+patent-consultation -- done
+startup-business-mentor?type=package -- done
+google-ads-web-analytics-setup -- done
+company-logo-design?type=package -- done
+social-media-marketing-services -- done
+website-design-creation?type=package -- done
+content-writing -- done
+seo marketing loading ------------------
+bespoke-landing-page-package -- done -- saud addon working
+seo-marketing-sevices -- done
+brochure-design?type=package -- done
+banner-ad-design -- done
+digital-poster-design -- done
+build-your-own-mobile-app?type=package --done
+custom-mobile-app-development?type=package - -done faq and details reaming as page not loading
+small-business-software-tools -- done no faq
+
+
+bookeeping, trademark, company formation
+
+startup business funding - image section not show -- done
+Register a trde mark in uSa - Copyrights, Designs, Patents And Trade Marks
+Google Ads  & Web Analytics Setup - desc -- done
+company-logo-design?type=package- desc -- done
+Content Writing- desc -- done
+eo-marketing-sevices- desc -- done
+Bespoke Landing Page Design - seo title undefind -- done
+build-your-own-mobile-app?type=package image section not view -- done
+
+trademark
+
+seo keywords , seperated
+
+products entries working
+invoice/order history view working
+non disclosure agreement tool working
+status dynamic show in investor and member
+marketplace individual page loading issue solve
+
+Done
+Book keeping 
+Business banking setup
+patent consultant
+startup business mentor
+google-ads-web-analytics-setup
+/company-logo-design?type=package
+social-media-marketing-services
+website-design-creation?type=package
+bespoke-landing-page-design
+brochure-design?type=package
+banner-ad-design
+digital-flyer-design
+Animated Video Creation 
+digital-poster-design
+small-business-software-tools
+
+
+saudeng.webforest@gmail.com
+Admin@8866186841
+
+related prodcut api change
+
+
+loading issue solve products/marketplace
+all products entries

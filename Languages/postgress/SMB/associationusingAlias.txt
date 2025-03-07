@@ -1,0 +1,136 @@
+Here are examples of Sequelize associations using **aliases** for both **same-table (self-referential)** and **different-table** associations.
+
+---
+
+## **1. Self-Referential Association (Same Table)**
+This is useful when a `Product` can have a **parent product** (e.g., for variations, bundles, etc.).
+
+### **Model Definition (Product Model)**
+```javascript
+module.exports = (sequelize, DataTypes) => {
+    const Product = sequelize.define('Product', {
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+            defaultValue: DataTypes.UUIDV4
+        },
+        name: DataTypes.STRING,
+        parentProductId: {
+            type: DataTypes.UUID,
+            allowNull: true
+        }
+    });
+
+    Product.hasMany(Product, { as: 'SubProducts', foreignKey: 'parentProductId' });
+    Product.belongsTo(Product, { as: 'ParentProduct', foreignKey: 'parentProductId' });
+
+    return Product;
+};
+```
+
+### **Querying with Alias**
+```javascript
+const getProductWithSubProducts = async (productId) => {
+    return await Product.findOne({
+        where: { id: productId },
+        include: [
+            {
+                model: Product,
+                as: 'SubProducts', // Alias used in association
+                attributes: ['id', 'name']
+            },
+            {
+                model: Product,
+                as: 'ParentProduct', // Alias for the parent product
+                attributes: ['id', 'name']
+            }
+        ]
+    });
+};
+```
+
+---
+
+## **2. Different Table Association with Alias**
+Example: A **Product** belongs to a **Category**, and a **Category** has many **Products**.
+
+### **Model Definitions**
+#### **Category Model**
+```javascript
+module.exports = (sequelize, DataTypes) => {
+    const Category = sequelize.define('Category', {
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+            defaultValue: DataTypes.UUIDV4
+        },
+        name: DataTypes.STRING
+    });
+
+    Category.hasMany(models.Product, { as: 'Products', foreignKey: 'categoryId' });
+
+    return Category;
+};
+```
+
+#### **Product Model**
+```javascript
+module.exports = (sequelize, DataTypes) => {
+    const Product = sequelize.define('Product', {
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+            defaultValue: DataTypes.UUIDV4
+        },
+        name: DataTypes.STRING,
+        categoryId: {
+            type: DataTypes.UUID,
+            allowNull: false
+        }
+    });
+
+    Product.belongsTo(models.Category, { as: 'Category', foreignKey: 'categoryId' });
+
+    return Product;
+};
+```
+
+### **Querying with Alias**
+```javascript
+const getCategoryWithProducts = async (categoryId) => {
+    return await Category.findOne({
+        where: { id: categoryId },
+        include: [
+            {
+                model: Product,
+                as: 'Products', // Alias used in association
+                attributes: ['id', 'name']
+            }
+        ]
+    });
+};
+```
+
+```javascript
+const getProductWithCategory = async (productId) => {
+    return await Product.findOne({
+        where: { id: productId },
+        include: [
+            {
+                model: Category,
+                as: 'Category', // Alias used in association
+                attributes: ['id', 'name']
+            }
+        ]
+    });
+};
+```
+
+---
+
+## **Key Takeaways**
+1. **Self-referential relationships (same table)**: Use an alias for both `hasMany` and `belongsTo` to avoid conflicts.
+2. **Different-table associations**: Define aliases to avoid issues when querying multiple relationships.
+3. **Include the alias in queries**: Always use the alias when performing `include` queries.
+
+Let me know if you need more clarifications! 🚀

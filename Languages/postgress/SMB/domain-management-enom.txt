@@ -1,0 +1,90 @@
+To manage **DNS settings**, **host records**, and **MX records** for domains purchased through your Enom reseller API, you'll need the following key API commands:
+
+https://www.facebook.com/startmybusinessnow
+https://www.linkedin.com/company/start-my-business-now
+
+---
+
+### **1️⃣ DNS Management (Adding Default & Custom DNS)**
+#### **Getting DNS Records**
+- ✅ `GetDNS` → Retrieves the current DNS settings for a domain.
+- ✅ `GetDNSStatus` → Checks if DNS management is enabled for a domain.
+
+#### **Updating DNS Records**
+- ✅ `SetDNSHost` → Sets DNS records (A, CNAME, MX, TXT, etc.) for a domain.
+- ✅ `ModifyNSHosting` → Updates nameserver (NS) settings for DNS hosting. - no use
+- ✅ `ModifyNS` → Updates a domain's authoritative nameservers.
+
+---
+
+### **2️⃣ Host Records (A, CNAME, TXT, etc.)**
+#### **Getting Host Records**
+- ✅ `GetHosts` → Retrieves existing A, CNAME, and other host records.
+
+#### **Updating Host Records**
+- ✅ `SetHosts` → Adds/updates A, CNAME, TXT, and other records.
+
+---
+
+### **3️⃣ MX Records (Email Hosting)**
+#### **Getting MX Records**
+- ✅ `GetMailHosts` → Retrieves current MX records.
+
+#### **Updating MX Records**
+- ✅ `SetHosts` → Updates MX records.
+- ✅ `SetCatchAll` → Sets up a catch-all email address.
+
+---
+
+### **4️⃣ Domain Management (Getting and Updating Domain Info)**
+#### **Getting Domain Data**
+- ✅ `GetDomainInfo` → Fetches details about a domain (registrant, expiration, etc.).
+- ✅ `GetDomainStatus` → Checks domain registration and status.
+- ✅ `GetContacts` → Retrieves domain contact details.
+- ✅ `GetRegLock` → Checks if domain lock is enabled.
+
+#### **Updating Domain Data**
+- ✅ `SetRegLock` → Enables/disables domain lock.
+- ✅ `ModifyNS` → Updates nameservers.
+- ✅ `SetDomainSubServices` → Enables/disables domain services.
+
+---
+
+### **5️⃣ WHOIS & Privacy Management**
+- ✅ `GetWhoisContact` → Retrieves WHOIS contact details.
+- ✅ `UpdateAccountInfo` → Updates registrant/WHOIS information.
+- ✅ `GetWPPSInfo` → Checks WHOIS privacy protection status.
+- ✅ `SetRegLock` → Locks/unlocks the domain from transfers.
+
+---
+
+### **6️⃣ Other Useful Commands**
+- ✅ `Check` → Checks domain availability.
+- ✅ `GetDomains` → Lists all domains in your reseller account.
+- ✅ `PushDomain` → Moves a domain to another account.
+- ✅ `ExtendDomainDNS` → Extends DNS hosting for a domain.
+- ✅ `RenewServices` → Renews DNS or email services.
+
+---
+
+### **🛠️ Example Use Cases**
+1️⃣ **User wants to update DNS to a custom nameserver**
+   - Call `ModifyNS` with the new nameservers.
+
+2️⃣ **User wants to add a new A record**
+   - Fetch existing records using `GetHosts`.
+   - Update with `SetHosts`.
+
+3️⃣ **User wants to update MX records for email hosting**
+   - Use `GetMailHosts` to check current records.
+   - Use `SetHosts` to add/update MX records.
+
+---
+
+### **✅ Final Recommendation**
+- **For fetching data**: `GetDNS`, `GetHosts`, `GetMailHosts`, `GetDomainInfo`, `GetContacts`
+- **For updating data**: `SetDNSHost`, `ModifyNS`, `SetHosts`, `SetCatchAll`, `SetRegLock`
+
+These will allow you to manage **DNS, host records, MX records, and domain settings** effectively. Let me know if you need examples of API calls! 🚀
+
+https://chatgpt.com/share/67caae96-d21c-8008-ab58-d1908a3c3951
