@@ -18,10 +18,8 @@ country code working admin
 37 blogs added to live through script
 adding remaining product/section data admin
 
-shoaibaslam359@admin.com
-shoaibaslam359@Admin
 
-
+putty pwd
 S@Ud8866186841a
 ssh-keygen -t rsa -b 4096 -C "saudeng.webforest@gmail.com
 "
@@ -37,6 +35,7 @@ pm2 save
 vi /etc/nginx/sites-available/smb
 sudo nginx -t 
 npm run build 
+pm2 restart 0
 sudo cp -r dist/* /var/www/admin-panel/
 sudo cp -r build/* /var/www/main-frontend/
 sudo systemctl restart nginx

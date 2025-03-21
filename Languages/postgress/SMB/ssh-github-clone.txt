@@ -1,0 +1,59 @@
+To clone a GitHub repository using SSH on an **EC2 instance**, follow these steps:
+
+### **Step 1: Install Git (if not installed)**
+Run the following command on your EC2 instance:
+```sh
+sudo yum install git -y   # For Amazon Linux
+sudo apt install git -y   # For Ubuntu/Debian
+```
+
+### **Step 2: Generate SSH Key on EC2 (if not already generated)**
+If you don’t have an SSH key, generate one:
+```sh
+ssh-keygen -t rsa -b 4096 -C "your-email@example.com"
+```
+Press `Enter` to accept the default location (`~/.ssh/id_rsa`). If prompted, enter a passphrase (optional).
+
+### **Step 3: Copy the Public Key**
+Get the public key using:
+```sh
+cat ~/.ssh/id_rsa.pub
+```
+Copy the output.
+
+### **Step 4: Add SSH Key to GitHub**
+1. Go to **GitHub → Settings → SSH and GPG keys**.
+2. Click **New SSH key**.
+3. Paste the copied public key and save.
+
+### **Step 5: Test SSH Connection**
+Run:
+```sh
+ssh -T git@github.com
+```
+If successful, you should see:
+```
+Hi <your-github-username>! You've successfully authenticated...
+```
+
+### **Step 6: Clone the Repository**
+Now, clone the repo using SSH:
+```sh
+git clone git@github.com:your-username/your-repo.git
+```
+
+### **(Optional) Step 7: Fix Permissions**
+Ensure correct permissions:
+```sh
+chmod 600 ~/.ssh/id_rsa
+chmod 644 ~/.ssh/id_rsa.pub
+```
+
+### **Step 8: If Permission Denied (Fix Known Hosts)**
+If you get a `Permission denied (publickey)` error:
+```sh
+ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+```
+Then retry cloning.
+
+Let me know if you face any issues! 🚀

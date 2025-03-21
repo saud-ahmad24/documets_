@@ -1,0 +1,186 @@
+### **Domain Transfer Process Using Enom API**
+To **transfer a domain** using the **Enom API**, you need to follow these steps:
+
+---
+
+## **🔹 Step 1: Check Domain Transfer Eligibility**
+Before initiating a transfer, verify if the domain is eligible using:
+
+### **1️⃣ Check**
+- **Purpose:** Checks domain availability or transfer eligibility.
+- **API Command:**  
+  ```plaintext
+  https://reseller.enom.com/interface.asp?command=Check
+  ```
+- **Required Parameters:**
+  ```plaintext
+  sld=example&tld=com
+  ```
+- **Response:**
+  - `"available"` → Domain is **available for registration**.
+  - `"transfer"` → Domain is **available for transfer**.
+  - `"unavailable"` → Domain is **not eligible for transfer**.
+
+---
+
+## **🔹 Step 2: Get Authorization Code (EPP Code)**
+Before initiating a transfer, the domain owner must provide the **EPP/Auth Code** (also called the Transfer Secret).  
+You can request this from the current registrar using:
+
+### **2️⃣ SynchAuthInfo**
+- **Purpose:** Retrieves the **EPP code** for a domain.
+- **API Command:**  
+  ```plaintext
+  https://reseller.enom.com/interface.asp?command=SynchAuthInfo
+  ```
+- **Required Parameters:**
+  ```plaintext
+  sld=example&tld=com
+  ```
+- **Response:**  
+  - The **EPP code** needed for transfer.
+
+---
+
+## **🔹 Step 3: Unlock the Domain for Transfer**
+Most registrars require domains to be **unlocked** before a transfer can be initiated.
+
+### **3️⃣ SetRegLock**
+- **Purpose:** Unlocks the domain by **removing transfer protection**.
+- **API Command:**  
+  ```plaintext
+  https://reseller.enom.com/interface.asp?command=SetRegLock
+  ```
+- **Required Parameters:**
+  ```plaintext
+  sld=example&tld=com&Unlock=1
+  ```
+- **Response:**
+  - `"success"` → Domain is **unlocked**.
+  - `"failure"` → Domain is **still locked**.
+
+---
+
+## **🔹 Step 4: Submit the Domain Transfer Order**
+Once the domain is **unlocked and has the EPP code**, you can initiate a transfer request.
+
+### **4️⃣ TP_SubmitOrder**
+- **Purpose:** Submits a domain **transfer request**.
+- **API Command:**  
+  ```plaintext
+  https://reseller.enom.com/interface.asp?command=TP_SubmitOrder
+  ```
+- **Required Parameters:**
+  ```plaintext
+  sld=example&tld=com&AuthInfo=EPP-CODE-HERE&UseContacts=1
+  ```
+- **Optional Parameters:**
+  ```plaintext
+  OrderType=AutoApprove  // Automatically approves the transfer when possible
+  ```
+- **Response:**
+  - `"orderid=123456"` → Transfer request **successfully submitted**.
+  - `"error"` → Something went wrong.
+
+---
+
+## **🔹 Step 5: Get Transfer Order Status**
+After submitting a transfer request, you can track its status.
+
+### **5️⃣ TP_GetOrderStatuses**
+- **Purpose:** Retrieves the **current status** of a transfer.
+- **API Command:**  
+  ```plaintext
+  https://reseller.enom.com/interface.asp?command=TP_GetOrderStatuses
+  ```
+- **Required Parameters:**
+  ```plaintext
+  orderid=123456
+  ```
+- **Response:**  
+  - `"pending"` → Transfer is in progress.
+  - `"completed"` → Transfer is successful.
+  - `"failed"` → Transfer failed (check the error message).
+
+---
+
+## **🔹 Step 6: Approve or Resend Transfer Confirmation Email**
+Some domain transfers require **email approval** by the domain owner.
+
+### **6️⃣ TP_ResendEmail**
+- **Purpose:** Resends the **transfer approval email** to the domain owner.
+- **API Command:**  
+  ```plaintext
+  https://reseller.enom.com/interface.asp?command=TP_ResendEmail
+  ```
+- **Required Parameters:**
+  ```plaintext
+  orderid=123456
+  ```
+- **Response:**
+  - `"success"` → Email sent.
+  - `"error"` → Email could not be sent.
+
+---
+
+## **🔹 Step 7: Complete Transfer and Check the Final Status**
+Once approved, check if the transfer is completed.
+
+### **7️⃣ TP_GetDetailsByDomain**
+- **Purpose:** Retrieves transfer details for a **specific domain**.
+- **API Command:**  
+  ```plaintext
+  https://reseller.enom.com/interface.asp?command=TP_GetDetailsByDomain
+  ```
+- **Required Parameters:**
+  ```plaintext
+  sld=example&tld=com
+  ```
+- **Response:**
+  - `"Transfer Complete"` → Domain transfer is successful.
+  - `"Transfer Failed"` → Check for errors.
+
+---
+
+## **🔹 Step 8: Verify the Transferred Domain**
+After the transfer is complete, confirm domain ownership.
+
+### **8️⃣ GetDomainInfo**
+- **Purpose:** Retrieves details of the **transferred domain**.
+- **API Command:**  
+  ```plaintext
+  https://reseller.enom.com/interface.asp?command=GetDomainInfo
+  ```
+- **Required Parameters:**
+  ```plaintext
+  sld=example&tld=com
+  ```
+- **Response:**
+  - WHOIS details, nameservers, and expiration date.
+
+---
+
+### **✅ Summary of Domain Transfer API Calls**
+| **Step** | **API Command** | **Purpose** |
+|----------|---------------|------------|
+| 1️⃣ Check domain transfer eligibility | `Check` | Verify if the domain is eligible for transfer |
+| 2️⃣ Get EPP/Auth Code | `SynchAuthInfo` | Retrieve the authorization code required for transfer |
+| 3️⃣ Unlock the domain | `SetRegLock` | Remove the registrar lock |
+| 4️⃣ Submit the transfer order | `TP_SubmitOrder` | Initiate the domain transfer request |
+| 5️⃣ Check transfer status | `TP_GetOrderStatuses` | Track the progress of the transfer |
+| 6️⃣ Resend transfer email | `TP_ResendEmail` | Resend the approval email to the domain owner |
+| 7️⃣ Get transfer details | `TP_GetDetailsByDomain` | Retrieve information on the transfer status |
+| 8️⃣ Verify transferred domain | `GetDomainInfo` | Ensure the domain was successfully transferred |
+
+---
+
+## **🔹 Additional Considerations**
+- **Domain transfers can take up to 5-7 days** to complete.
+- Ensure that:
+  - The **EPP/Auth code is correct**.
+  - The domain is **unlocked** at the current registrar.
+  - The **WHOIS email address is valid** to receive approval emails.
+
+---
+
+Let me know if you need help implementing any of these API calls! 🚀

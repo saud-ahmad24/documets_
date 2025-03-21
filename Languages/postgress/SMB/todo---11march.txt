@@ -1,0 +1,14 @@
+seo for launchapd
+min height for blog, event, tiptrick, learn, guide,perk, community
+blog, tip tricks, guide seo working
+scroll effect error solve blog, guide, tips
+other status for investor apply added
+business plan validation
+chart view overlap and download issue fix
+auto login on direct purchase 
+dont show same blog in latest blogs
+admin passowrd update working
+apis in backend for domain management, upto SetDomainSRVHosts records done
+
+card selection working secure
+

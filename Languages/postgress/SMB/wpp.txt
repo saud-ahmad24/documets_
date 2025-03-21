@@ -1,0 +1,4 @@
+scp "C:\Users\WF035\Downloads\rhtrford.zip" root@64.227.35.105:/var/www/html/
+
+
+https://othrfund.com/

@@ -1,0 +1,93 @@
+Yes! Here are alternative ways to move your **WordPress ZIP** file from `/root/` to `/var/www/html/`:
+
+---
+
+### **1. Use `cp` (Copy Command)**
+Instead of moving, you can copy the file:
+
+```sh
+cp /root/your-wordpress.zip /var/www/html/
+```
+
+Then navigate to the destination:
+
+```sh
+cd /var/www/html/
+unzip your-wordpress.zip
+rm your-wordpress.zip  # Remove the ZIP after extraction (optional)
+```
+
+---
+
+### **2. Use `rsync` (Efficient Copy)**
+If your ZIP is large and you want a progress indicator:
+
+```sh
+rsync -av --progress /root/your-wordpress.zip /var/www/html/
+```
+
+Then proceed with extraction as mentioned above.
+
+---
+
+### **3. Use `scp` (From Local Machine to Server)**
+If your ZIP is **on your local computer**, you can upload it directly:
+
+```sh
+scp your-wordpress.zip root@your_droplet_ip:/var/www/html/
+```
+
+Then SSH into your server and extract:
+
+```sh
+ssh root@your_droplet_ip
+cd /var/www/html/
+unzip your-wordpress.zip
+rm your-wordpress.zip
+```
+
+---
+
+### **4. Use `mv` (Move Instead of Copy)**
+If you don't need the ZIP in `/root/`, simply move it:
+
+```sh
+mv /root/your-wordpress.zip /var/www/html/
+```
+
+Then extract it:
+
+```sh
+cd /var/www/html/
+unzip your-wordpress.zip
+rm your-wordpress.zip
+```
+
+---
+
+### **5. Use FTP (If You Have an FTP Client Installed)**
+- Install **vsftpd** (if not already installed):
+  ```sh
+  sudo apt install vsftpd -y
+  sudo systemctl start vsftpd
+  sudo systemctl enable vsftpd
+  ```
+- Connect via **FileZilla** (or any FTP client)
+- Upload the ZIP to `/var/www/html/`
+- Extract via SSH as shown earlier.
+
+---
+
+### **Final Steps**
+After extraction:
+1. **Set correct permissions**:
+   ```sh
+   sudo chown -R www-data:www-data /var/www/html/
+   sudo chmod -R 755 /var/www/html/
+   ```
+2. **Set up MySQL, `wp-config.php`, and restart Apache** (refer to previous messages).
+3. **Visit** `http://your_droplet_ip` to complete installation.
+
+---
+
+Let me know which method works best for you! 🚀

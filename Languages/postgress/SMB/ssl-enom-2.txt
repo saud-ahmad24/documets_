@@ -1,0 +1,126 @@
+These are **Enom API** commands related to **SSL certificates**, **Auto-Renewal Management**, and **SiteLock** security services. Below is a breakdown of each command and its function:
+
+---
+
+## **🔒 SSL Management (SSL Certificates)**
+These commands help **manage, purchase, configure, and modify SSL certificates** for domains.
+
+### **1️⃣ CertChangeApproverEmail**
+- **Purpose:** Changes the email address of the person who must approve the SSL certificate request.
+- **Use Case:** If the SSL approval email was sent to the wrong address, use this to change it.
+
+### **2️⃣ CertConfigureCert**
+- **Purpose:** Configures SSL certificate details after purchase.
+- **Use Case:** Once you buy an SSL certificate, you must provide a **CSR (Certificate Signing Request)**, domain, and organization details before issuance.
+
+### **3️⃣ CertGetApproverEmail**
+- **Purpose:** Gets the list of available **approver emails** for an SSL certificate.
+- **Use Case:** When setting up an SSL, Enom provides a list of email addresses (e.g., `admin@yourdomain.com`, `webmaster@yourdomain.com`) that can approve the certificate.
+
+### **4️⃣ CertGetCertDetail**
+- **Purpose:** Retrieves **detailed information** about an SSL certificate.
+- **Use Case:** If you want to check **SSL validity, issuance date, and expiration date**.
+
+### **5️⃣ CertModifyOrder**
+- **Purpose:** Modifies an SSL order before it is issued.
+- **Use Case:** If you made a mistake in the **CSR** or other certificate details.
+
+### **6️⃣ CertParseCSR**
+- **Purpose:** Parses a **CSR (Certificate Signing Request)** to extract domain, organization, and public key details.
+- **Use Case:** If you want to verify the details inside a **CSR file** before using it.
+
+### **7️⃣ CertPurchaseCert**
+- **Purpose:** Purchases a new SSL certificate.
+- **Use Case:** Use this when buying **a new SSL certificate** for a domain.
+
+### **8️⃣ CertReissueCert**
+- **Purpose:** Reissues an SSL certificate (for example, when moving to a different web host).
+- **Use Case:** If your SSL certificate **private key is lost or compromised**, you can request a **reissue**.
+
+### **9️⃣ CertResendApproverEmail**
+- **Purpose:** Resends the SSL **approval email** to the selected approver address.
+- **Use Case:** If the approval email was not received or got lost.
+
+### **🔟 CertResendFulfillmentEmail**
+- **Purpose:** Resends the **certificate issuance email** to the domain owner.
+- **Use Case:** If the original email with the SSL certificate files was deleted or lost.
+
+### **🔢 GetCerts**
+- **Purpose:** Retrieves a **list of all SSL certificates** associated with your Enom account.
+- **Use Case:** If you want to see all **active, expired, or pending SSL certificates** in your account.
+
+---
+
+## **♻️ Auto-Renewal Management (AM)**
+These commands help manage **automatic renewal of domains, SSLs, and other services**.
+
+### **1️⃣ AM_AutoRenew**
+- **Purpose:** Enables or disables **auto-renewal** for a domain or service.
+- **Use Case:** If you want to **automatically renew a domain** instead of manually renewing it.
+
+### **2️⃣ AM_Configure**
+- **Purpose:** Configures **auto-renewal settings** for an account.
+- **Use Case:** If you want to **set a default renewal method** (e.g., charge a credit card or deduct from account balance).
+
+### **3️⃣ AM_GetAccounts**
+- **Purpose:** Retrieves a list of accounts with **auto-renewal enabled**.
+- **Use Case:** If you manage multiple domains and want to check **which ones have auto-renew enabled**.
+
+### **4️⃣ AM_GetAccountDetail**
+- **Purpose:** Gets detailed **auto-renewal settings** for a specific account.
+- **Use Case:** If you want to see **when a domain is set to renew and the payment method used**.
+
+---
+
+## **🛡️ SiteLock (Website Security Services)**
+SiteLock provides **malware scanning, website security monitoring, and protection**.
+
+### **1️⃣ GetProductSelectionList**
+- **Purpose:** Retrieves a list of **available SiteLock security products**.
+- **Use Case:** If you want to see **which SiteLock plans are available** for purchase.
+
+### **2️⃣ SL_AutoRenew**
+- **Purpose:** Enables or disables **auto-renewal for SiteLock**.
+- **Use Case:** If you want to ensure **your website’s security does not expire**.
+
+### **3️⃣ SL_Configure**
+- **Purpose:** Configures **SiteLock security settings** after purchase.
+- **Use Case:** If you want to set up **malware scanning, firewalls, or security monitoring**.
+
+### **4️⃣ SL_GetAccountDetail**
+- **Purpose:** Retrieves **detailed information** about a specific SiteLock account.
+- **Use Case:** If you want to check **which domains have SiteLock protection**.
+
+### **5️⃣ SL_GetAccounts**
+- **Purpose:** Retrieves a list of **all SiteLock accounts** associated with your Enom reseller account.
+- **Use Case:** If you manage **multiple websites and need to track security status**.
+
+---
+
+## **✅ Summary**
+| Category | Command | Function |
+|----------|------------|------------|
+| **SSL Certificates** | `CertChangeApproverEmail` | Change SSL approver email |
+|  | `CertConfigureCert` | Configure SSL after purchase |
+|  | `CertGetApproverEmail` | Get available approver emails for SSL |
+|  | `CertGetCertDetail` | Retrieve SSL certificate details |
+|  | `CertModifyOrder` | Modify an SSL order before issuance |
+|  | `CertParseCSR` | Extract details from CSR (Certificate Signing Request) |
+|  | `CertPurchaseCert` | Purchase a new SSL certificate |
+|  | `CertReissueCert` | Reissue an SSL certificate |
+|  | `CertResendApproverEmail` | Resend SSL approval email |
+|  | `CertResendFulfillmentEmail` | Resend SSL issuance email |
+|  | `GetCerts` | Get a list of all SSL certificates |
+| **Auto-Renewal Management** | `AM_AutoRenew` | Enable/disable auto-renewal |
+|  | `AM_Configure` | Configure auto-renewal settings |
+|  | `AM_GetAccounts` | Get accounts with auto-renew enabled |
+|  | `AM_GetAccountDetail` | Get auto-renewal details for an account |
+| **SiteLock Security** | `GetProductSelectionList` | Get available SiteLock security plans |
+|  | `SL_AutoRenew` | Enable/disable SiteLock auto-renewal |
+|  | `SL_Configure` | Configure SiteLock security settings |
+|  | `SL_GetAccountDetail` | Get SiteLock account details |
+|  | `SL_GetAccounts` | Get all SiteLock accounts |
+
+---
+
+Let me know if you need help with **implementing any of these API calls**! 🚀
