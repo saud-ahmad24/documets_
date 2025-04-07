@@ -186,4 +186,9 @@ server {
 ~
 
 
+ALTER TABLE public."Events"
+ALTER COLUMN type SET DATA TYPE TEXT[]
+USING string_to_array(type, ',');
+
+
 
